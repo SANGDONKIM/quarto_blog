@@ -16,4 +16,4 @@ about:
 
 ---
 
-
+I specialize in using R, python for data analysis, data visualizations. I am also passionate about making bike-sharing systems more efficient.
