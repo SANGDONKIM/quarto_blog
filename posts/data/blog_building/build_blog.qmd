@@ -1,0 +1,19 @@
+---
+title: "Quarto로 블로그 만들기"
+description: |
+  Quarto로 블로그 만들기 튜토리얼
+author: "Don Don"
+date: "2022-06-22"
+categories: [quarto, blog]
+image: "https://quarto.org/docs/websites/images/myblog.png"
+---
+
+
+
+# 참고 
+
+<https://quarto.org/docs/websites/website-blog.html>
+
+<https://quarto.org/docs/output-formats/html-themes.html>
+
+<https://www.youtube.com/watch?v=DMgEGpqXEM4>
