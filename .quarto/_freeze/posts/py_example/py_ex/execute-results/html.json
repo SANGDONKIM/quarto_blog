@@ -1,0 +1,11 @@
+{
+  "hash": "b971b580da508d30ffba410d2c63ef57",
+  "result": {
+    "markdown": "---\ntitle: \"quarto vscode and python\"\ndescription: |\n  vscode에서 quarto와 파이썬 사용하기 \nauthor: \"Don Don\"\ndate: \"2022-06-22\"\ncategories: [python]\nimage: \"https://quarto.org/docs/tools/images/vscode-render.png\"\n---\n\n# quarto vscode 파이썬 세팅 \n\nquarto는 vscode에서도 잘 작동한다. Rstudio에서 quarto를 사용할 수 있지만, vscode가 파이썬에 좀 더 친숙하기 때문에 vscode를 이용하기로 마음먹었다. \n\nquarto를 이용하면 r, python을 왔다갔다하면서 글을 쉽게 쓸 수 있는 것이 큰 장점인 것 같다(Rmd도 되긴함..). \n\nquarto는 r에서 reticulate를 통해 파이썬을 세팅 안해도 되서, Rmd보다 편하다. \n\n\n\n세팅하는 방법은 몇 번의 시도 끝에 한 것이기 때문에..글을 올리기 위해 실험을 다시 하는 것은 번거롭고, 내가 했던 방법에 대해 공유를 해보면 \n\n1. vscode 설치 \n\n2. python 가상환경 세팅 \n\n3. vscode에서 파이썬 가상환경 세팅 \n\n  -   가상환경에 필요한 파이썬 패키지 설치 \n\n    -   python3 -m pip install matplotlib plotly_express\n\n    -   python3 -m pip install jupyter(**필수**)  \n\n  -   Ctrl + Shift + p : python interpreter를 치고, 만든 가상환경으로 선택 \n\n\n아래는 quarto 홈페이지에 있는 튜토리얼 코드이다. 해당 코드를 돌려보면 정상적으로 돌아가는 것을 볼 수 있다. \n\nFor a demonstration of a line plot on a polar axis, see @fig-polar.\n\n::: {.cell execution_count=1}\n``` {.python .cell-code}\nimport numpy as np\nimport matplotlib.pyplot as plt\n\nr = np.arange(0, 2, 0.01)\ntheta = 2 * np.pi * r\nfig, ax = plt.subplots(\n  subplot_kw = {'projection': 'polar'} \n)\nax.plot(theta, r)\nax.set_rticks([0.5, 1, 1.5, 2])\nax.grid(True)\nplt.show()\n```\n\n::: {.cell-output .cell-output-display}\n![A line plot on a polar axis](py_ex_files/figure-html/fig-polar-output-1.png){#fig-polar width=443 height=432}\n:::\n:::\n\n\n# 참고 \n\n<https://quarto.org/docs/get-started/hello/vscode.html>\n\n",
+    "supporting": [
+      "py_ex_files"
+    ],
+    "filters": [],
+    "includes": {}
+  }
+}

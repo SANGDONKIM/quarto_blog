@@ -1,0 +1,11 @@
+[
+  {
+    "listing": "/index.html",
+    "items": [
+      "/posts/welcome/index.html",
+      "/posts/com_sep/com_sep.html",
+      "/posts/logistic_reg/index.html",
+      "/posts/py_example/py_ex.html"
+    ]
+  }
+]

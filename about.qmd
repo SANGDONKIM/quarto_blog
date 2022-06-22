@@ -1,0 +1,19 @@
+---
+title: "about"
+image: myimage.jpg
+about:
+  template: jolla
+  links:
+    - icon: linkedin
+      text: online class
+      href: https://statisticsplaybook.com/p/adp-r
+    - icon: linkedin
+      text: LinkedIn
+      href: https://www.linkedin.com/in/%EC%83%81%EB%8F%88-%EA%B9%80-b89985199/
+    - icon: github
+      text: Github
+      href: https://github.com/SANGDONKIM
+
+---
+
+

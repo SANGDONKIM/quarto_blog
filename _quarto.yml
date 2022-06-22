@@ -1,0 +1,18 @@
+project:
+  type: website
+
+website:
+  title: "Don Don"
+  navbar:
+    right:
+      - about.qmd
+      - icon: github
+        href: https://github.com/SANGDONKIM
+      - icon: linkedin
+        href: https://www.linkedin.com/in/%EC%83%81%EB%8F%88-%EA%B9%80-b89985199/
+  html:
+    theme: Litera
+    css: styles.css
+
+
+

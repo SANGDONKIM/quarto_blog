@@ -1,0 +1,14 @@
+---
+title: "데이터분석전문가(ADP) 실기 머신러닝 강의 소개"
+author: "Don Don"
+date: "2022-06-22"
+categories: [news]
+image: "welcome.jpg"
+---
+
+데이터분석전문가(ADP) 강의 진행 중입니다. 
+
+강의 홈페이지 : <https://statisticsplaybook.com/p/adp-r>
+
+**4기** 수업은 **7월 말**부터 시작합니다. 이전 수업 영상과 자료는 결제 후에 보실 수 있습니다. 
+

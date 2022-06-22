@@ -1,0 +1,100 @@
+[
+  {
+    "objectID": "posts/welcome/index.html",
+    "href": "posts/welcome/index.html",
+    "title": "데이터분석전문가(ADP) 실기 머신러닝 강의 소개",
+    "section": "",
+    "text": "강의 홈페이지 : https://statisticsplaybook.com/p/adp-r\n4기 수업은 7월 말부터 시작합니다. 이전 수업 영상과 자료는 결제 후에 보실 수 있습니다."
+  },
+  {
+    "objectID": "posts/post-with-code/index.html",
+    "href": "posts/post-with-code/index.html",
+    "title": "Post With Code",
+    "section": "",
+    "text": "This is a post with executable code."
+  },
+  {
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "About",
+    "section": "",
+    "text": "About this blog"
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Don Don",
+    "section": "",
+    "text": "news\n\n\n\n\n\n\n\n\n\n\n\nJun 22, 2022\n\n\nDon Don\n\n\n\n\n\n\n  \n\n\n\n\n\n\n\n\n\n\nR\n\n\nglm\n\n\ncaret\n\n\n\n\nglm.fit: fitted probabilities numerically 0 or 1 occurred\n\n\n\n\n\n\nJun 22, 2022\n\n\nDon Don\n\n\n\n\n\n\n  \n\n\n\n\n\n\n\n\n\n\nR\n\n\nglm\n\n\n\n\nGLM에서 다중공선성 체크 해야 하는지\n\n\n\n\n\n\nJun 22, 2022\n\n\nDon Don\n\n\n\n\n\n\n  \n\n\n\n\n\n\n\n\n\n\npython\n\n\n\n\nvscode에서 quarto와 파이썬 사용하기\n\n\n\n\n\n\nJun 22, 2022\n\n\nDon Don\n\n\n\n\n\n\nNo matching items"
+  },
+  {
+    "objectID": "posts/logistic_reg/index.html",
+    "href": "posts/logistic_reg/index.html",
+    "title": "다중공선성 개념 및 체크 방법",
+    "section": "",
+    "text": "library(tidyverse)\nlibrary(data.table)\nlibrary(recipes)\nlibrary(broom)"
+  },
+  {
+    "objectID": "posts/logistic_reg/index.html#example",
+    "href": "posts/logistic_reg/index.html#example",
+    "title": "다중공선성 개념 및 체크 방법",
+    "section": "Example",
+    "text": "Example\n먼저 다중회귀모형에서 다중공선성이 있을 때, 회귀계수의 추정량의 분산이 어떻게 변화하는지를 알아보자.\n간단하게, 설명변수 \\(X_1, X_2\\), 절편이 존재하는 다중회귀모형의 \\(\\beta\\)의 공분산은 다음과 같이 구할 수 있다.\n\\[\n\\begin{aligned}\ncov(\\hat{\\beta}) = \\begin{bmatrix}\nvar(\\hat{\\beta_0}) & cov(\\hat{\\beta}_0, \\hat{\\beta}_1) & cov(\\hat{\\beta}_0, \\hat{\\beta}_2) \\\\\ncov(\\hat{\\beta}_1, \\hat{\\beta}_0) & var(\\hat{\\beta}_1) & cov(\\hat{\\beta}_1, \\hat{\\beta}_2) \\\\\ncov(\\hat{\\beta}_2, \\hat{\\beta}_0) & cov(\\hat{\\beta}_2, \\hat{\\beta}_1) & var(\\hat{\\beta}_2)\n\\end{bmatrix}\n=\\sigma^2(X^tX)^{-1}\n\\end{aligned}\n\\]\n표준화된 설명변수 \\(X_1, X_2\\)에 대한 상관계수가 \\(0.99, 0.95, 0.85\\)로 높은 경우를 가정해보자.\n\nxtx <- matrix(c(1, 0.99, 0.85, 0.99, 1, 0.95, 0.85, 0.95, 1), ncol = 3)\nxtx\n\n     [,1] [,2] [,3]\n[1,] 1.00 0.99 0.85\n[2,] 0.99 1.00 0.95\n[3,] 0.85 0.95 1.00\n\n\n\nsolve(xtx)\n\n       [,1]   [,2]    [,3]\n[1,] -15.60  29.20 -14.480\n[2,]  29.20 -44.40  17.360\n[3,] -14.48  17.36  -3.184\n\n\n\\(X\\)는 표준화된 설명변수라고 할 때, 상관계수가 \\(0.99, 0.95, 0.85\\)로 높을 경우 역행렬을 구해보면 역행렬의 각 element는 모두 큰 값으로 커지게 된다(\\(\\sigma = 1\\)). 즉, 위의 식에 대입해서 보면 \\(\\hat{\\beta}\\)의 분산이 매우 커지는 것을 볼 수 있다."
+  },
+  {
+    "objectID": "posts/logistic_reg/index.html#example-2",
+    "href": "posts/logistic_reg/index.html#example-2",
+    "title": "다중공선성 개념 및 체크 방법",
+    "section": "Example",
+    "text": "Example\n\nset.seed(1)\nX1 <- rnorm(10)\nX2 <- X1*runif(10)\ny <- rbinom(10, 1, 0.3)\ndat <- data.frame(X1, X2, y)\n\nfit <- glm(y~., family = binomial, dat)\n\n\\((X^tWX)^{-1}\\)는 R base 함수인 vcov()를 통해 구할 수 있다.\n\nvcov(fit)\n\n            (Intercept)         X1         X2\n(Intercept)   0.9009862 -0.7664066  0.6210139\nX1           -0.7664066  3.5509802 -7.4328529\nX2            0.6210139 -7.4328529 28.2736799\n\n\n\\((X^tWX)^{-1}\\)를 직접 구해보면 다음과 같다. \\(w_{ii} = \\hat{\\pi}_i(1-\\hat{\\pi}_i)\\)\n\np <- fit$fitted.values\nw <- p*(1-p)\nX <- model.matrix(fit)\n\nsolve(t(X)%*%diag(w)%*%X)\n\n            (Intercept)         X1         X2\n(Intercept)   0.9009921 -0.7664113  0.6210083\nX1           -0.7664113  3.5509949 -7.4329015\nX2            0.6210083 -7.4329015 28.2739839\n\n\nvcov()의 \\((1, 1)\\) element와 \\(var(\\hat{\\beta_0})\\)의 결과가 같은 것을 볼 수 있다.\n\ntidy(fit)$std.error[1]^2\n\n[1] 0.9009862\n\n\n따라서 GLM에서도 다중회귀모형과 마찬가지로, 모형 적합 시에 다중공선성도 체크해줘야 한다."
+  },
+  {
+    "objectID": "posts/ com_seperation/com_sep.html",
+    "href": "posts/ com_seperation/com_sep.html",
+    "title": "logistic regression에서 complete seperation 문제",
+    "section": "",
+    "text": "library(data.table)\nlibrary(GGally)\nlibrary(caret)\nlibrary(recipes)\nlibrary(janitor)\nlibrary(ggmosaic)\nlibrary(pROC)\nlibrary(tidyverse)\nlibrary(tictoc)\n\ntheme_set(theme_bw())"
+  },
+  {
+    "objectID": "posts/ com_seperation/com_sep.html#complete-seperation-예제",
+    "href": "posts/ com_seperation/com_sep.html#complete-seperation-예제",
+    "title": "logistic regression에서 complete seperation 문제",
+    "section": "complete seperation 예제",
+    "text": "complete seperation 예제\n\n\n\nY\nX1\nX2\n\n\n\n\n0\n1\n3\n\n\n0\n2\n2\n\n\n0\n3\n-1\n\n\n0\n3\n-1\n\n\n1\n5\n2\n\n\n1\n6\n4\n\n\n1\n10\n1\n\n\n1\n11\n0\n\n\n\n\n\\(X_1\\le 3\\)일 경우 \\(Y=0\\)이고, \\(X_1>3\\)일 경우 \\(Y=1\\)로 완벽하게 분리됨"
+  },
+  {
+    "objectID": "posts/ com_seperation/com_sep.html#왜-complete-seperation이-문제인가",
+    "href": "posts/ com_seperation/com_sep.html#왜-complete-seperation이-문제인가",
+    "title": "logistic regression에서 complete seperation 문제",
+    "section": "왜 complete seperation이 문제인가?",
+    "text": "왜 complete seperation이 문제인가?\n\nLogistic regression의 경우 MLE로 회귀계수를 추정할 때 수치적인 알고리즘을 이용하여 계산하는데 complete seperation일 경우 알고리즘이 수렴하지 않는 문제가 발생할 수 있음\n\n\ndat <- data.frame(x1 = c(1, 2, 3, 3, 5, 6, 10, 11), \n           x2 = c(3, 2, -1, -1, 2, 4, 1, 0), \n           y = c(0, 0, 0, 0, 1, 1, 1, 1))\n\n\nfit <- glm(y~., family = binomial, dat)\nfit$fitted.values\n\n           1            2            3            4            5            6 \n2.220446e-16 9.861322e-11 3.179312e-12 3.179312e-12 1.000000e+00 1.000000e+00 \n           7            8 \n1.000000e+00 1.000000e+00 \n\n\n\nglm.fit: fitted probabilities numerically 0 or 1 occurred warning message 출력\n\n예측 확률이 0, 1에 거의 근접한 값이 나왔기 때문에 발생함\n즉, 너무 완벽하게 예측했을 경우 발생함\n\nglm.fit: algorithm did not converge warning message 출력\n\nMLE를 계산할 때, 알고리즘이 수렴하지 않을 경우 발생함"
+  },
+  {
+    "objectID": "posts/com_sep/com_sep.html",
+    "href": "posts/com_sep/com_sep.html",
+    "title": "complete seperation in logistic regression",
+    "section": "",
+    "text": "library(data.table)\nlibrary(GGally)\nlibrary(caret)\nlibrary(recipes)\nlibrary(janitor)\nlibrary(ggmosaic)\nlibrary(pROC)\nlibrary(tidyverse)\nlibrary(tictoc)\n\ntheme_set(theme_bw())"
+  },
+  {
+    "objectID": "posts/com_sep/com_sep.html#complete-seperation-예제",
+    "href": "posts/com_sep/com_sep.html#complete-seperation-예제",
+    "title": "complete seperation in logistic regression",
+    "section": "complete seperation 예제",
+    "text": "complete seperation 예제\n\n\n\nY\nX1\nX2\n\n\n\n\n0\n1\n3\n\n\n0\n2\n2\n\n\n0\n3\n-1\n\n\n0\n3\n-1\n\n\n1\n5\n2\n\n\n1\n6\n4\n\n\n1\n10\n1\n\n\n1\n11\n0\n\n\n\n\n\\(X_1\\le 3\\)일 경우 \\(Y=0\\)이고, \\(X_1>3\\)일 경우 \\(Y=1\\)로 완벽하게 분리됨"
+  },
+  {
+    "objectID": "posts/com_sep/com_sep.html#왜-complete-seperation이-문제인가",
+    "href": "posts/com_sep/com_sep.html#왜-complete-seperation이-문제인가",
+    "title": "complete seperation in logistic regression",
+    "section": "왜 complete seperation이 문제인가?",
+    "text": "왜 complete seperation이 문제인가?\n\nLogistic regression의 경우 MLE로 회귀계수를 추정할 때 수치적인 알고리즘을 이용하여 계산하는데 complete seperation일 경우 알고리즘이 수렴하지 않는 문제가 발생할 수 있음\n\n\ndat <- data.frame(x1 = c(1, 2, 3, 3, 5, 6, 10, 11), \n           x2 = c(3, 2, -1, -1, 2, 4, 1, 0), \n           y = c(0, 0, 0, 0, 1, 1, 1, 1))\n\n\nfit <- glm(y~., family = binomial, dat)\nfit$fitted.values\n\n           1            2            3            4            5            6 \n2.220446e-16 9.861322e-11 3.179312e-12 3.179312e-12 1.000000e+00 1.000000e+00 \n           7            8 \n1.000000e+00 1.000000e+00 \n\n\n\nglm.fit: fitted probabilities numerically 0 or 1 occurred warning message 출력\n\n예측 확률이 0, 1에 거의 근접한 값이 나왔기 때문에 발생함\n즉, 너무 완벽하게 예측했을 경우 발생함\n\nglm.fit: algorithm did not converge warning message 출력\n\nMLE를 계산할 때, 알고리즘이 수렴하지 않을 경우 발생함"
+  },
+  {
+    "objectID": "posts/py_example/py_ex.html",
+    "href": "posts/py_example/py_ex.html",
+    "title": "quarto vscode and python",
+    "section": "",
+    "text": "참고\nhttps://quarto.org/docs/get-started/hello/vscode.html"
+  }
+]
