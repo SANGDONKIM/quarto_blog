@@ -1,0 +1,308 @@
+---
+title: "multiple test"
+description: |
+  Multiple test에 대한 소개 
+author: "Don Don"
+date: "2021-06-18"
+categories: [R, statistics]
+image: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0c/Spurious_correlations_-_spelling_bee_spiders.svg/1920px-Spurious_correlations_-_spelling_bee_spiders.svg.png"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  comment = " ",
+  echo = TRUE,
+  message = FALSE,
+  warning = FALSE,
+  R.options = list(width = 80)
+)
+```
+
+다중검정은 multiple test, simultaneous tes, joint test 등으로 불리우는데, 보통 ANOVA 이후 집단 간의 세부적인 차이를 알아보기 위한 사후 검정으로 활용된다. 이번에 다중 검정 관련 논문을 읽을 일이 있어서 기본 개념에 대해 정리를 해보려고 한다.
+
+# Motivation
+
+먼저 ANOVA부터 시작해서 왜 다중 검정이 필요한지, 다중 검정을 수행할 때 발생하는 문제점에 대해 정리해본다.
+
+## One-way ANOVA
+
+세 집단에 약물을 복용했을 때 치료 효과가 있는지 ANOVA를 실시한다고 해보자. ANOVA를 수식으로 표현하면 다음과 같다.
+
+$$
+Y_{ij} = \mu + \alpha_i + \epsilon_{ij}, \quad i = 1,2, 3 \quad j = 1, \cdots ,n \\
+\alpha_i : \text{i - th treatment effect} 
+$$
+
+수식을 직관적으로 표로 표현하면 다음과 같다.
+
++--------------+------------------------+---------------------------------+------------------------------------------+---------------------------------------------------+
+| Treat \\ Rep | $$                     | $$                              | $$                                       | $$                                                |
+|              | 1                      | 2                               | \cdots                                   | n                                                 |
+|              | $$                     | $$                              | $$                                       | $$                                                |
++==============+========================+=================================+==========================================+===================================================+
+| $$           | $$                     | $$                              | $$                                       | $$                                                |
+|  1           |                 Y_{11} |                          Y_{12} |                                   \cdots |                                            Y_{1n} |
+|  $$          |                 $$     |                          $$     |                                   $$     |                                            $$     |
++--------------+------------------------+---------------------------------+------------------------------------------+---------------------------------------------------+
+| $$           | $$                     | $$                              | $$                                       | $$                                                |
+|  2           |                 Y_{21} |                          Y_{22} |                                   \cdots |                                            Y_{2n} |
+|  $$          |                 $$     |                          $$     |                                   $$     |                                            $$     |
++--------------+------------------------+---------------------------------+------------------------------------------+---------------------------------------------------+
+| $$           | $$                     | $$                              | $$                                       | $$                                                |
+|  3           |                 Y_{31} |                          Y_{32} |                                   \cdots |                                            Y_{3n} |
+|  $$          |                 $$     |                          $$     |                                   $$     |                                            $$     |
++--------------+------------------------+---------------------------------+------------------------------------------+---------------------------------------------------+
+
+ANOVA에 대한 가설은 다음과 같이 도출될 수 있다.
+
+$$
+H_0 : \alpha_1 = \alpha_2 = \alpha_3 \quad \text{(no treatment effect)} \\
+H_1: \text{Not }H_0
+$$
+
+다음과 같은 가설 설정에 대해서 등분산 가정 하에 ANOVA를 수행했을 때 항상 두 가지 결론이 도출될 수 있다.
+
+1.  귀무가설을 기각하지 못할 경우
+
+    -   즉 세 집단 간의 평균 차이가 없다(혹은 약물의 치료 효과가 없다)
+
+2.  귀무가설을 기각할 경우
+
+    -   즉, 세 집단 간의 평균 차이가 존재한다.
+
+여기서 귀무가설을 기각할 경우를 주목해보자. 귀무가설을 기각할 경우 내릴 수 있는 결론은 "세 집단 간의 평균 차이가 존재한다"이다. 다시 풀어서 써보면 "세 집단 간 중에 적어도 하나는 평균 차이가 존재한다"이며, 이는 어느 집단 간에 차이가 나는지 모른다는 의미와 같다. 즉, 다음과 같은 경우의 수가 도출될 수 있다.
+
+$$H_1 : \\
+\alpha_1 = \alpha_2 > \alpha3 \\
+\alpha_1 = \alpha_2 < \alpha3 \\
+\alpha_1 < \alpha_2 = \alpha3 \\
+\vdots \\
+\alpha_1 \neq \alpha_2 \neq \alpha3
+$$
+
+ANOVA test로는 어느 집단 간에 평균 차이가 존재하는지 모르기 때문에 **사후검정** 을 추가적으로 실시해야만 이를 알 수 있다. 이 때 수행하는 것이 다중 검정(multiple test)이다.
+
+$$
+H_{01}: \alpha_1 = \alpha_2, \quad H_{02}: \alpha_1 = \alpha_3, \quad H_{03}: \alpha_2 = \alpha_3,
+$$
+
+가설의 개수는 treatment 3일 때, 2개의 쌍을 뽑는 것이므로 $3 \choose 2$가 된다.
+
+## Multiple test
+
+다중 검정이 왜 필요한지에 대해 이해했으니, 이제 다중 검정을 실시할 때의 문제점에 대해 알아보자.
+
+$m$개의 가설이 있다고 해보자.
+
+$$
+H_{0i} : \mu_{1i} = \mu_{2i}, \quad i = 1, \cdots, m
+$$
+
+각 가설에 대한 제 1종 오류를 수식으로 표현하면 다음과 같다.
+
+$$
+E_i = \{\text{reject }H_{0i} \text{ when }H_{0i}\text{ is true}\}, \quad i = 1, \cdots, m
+$$
+
+$m$ 개의 가설에 대한 제 1종 오류의 upper bound를 표현하면
+
+$$
+\begin{equation*}
+\begin{aligned}
+P(\bigcup_{i=1}^{m} E_{i}) &= 1-P(\bigcap_{i=1}^{m} E_{i}^c) \\
+&= 1 -  \prod_{i=1}^{m} P(E_i^c) \\
+&\le 1 - (1-\alpha)^m, \quad P(E_i) \le \alpha
+\end{aligned}
+\end{equation*} 
+$$
+
+여기서 $\bigcap$이 $\prod$로 표현되는 이유는 가설 설정 시에 모든 가설($E_i$)은 서로 독립이기 때문이다. $m$ 에 값을 대입하면서 1종 오류의 upper bound에 대해 알아보자.
+
+$$
+\begin{equation*} 
+\begin{aligned}
+&\alpha = 0.05 \text{일 때}, \\ 
+&m = 2,\quad 1 - (1-\alpha)^m=0.0975 \\
+&m = 3,\quad 1 - (1-\alpha)^m=0.1426 \\ 
+&m = 100,\quad 1 - (1-\alpha)^m \backsimeq 0.9941 \backsimeq 1 \\
+\end{aligned} 
+\end{equation*} 
+$$
+
+$m$ 이 증가할 때, 즉 가설의 개수가 많아질 때 제 1종 오류가 발생할 upper bound는 거의 1에 가깝게 되며, 이는 거의 항상 error가 발생한다고 할 수 있다. 따라서 이러한 문제를 해결하기 위해서 제 1종 오류에 대한 일종의 보정을 수행해야 하는데 대표적인 방법이 Bonferroni correction이다. Bonferroni correction을 설명하기 이전에 광의적인 개념인 FWER에 대해 집고 넘어간다.
+
+## Family-wise error rate(FWER)
+
+$m$ 개의 가설검정($H^1, H^2,\cdots, H^m$)을 수행한다고 가정했을 때 결과를 table로 정리해보면 다음과 같다.
+
++------------------------+---------------------------------------------+-----------------------------------------------------------------+---------------------------------------------------------------------------------------+
+| true state \\ decision | $$                                          | $$                                                              |                                                                                       |
+|                        | \text{accept }H_0                           | \text{reject }H_0                                               |                                                                                       |
+|                        | $$                                          | $$                                                              |                                                                                       |
++========================+=============================================+=================================================================+=======================================================================================+
+| $$                     | $$                                          | $$                                                              | $$                                                                                    |
+|  H_0: \text{true}      |                           U\text{(unknown)} |                                               V\text{(unknown)} |                                                                   m_0\text{(unknown)} |
+|  $$                    |                           $$                |                                               $$                |                                                                   $$                  |
++------------------------+---------------------------------------------+-----------------------------------------------------------------+---------------------------------------------------------------------------------------+
+| $$                     | $$                                          | $$                                                              | $$                                                                                    |
+|  H_1: \text{true}      |                           T\text{(unknown)} |                                               S\text{(unknown)} |                                                                   m_1\text{(unknown)} |
+|  $$                    |                           $$                |                                               $$                |                                                                   $$                  |
++------------------------+---------------------------------------------+-----------------------------------------------------------------+---------------------------------------------------------------------------------------+
+| $$                     | $$                                          | $$                                                              | $$                                                                                    |
+|  \text{Total}          |                           m-R\text{(known)} |                                               R\text{(known)}   |                                                                   m\text{(known)}     |
+|  $$                    |                           $$                |                                               $$                |                                                                   $$                  |
++------------------------+---------------------------------------------+-----------------------------------------------------------------+---------------------------------------------------------------------------------------+
+
+: Result of m multiple hypothesis
+
+FWER의 의미는 the probability of at least one type 1 error, 즉 1번이라도 1종 오류가 발생할 확률을 의미한다. 이를 수식으로 표현하면 $P(V \ge1)$ 이다. FWER을 통제한다는 의미는 $P(V \ge1) \le \alpha$ , 즉 최소 1번이라도 제 1종 오류를 범할 확률을 $\alpha$ 이하로 조절한다는 의미이고, 이를 위해서는 개별 검정 결과에 대한 제 1종 오류를 범할 확률을 조절해야한다.
+
+### Bonferroni Correction
+
+FWER을 조절하는 대표적인 방법이 본페로니 보정방법이다. FWER은 Bonferroni inequality에 의해 다음과 같은 upper bound를 얻을 수 있다.
+
+$$
+P(V \ge 1)=P(\bigcup_{i=1}^{m} E_{i}) \le \sum_{i=1}^m P(E_i) \le \alpha 
+$$
+
+Bonferroni Correction은 위의 upper bound를 이용해서 개별 가설에 대한 $\alpha^*$ 값을 전체 $\alpha$ 를 개별 가설의 개수 $m$으로 나눠준다.
+
+$$\alpha^* = \frac{\alpha}{m}$$
+
+Bonferroni Correction은 $m$ 이 작을 때, 비교적 잘 작동한다. $m$ 이 클 경우 Bonferroni Correction은 잘 작동하지 않는다. 수식을 보면 직관적으로 알 수 있는데 $m$이 커질 경우 $\alpha^*$ 값이 매우 작아지기 때문에 개별 가설에 대해서 거의 기각하지 못하는 문제가 발생한다. 즉 Bonferroni Correction은 매우 보수적인 방법이라고 할 수 있다.
+
+### Sidak Correction
+
+시닥 보정 방법은 본페로니 보정 방법에서 조금 개선된 버전이다. 하지만 본페로니 보정의 문제점을 그대로 가지고 있다.
+
+$$ 
+\begin{equation*} 
+\begin{aligned} 
+P(\bigcup_{i=1}^{m} E_{i}) &= 1-P(\bigcap_{i=1}^{m} E_{i}^c) \\ 
+&= 1 - \prod_{i=1}^{m} P(E_i^c) \\
+&= 1 - \{1-P(E_i)\}^m \\ 
+&= 1 - (1-\alpha^*)^m \le \alpha \\
+&\therefore \alpha^* = 1-(1-\alpha)^\frac{1}{m}
+\end{aligned}
+\end{equation*} 
+$$
+
+### Example
+
+#### No correction
+
+$$ 
+\begin{equation*} 
+\begin{aligned} 
+P(\text{at least one significant result}) &= 1-P(\text{no significant result}) \\
+&= 1 - (1-0.05)^{20} \\
+&\simeq 0.64 
+\end{aligned}
+\end{equation*} 
+$$
+
+#### Bonferroni correction
+
+$$ 
+\begin{equation*} 
+\begin{aligned} 
+P(\text{at least one significant result}) &= 1-P(\text{no significant result}) \\
+&= 1 - (1-\frac{0.05}{20})^{20} \\
+&\simeq 0.0488 
+\end{aligned}
+\end{equation*} 
+$$
+
+#### Sidak correction
+
+$$ 
+\begin{equation*} 
+\begin{aligned} 
+P(\text{at least one significant result}) &= 1-P(\text{no significant result}) \\
+&= 1 - (1-\alpha^*)^{20} \\
+&\simeq 0.1854
+\end{aligned}
+\end{equation*} 
+$$
+
+## False Discovery Rate(FDR)
+
+FDR은 FWER의 단점인 가설의 수가 많아질 때 개별 가설에 대해서 거의 기각하지 못하는 단점을 보완한 방법이다.
+
+Benjamini and Hochberg(1995)
+
+$E[\frac{V}{R}] \le q, \quad q \text{ : correspond to level of significance}$
+
+식을 해석해보면 잘못기각되는 가설의 비율의 기댓값을 $q$ 수준으로 조절하는 것이라고 할 수 있다.
+
+**Benjamini and hochberg FDR procedure**
+
+To control FDR at level $\delta$
+
+1.  Order the unadjusted p-values: $p_1 \le p_2 \le \cdots \le p_m$
+2.  Then find the test with the highest rank, $j$, for which the p-value, $p_j$, is less than or equal to $\frac{j}{m}\cdot \delta$
+3.  Declare the tests of rank $1, 2, \cdots, j$ as significant $p(j) \le \delta \cdot \frac{j}{m}$
+
+### Code
+
+#### No corrections
+
+```{r}
+set.seed(311)
+x <- c(rnorm(900), rnorm(100, mean = 3))
+plot(density(x))
+
+p <- pnorm(x, lower.tail = F)
+length(p)
+
+test <- p > 0.05
+
+summary(test[1:900])
+summary(test[901:1000])
+
+```
+
+#### Bonferroni correction
+
+```{r}
+bonftest <- p > 0.00005
+summary(bonftest[1:900])
+summary(bonftest[901:1000])
+```
+
+#### FDR
+
+```{r}
+psort <- sort(p)
+fdrtest <- NULL
+
+for (i in 1:1000){
+  fdrtest <- c(fdrtest, p[i] > match(p[i],psort) * .05/1000)
+
+}
+summary(fdrtest[1:900])
+summary(fdrtest[901:1000])
+```
+
+#### FDR using R stat package
+
+```{r}
+p.adj <- stats::p.adjust(p, method = 'BH', n = length(p))
+fdrtest2 <- p.adj > 0.05
+summary(fdrtest2[1:900])
+summary(fdrtest2[901:1000])
+matplot(p, p.adj)
+```
+
+
+### 참고 자료
+
+<https://www.stat.berkeley.edu/~mgoldman/Section0402.pdf>
+
+<https://be-favorite.tistory.com/26>
+
+<https://www.tandfonline.com/doi/suppl/10.1080/01621459.2020.1859379?scroll=top>
+
+<https://ndownloader.figstatic.com/files/25717051>
+
+<https://www.gs.washington.edu/academics/courses/akey/56008/lecture/lecture10.pdf>

@@ -1,0 +1,2280 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1"/>
+  <meta name="generator" content="distill" />
+
+  <style type="text/css">
+  /* Hide doc at startup (prevent jankiness while JS renders/transforms) */
+  body {
+    visibility: hidden;
+  }
+  </style>
+
+ <!--radix_placeholder_import_source-->
+ <!--/radix_placeholder_import_source-->
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css" data-origin="pandoc">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ad0000; } /* Alert */
+code span.an { color: #5e5e5e; } /* Annotation */
+code span.at { color: #20794d; } /* Attribute */
+code span.bn { color: #ad0000; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007ba5; } /* ControlFlow */
+code span.ch { color: #20794d; } /* Char */
+code span.cn { color: #8f5902; } /* Constant */
+code span.co { color: #5e5e5e; } /* Comment */
+code span.cv { color: #5e5e5e; font-style: italic; } /* CommentVar */
+code span.do { color: #5e5e5e; font-style: italic; } /* Documentation */
+code span.dt { color: #ad0000; } /* DataType */
+code span.dv { color: #ad0000; } /* DecVal */
+code span.er { color: #ad0000; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #ad0000; } /* Float */
+code span.fu { color: #4758ab; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #5e5e5e; } /* Information */
+code span.kw { color: #007ba5; } /* Keyword */
+code span.op { color: #5e5e5e; } /* Operator */
+code span.ot { color: #007ba5; } /* Other */
+code span.pp { color: #ad0000; } /* Preprocessor */
+code span.sc { color: #20794d; } /* SpecialChar */
+code span.ss { color: #20794d; } /* SpecialString */
+code span.st { color: #20794d; } /* String */
+code span.va { color: #111111; } /* Variable */
+code span.vs { color: #20794d; } /* VerbatimString */
+code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
+</style>
+
+  <!--radix_placeholder_meta_tags-->
+  <title>machine learning explainability</title>
+
+  <meta property="description" itemprop="description" content="feature importance, partial dependence plot, shap value 소개"/>
+
+
+  <!--  https://schema.org/Article -->
+  <meta property="article:published" itemprop="datePublished" content="2021-07-29"/>
+  <meta property="article:created" itemprop="dateCreated" content="2021-07-29"/>
+  <meta name="article:author" content="dondon"/>
+
+  <!--  https://developers.facebook.com/docs/sharing/webmasters#markup -->
+  <meta property="og:title" content="machine learning explainability"/>
+  <meta property="og:type" content="article"/>
+  <meta property="og:description" content="feature importance, partial dependence plot, shap value 소개"/>
+  <meta property="og:locale" content="en_US"/>
+
+  <!--  https://dev.twitter.com/cards/types/summary -->
+  <meta property="twitter:card" content="summary"/>
+  <meta property="twitter:title" content="machine learning explainability"/>
+  <meta property="twitter:description" content="feature importance, partial dependence plot, shap value 소개"/>
+
+  <!--/radix_placeholder_meta_tags-->
+  <!--radix_placeholder_rmarkdown_metadata-->
+
+  <script type="text/json" id="radix-rmarkdown-metadata">
+  {"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","description","author","date","output","categories"]}},"value":[{"type":"character","attributes":{},"value":["machine learning explainability"]},{"type":"character","attributes":{},"value":["feature importance, partial dependence plot, shap value 소개 \n"]},{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","url"]}},"value":[{"type":"character","attributes":{},"value":["dondon"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":[]}},"value":[]}]}]},{"type":"character","attributes":{},"value":["07-29-2021"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["distill::distill_article"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["toc","self_contained"]}},"value":[{"type":"logical","attributes":{},"value":[true]},{"type":"logical","attributes":{},"value":[false]}]}]},{"type":"character","attributes":{},"value":["Statistics","Machine learning"]}]}
+  </script>
+  <!--/radix_placeholder_rmarkdown_metadata-->
+  
+  <script type="text/json" id="radix-resource-manifest">
+  {"type":"character","attributes":{},"value":["image11.png","image12.png","image13.png","image14.png","image15.png","image16.PNG","image17.PNG","image18.png","image19.png","machine-learning-explainability_files/anchor-4.2.2/anchor.min.js","machine-learning-explainability_files/bowser-1.9.3/bowser.min.js","machine-learning-explainability_files/distill-2.2.21/template.v2.js","machine-learning-explainability_files/figure-html5/unnamed-chunk-10-1.png","machine-learning-explainability_files/figure-html5/unnamed-chunk-11-1.png","machine-learning-explainability_files/figure-html5/unnamed-chunk-13-1.png","machine-learning-explainability_files/figure-html5/unnamed-chunk-14-1.png","machine-learning-explainability_files/figure-html5/unnamed-chunk-15-1.png","machine-learning-explainability_files/figure-html5/unnamed-chunk-2-1.png","machine-learning-explainability_files/figure-html5/unnamed-chunk-4-1.png","machine-learning-explainability_files/figure-html5/unnamed-chunk-5-1.png","machine-learning-explainability_files/figure-html5/unnamed-chunk-7-1.png","machine-learning-explainability_files/figure-html5/unnamed-chunk-9-1.png","machine-learning-explainability_files/header-attrs-2.9/header-attrs.js","machine-learning-explainability_files/jquery-1.11.3/jquery.min.js","machine-learning-explainability_files/popper-2.6.0/popper.min.js","machine-learning-explainability_files/tippy-6.2.7/tippy-bundle.umd.min.js","machine-learning-explainability_files/tippy-6.2.7/tippy-light-border.css","machine-learning-explainability_files/tippy-6.2.7/tippy.css","machine-learning-explainability_files/tippy-6.2.7/tippy.umd.min.js","machine-learning-explainability_files/webcomponents-2.0.0/webcomponents.js"]}
+  </script>
+  <!--radix_placeholder_navigation_in_header-->
+  <!--/radix_placeholder_navigation_in_header-->
+  <!--radix_placeholder_distill-->
+
+  <style type="text/css">
+
+  body {
+    background-color: white;
+  }
+
+  .pandoc-table {
+    width: 100%;
+  }
+
+  .pandoc-table>caption {
+    margin-bottom: 10px;
+  }
+
+  .pandoc-table th:not([align]) {
+    text-align: left;
+  }
+
+  .pagedtable-footer {
+    font-size: 15px;
+  }
+
+  d-byline .byline {
+    grid-template-columns: 2fr 2fr;
+  }
+
+  d-byline .byline h3 {
+    margin-block-start: 1.5em;
+  }
+
+  d-byline .byline .authors-affiliations h3 {
+    margin-block-start: 0.5em;
+  }
+
+  .authors-affiliations .orcid-id {
+    width: 16px;
+    height:16px;
+    margin-left: 4px;
+    margin-right: 4px;
+    vertical-align: middle;
+    padding-bottom: 2px;
+  }
+
+  d-title .dt-tags {
+    margin-top: 1em;
+    grid-column: text;
+  }
+
+  .dt-tags .dt-tag {
+    text-decoration: none;
+    display: inline-block;
+    color: rgba(0,0,0,0.6);
+    padding: 0em 0.4em;
+    margin-right: 0.5em;
+    margin-bottom: 0.4em;
+    font-size: 70%;
+    border: 1px solid rgba(0,0,0,0.2);
+    border-radius: 3px;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+
+  d-article table.gt_table td,
+  d-article table.gt_table th {
+    border-bottom: none;
+  }
+
+  .html-widget {
+    margin-bottom: 2.0em;
+  }
+
+  .l-screen-inset {
+    padding-right: 16px;
+  }
+
+  .l-screen .caption {
+    margin-left: 10px;
+  }
+
+  .shaded {
+    background: rgb(247, 247, 247);
+    padding-top: 20px;
+    padding-bottom: 20px;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  }
+
+  .shaded .html-widget {
+    margin-bottom: 0;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+  }
+
+  .shaded .shaded-content {
+    background: white;
+  }
+
+  .text-output {
+    margin-top: 0;
+    line-height: 1.5em;
+  }
+
+  .hidden {
+    display: none !important;
+  }
+
+  d-article {
+    padding-top: 2.5rem;
+    padding-bottom: 30px;
+  }
+
+  d-appendix {
+    padding-top: 30px;
+  }
+
+  d-article>p>img {
+    width: 100%;
+  }
+
+  d-article h2 {
+    margin: 1rem 0 1.5rem 0;
+  }
+
+  d-article h3 {
+    margin-top: 1.5rem;
+  }
+
+  d-article iframe {
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    margin-bottom: 2.0em;
+    width: 100%;
+  }
+
+  /* Tweak code blocks */
+
+  d-article div.sourceCode code,
+  d-article pre code {
+    font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+  }
+
+  d-article pre,
+  d-article div.sourceCode,
+  d-article div.sourceCode pre {
+    overflow: auto;
+  }
+
+  d-article div.sourceCode {
+    background-color: white;
+  }
+
+  d-article div.sourceCode pre {
+    padding-left: 10px;
+    font-size: 12px;
+    border-left: 2px solid rgba(0,0,0,0.1);
+  }
+
+  d-article pre {
+    font-size: 12px;
+    color: black;
+    background: none;
+    margin-top: 0;
+    text-align: left;
+    white-space: pre;
+    word-spacing: normal;
+    word-break: normal;
+    word-wrap: normal;
+    line-height: 1.5;
+
+    -moz-tab-size: 4;
+    -o-tab-size: 4;
+    tab-size: 4;
+
+    -webkit-hyphens: none;
+    -moz-hyphens: none;
+    -ms-hyphens: none;
+    hyphens: none;
+  }
+
+  d-article pre a {
+    border-bottom: none;
+  }
+
+  d-article pre a:hover {
+    border-bottom: none;
+    text-decoration: underline;
+  }
+
+  d-article details {
+    grid-column: text;
+    margin-bottom: 0.8em;
+  }
+
+  @media(min-width: 768px) {
+
+  d-article pre,
+  d-article div.sourceCode,
+  d-article div.sourceCode pre {
+    overflow: visible !important;
+  }
+
+  d-article div.sourceCode pre {
+    padding-left: 18px;
+    font-size: 14px;
+  }
+
+  d-article pre {
+    font-size: 14px;
+  }
+
+  }
+
+  figure img.external {
+    background: white;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    box-shadow: 0 1px 8px rgba(0, 0, 0, 0.1);
+    padding: 18px;
+    box-sizing: border-box;
+  }
+
+  /* CSS for d-contents */
+
+  .d-contents {
+    grid-column: text;
+    color: rgba(0,0,0,0.8);
+    font-size: 0.9em;
+    padding-bottom: 1em;
+    margin-bottom: 1em;
+    padding-bottom: 0.5em;
+    margin-bottom: 1em;
+    padding-left: 0.25em;
+    justify-self: start;
+  }
+
+  @media(min-width: 1000px) {
+    .d-contents.d-contents-float {
+      height: 0;
+      grid-column-start: 1;
+      grid-column-end: 4;
+      justify-self: center;
+      padding-right: 3em;
+      padding-left: 2em;
+    }
+  }
+
+  .d-contents nav h3 {
+    font-size: 18px;
+    margin-top: 0;
+    margin-bottom: 1em;
+  }
+
+  .d-contents li {
+    list-style-type: none
+  }
+
+  .d-contents nav > ul {
+    padding-left: 0;
+  }
+
+  .d-contents ul {
+    padding-left: 1em
+  }
+
+  .d-contents nav ul li {
+    margin-top: 0.6em;
+    margin-bottom: 0.2em;
+  }
+
+  .d-contents nav a {
+    font-size: 13px;
+    border-bottom: none;
+    text-decoration: none
+    color: rgba(0, 0, 0, 0.8);
+  }
+
+  .d-contents nav a:hover {
+    text-decoration: underline solid rgba(0, 0, 0, 0.6)
+  }
+
+  .d-contents nav > ul > li > a {
+    font-weight: 600;
+  }
+
+  .d-contents nav > ul > li > ul {
+    font-weight: inherit;
+  }
+
+  .d-contents nav > ul > li > ul > li {
+    margin-top: 0.2em;
+  }
+
+
+  .d-contents nav ul {
+    margin-top: 0;
+    margin-bottom: 0.25em;
+  }
+
+  .d-article-with-toc h2:nth-child(2) {
+    margin-top: 0;
+  }
+
+
+  /* Figure */
+
+  .figure {
+    position: relative;
+    margin-bottom: 2.5em;
+    margin-top: 1.5em;
+  }
+
+  .figure img {
+    width: 100%;
+  }
+
+  .figure .caption {
+    color: rgba(0, 0, 0, 0.6);
+    font-size: 12px;
+    line-height: 1.5em;
+  }
+
+  .figure img.external {
+    background: white;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    box-shadow: 0 1px 8px rgba(0, 0, 0, 0.1);
+    padding: 18px;
+    box-sizing: border-box;
+  }
+
+  .figure .caption a {
+    color: rgba(0, 0, 0, 0.6);
+  }
+
+  .figure .caption b,
+  .figure .caption strong, {
+    font-weight: 600;
+    color: rgba(0, 0, 0, 1.0);
+  }
+
+  /* Citations */
+
+  d-article .citation {
+    color: inherit;
+    cursor: inherit;
+  }
+
+  div.hanging-indent{
+    margin-left: 1em; text-indent: -1em;
+  }
+
+  /* Citation hover box */
+
+  .tippy-box[data-theme~=light-border] {
+    background-color: rgba(250, 250, 250, 0.95);
+  }
+
+  .tippy-content > p {
+    margin-bottom: 0;
+    padding: 2px;
+  }
+
+
+  /* Tweak 1000px media break to show more text */
+
+  @media(min-width: 1000px) {
+    .base-grid,
+    distill-header,
+    d-title,
+    d-abstract,
+    d-article,
+    d-appendix,
+    distill-appendix,
+    d-byline,
+    d-footnote-list,
+    d-citation-list,
+    distill-footer {
+      grid-template-columns: [screen-start] 1fr [page-start kicker-start] 80px [middle-start] 50px [text-start kicker-end] 65px 65px 65px 65px 65px 65px 65px 65px [text-end gutter-start] 65px [middle-end] 65px [page-end gutter-end] 1fr [screen-end];
+      grid-column-gap: 16px;
+    }
+
+    .grid {
+      grid-column-gap: 16px;
+    }
+
+    d-article {
+      font-size: 1.06rem;
+      line-height: 1.7em;
+    }
+    figure .caption, .figure .caption, figure figcaption {
+      font-size: 13px;
+    }
+  }
+
+  @media(min-width: 1180px) {
+    .base-grid,
+    distill-header,
+    d-title,
+    d-abstract,
+    d-article,
+    d-appendix,
+    distill-appendix,
+    d-byline,
+    d-footnote-list,
+    d-citation-list,
+    distill-footer {
+      grid-template-columns: [screen-start] 1fr [page-start kicker-start] 60px [middle-start] 60px [text-start kicker-end] 60px 60px 60px 60px 60px 60px 60px 60px [text-end gutter-start] 60px [middle-end] 60px [page-end gutter-end] 1fr [screen-end];
+      grid-column-gap: 32px;
+    }
+
+    .grid {
+      grid-column-gap: 32px;
+    }
+  }
+
+
+  /* Get the citation styles for the appendix (not auto-injected on render since
+     we do our own rendering of the citation appendix) */
+
+  d-appendix .citation-appendix,
+  .d-appendix .citation-appendix {
+    font-size: 11px;
+    line-height: 15px;
+    border-left: 1px solid rgba(0, 0, 0, 0.1);
+    padding-left: 18px;
+    border: 1px solid rgba(0,0,0,0.1);
+    background: rgba(0, 0, 0, 0.02);
+    padding: 10px 18px;
+    border-radius: 3px;
+    color: rgba(150, 150, 150, 1);
+    overflow: hidden;
+    margin-top: -12px;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+  }
+
+  /* Include appendix styles here so they can be overridden */
+
+  d-appendix {
+    contain: layout style;
+    font-size: 0.8em;
+    line-height: 1.7em;
+    margin-top: 60px;
+    margin-bottom: 0;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    color: rgba(0,0,0,0.5);
+    padding-top: 60px;
+    padding-bottom: 48px;
+  }
+
+  d-appendix h3 {
+    grid-column: page-start / text-start;
+    font-size: 15px;
+    font-weight: 500;
+    margin-top: 1em;
+    margin-bottom: 0;
+    color: rgba(0,0,0,0.65);
+  }
+
+  d-appendix h3 + * {
+    margin-top: 1em;
+  }
+
+  d-appendix ol {
+    padding: 0 0 0 15px;
+  }
+
+  @media (min-width: 768px) {
+    d-appendix ol {
+      padding: 0 0 0 30px;
+      margin-left: -30px;
+    }
+  }
+
+  d-appendix li {
+    margin-bottom: 1em;
+  }
+
+  d-appendix a {
+    color: rgba(0, 0, 0, 0.6);
+  }
+
+  d-appendix > * {
+    grid-column: text;
+  }
+
+  d-appendix > d-footnote-list,
+  d-appendix > d-citation-list,
+  d-appendix > distill-appendix {
+    grid-column: screen;
+  }
+
+  /* Include footnote styles here so they can be overridden */
+
+  d-footnote-list {
+    contain: layout style;
+  }
+
+  d-footnote-list > * {
+    grid-column: text;
+  }
+
+  d-footnote-list a.footnote-backlink {
+    color: rgba(0,0,0,0.3);
+    padding-left: 0.5em;
+  }
+
+
+
+  /* Anchor.js */
+
+  .anchorjs-link {
+    /*transition: all .25s linear; */
+    text-decoration: none;
+    border-bottom: none;
+  }
+  *:hover > .anchorjs-link {
+    margin-left: -1.125em !important;
+    text-decoration: none;
+    border-bottom: none;
+  }
+
+  /* Social footer */
+
+  .social_footer {
+    margin-top: 30px;
+    margin-bottom: 0;
+    color: rgba(0,0,0,0.67);
+  }
+
+  .disqus-comments {
+    margin-right: 30px;
+  }
+
+  .disqus-comment-count {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.4);
+    cursor: pointer;
+  }
+
+  #disqus_thread {
+    margin-top: 30px;
+  }
+
+  .article-sharing a {
+    border-bottom: none;
+    margin-right: 8px;
+  }
+
+  .article-sharing a:hover {
+    border-bottom: none;
+  }
+
+  .sidebar-section.subscribe {
+    font-size: 12px;
+    line-height: 1.6em;
+  }
+
+  .subscribe p {
+    margin-bottom: 0.5em;
+  }
+
+
+  .article-footer .subscribe {
+    font-size: 15px;
+    margin-top: 45px;
+  }
+
+
+  .sidebar-section.custom {
+    font-size: 12px;
+    line-height: 1.6em;
+  }
+
+  .custom p {
+    margin-bottom: 0.5em;
+  }
+
+  /* Styles for listing layout (hide title) */
+  .layout-listing d-title, .layout-listing .d-title {
+    display: none;
+  }
+
+  /* Styles for posts lists (not auto-injected) */
+
+
+  .posts-with-sidebar {
+    padding-left: 45px;
+    padding-right: 45px;
+  }
+
+  .posts-list .description h2,
+  .posts-list .description p {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", Arial, sans-serif;
+  }
+
+  .posts-list .description h2 {
+    font-weight: 700;
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+
+  .posts-list h2.post-tag {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+    padding-bottom: 12px;
+  }
+  .posts-list {
+    margin-top: 60px;
+    margin-bottom: 24px;
+  }
+
+  .posts-list .post-preview {
+    text-decoration: none;
+    overflow: hidden;
+    display: block;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    padding: 24px 0;
+  }
+
+  .post-preview-last {
+    border-bottom: none !important;
+  }
+
+  .posts-list .posts-list-caption {
+    grid-column: screen;
+    font-weight: 400;
+  }
+
+  .posts-list .post-preview h2 {
+    margin: 0 0 6px 0;
+    line-height: 1.2em;
+    font-style: normal;
+    font-size: 24px;
+  }
+
+  .posts-list .post-preview p {
+    margin: 0 0 12px 0;
+    line-height: 1.4em;
+    font-size: 16px;
+  }
+
+  .posts-list .post-preview .thumbnail {
+    box-sizing: border-box;
+    margin-bottom: 24px;
+    position: relative;
+    max-width: 500px;
+  }
+  .posts-list .post-preview img {
+    width: 100%;
+    display: block;
+  }
+
+  .posts-list .metadata {
+    font-size: 12px;
+    line-height: 1.4em;
+    margin-bottom: 18px;
+  }
+
+  .posts-list .metadata > * {
+    display: inline-block;
+  }
+
+  .posts-list .metadata .publishedDate {
+    margin-right: 2em;
+  }
+
+  .posts-list .metadata .dt-authors {
+    display: block;
+    margin-top: 0.3em;
+    margin-right: 2em;
+  }
+
+  .posts-list .dt-tags {
+    display: block;
+    line-height: 1em;
+  }
+
+  .posts-list .dt-tags .dt-tag {
+    display: inline-block;
+    color: rgba(0,0,0,0.6);
+    padding: 0.3em 0.4em;
+    margin-right: 0.2em;
+    margin-bottom: 0.4em;
+    font-size: 60%;
+    border: 1px solid rgba(0,0,0,0.2);
+    border-radius: 3px;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+
+  .posts-list img {
+    opacity: 1;
+  }
+
+  .posts-list img[data-src] {
+    opacity: 0;
+  }
+
+  .posts-more {
+    clear: both;
+  }
+
+
+  .posts-sidebar {
+    font-size: 16px;
+  }
+
+  .posts-sidebar h3 {
+    font-size: 16px;
+    margin-top: 0;
+    margin-bottom: 0.5em;
+    font-weight: 400;
+    text-transform: uppercase;
+  }
+
+  .sidebar-section {
+    margin-bottom: 30px;
+  }
+
+  .categories ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .categories li {
+    color: rgba(0, 0, 0, 0.8);
+    margin-bottom: 0;
+  }
+
+  .categories li>a {
+    border-bottom: none;
+  }
+
+  .categories li>a:hover {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.4);
+  }
+
+  .categories .active {
+    font-weight: 600;
+  }
+
+  .categories .category-count {
+    color: rgba(0, 0, 0, 0.4);
+  }
+
+
+  @media(min-width: 768px) {
+    .posts-list .post-preview h2 {
+      font-size: 26px;
+    }
+    .posts-list .post-preview .thumbnail {
+      float: right;
+      width: 30%;
+      margin-bottom: 0;
+    }
+    .posts-list .post-preview .description {
+      float: left;
+      width: 45%;
+    }
+    .posts-list .post-preview .metadata {
+      float: left;
+      width: 20%;
+      margin-top: 8px;
+    }
+    .posts-list .post-preview p {
+      margin: 0 0 12px 0;
+      line-height: 1.5em;
+      font-size: 16px;
+    }
+    .posts-with-sidebar .posts-list {
+      float: left;
+      width: 75%;
+    }
+    .posts-with-sidebar .posts-sidebar {
+      float: right;
+      width: 20%;
+      margin-top: 60px;
+      padding-top: 24px;
+      padding-bottom: 24px;
+    }
+  }
+
+
+  /* Improve display for browsers without grid (IE/Edge <= 15) */
+
+  .downlevel {
+    line-height: 1.6em;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", Arial, sans-serif;
+    margin: 0;
+  }
+
+  .downlevel .d-title {
+    padding-top: 6rem;
+    padding-bottom: 1.5rem;
+  }
+
+  .downlevel .d-title h1 {
+    font-size: 50px;
+    font-weight: 700;
+    line-height: 1.1em;
+    margin: 0 0 0.5rem;
+  }
+
+  .downlevel .d-title p {
+    font-weight: 300;
+    font-size: 1.2rem;
+    line-height: 1.55em;
+    margin-top: 0;
+  }
+
+  .downlevel .d-byline {
+    padding-top: 0.8em;
+    padding-bottom: 0.8em;
+    font-size: 0.8rem;
+    line-height: 1.8em;
+  }
+
+  .downlevel .section-separator {
+    border: none;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+  }
+
+  .downlevel .d-article {
+    font-size: 1.06rem;
+    line-height: 1.7em;
+    padding-top: 1rem;
+    padding-bottom: 2rem;
+  }
+
+
+  .downlevel .d-appendix {
+    padding-left: 0;
+    padding-right: 0;
+    max-width: none;
+    font-size: 0.8em;
+    line-height: 1.7em;
+    margin-bottom: 0;
+    color: rgba(0,0,0,0.5);
+    padding-top: 40px;
+    padding-bottom: 48px;
+  }
+
+  .downlevel .footnotes ol {
+    padding-left: 13px;
+  }
+
+  .downlevel .base-grid,
+  .downlevel .distill-header,
+  .downlevel .d-title,
+  .downlevel .d-abstract,
+  .downlevel .d-article,
+  .downlevel .d-appendix,
+  .downlevel .distill-appendix,
+  .downlevel .d-byline,
+  .downlevel .d-footnote-list,
+  .downlevel .d-citation-list,
+  .downlevel .distill-footer,
+  .downlevel .appendix-bottom,
+  .downlevel .posts-container {
+    padding-left: 40px;
+    padding-right: 40px;
+  }
+
+  @media(min-width: 768px) {
+    .downlevel .base-grid,
+    .downlevel .distill-header,
+    .downlevel .d-title,
+    .downlevel .d-abstract,
+    .downlevel .d-article,
+    .downlevel .d-appendix,
+    .downlevel .distill-appendix,
+    .downlevel .d-byline,
+    .downlevel .d-footnote-list,
+    .downlevel .d-citation-list,
+    .downlevel .distill-footer,
+    .downlevel .appendix-bottom,
+    .downlevel .posts-container {
+    padding-left: 150px;
+    padding-right: 150px;
+    max-width: 900px;
+  }
+  }
+
+  .downlevel pre code {
+    display: block;
+    border-left: 2px solid rgba(0, 0, 0, .1);
+    padding: 0 0 0 20px;
+    font-size: 14px;
+  }
+
+  .downlevel code, .downlevel pre {
+    color: black;
+    background: none;
+    font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+    text-align: left;
+    white-space: pre;
+    word-spacing: normal;
+    word-break: normal;
+    word-wrap: normal;
+    line-height: 1.5;
+
+    -moz-tab-size: 4;
+    -o-tab-size: 4;
+    tab-size: 4;
+
+    -webkit-hyphens: none;
+    -moz-hyphens: none;
+    -ms-hyphens: none;
+    hyphens: none;
+  }
+
+  .downlevel .posts-list .post-preview {
+    color: inherit;
+  }
+
+
+
+  </style>
+
+  <script type="application/javascript">
+
+  function is_downlevel_browser() {
+    if (bowser.isUnsupportedBrowser({ msie: "12", msedge: "16"},
+                                   window.navigator.userAgent)) {
+      return true;
+    } else {
+      return window.load_distill_framework === undefined;
+    }
+  }
+
+  // show body when load is complete
+  function on_load_complete() {
+
+    // add anchors
+    if (window.anchors) {
+      window.anchors.options.placement = 'left';
+      window.anchors.add('d-article > h2, d-article > h3, d-article > h4, d-article > h5');
+    }
+
+
+    // set body to visible
+    document.body.style.visibility = 'visible';
+
+    // force redraw for leaflet widgets
+    if (window.HTMLWidgets) {
+      var maps = window.HTMLWidgets.findAll(".leaflet");
+      $.each(maps, function(i, el) {
+        var map = this.getMap();
+        map.invalidateSize();
+        map.eachLayer(function(layer) {
+          if (layer instanceof L.TileLayer)
+            layer.redraw();
+        });
+      });
+    }
+
+    // trigger 'shown' so htmlwidgets resize
+    $('d-article').trigger('shown');
+  }
+
+  function init_distill() {
+
+    init_common();
+
+    // create front matter
+    var front_matter = $('<d-front-matter></d-front-matter>');
+    $('#distill-front-matter').wrap(front_matter);
+
+    // create d-title
+    $('.d-title').changeElementType('d-title');
+
+    // create d-byline
+    var byline = $('<d-byline></d-byline>');
+    $('.d-byline').replaceWith(byline);
+
+    // create d-article
+    var article = $('<d-article></d-article>');
+    $('.d-article').wrap(article).children().unwrap();
+
+    // move posts container into article
+    $('.posts-container').appendTo($('d-article'));
+
+    // create d-appendix
+    $('.d-appendix').changeElementType('d-appendix');
+
+    // flag indicating that we have appendix items
+    var appendix = $('.appendix-bottom').children('h3').length > 0;
+
+    // replace footnotes with <d-footnote>
+    $('.footnote-ref').each(function(i, val) {
+      appendix = true;
+      var href = $(this).attr('href');
+      var id = href.replace('#', '');
+      var fn = $('#' + id);
+      var fn_p = $('#' + id + '>p');
+      fn_p.find('.footnote-back').remove();
+      var text = fn_p.html();
+      var dtfn = $('<d-footnote></d-footnote>');
+      dtfn.html(text);
+      $(this).replaceWith(dtfn);
+    });
+    // remove footnotes
+    $('.footnotes').remove();
+
+    // move refs into #references-listing
+    $('#references-listing').replaceWith($('#refs'));
+
+    $('h1.appendix, h2.appendix').each(function(i, val) {
+      $(this).changeElementType('h3');
+    });
+    $('h3.appendix').each(function(i, val) {
+      var id = $(this).attr('id');
+      $('.d-contents a[href="#' + id + '"]').parent().remove();
+      appendix = true;
+      $(this).nextUntil($('h1, h2, h3')).addBack().appendTo($('d-appendix'));
+    });
+
+    // show d-appendix if we have appendix content
+    $("d-appendix").css('display', appendix ? 'grid' : 'none');
+
+    // localize layout chunks to just output
+    $('.layout-chunk').each(function(i, val) {
+
+      // capture layout
+      var layout = $(this).attr('data-layout');
+
+      // apply layout to markdown level block elements
+      var elements = $(this).children().not('details, div.sourceCode, pre, script');
+      elements.each(function(i, el) {
+        var layout_div = $('<div class="' + layout + '"></div>');
+        if (layout_div.hasClass('shaded')) {
+          var shaded_content = $('<div class="shaded-content"></div>');
+          $(this).wrap(shaded_content);
+          $(this).parent().wrap(layout_div);
+        } else {
+          $(this).wrap(layout_div);
+        }
+      });
+
+
+      // unwrap the layout-chunk div
+      $(this).children().unwrap();
+    });
+
+    // remove code block used to force  highlighting css
+    $('.distill-force-highlighting-css').parent().remove();
+
+    // remove empty line numbers inserted by pandoc when using a
+    // custom syntax highlighting theme
+    $('code.sourceCode a:empty').remove();
+
+    // load distill framework
+    load_distill_framework();
+
+    // wait for window.distillRunlevel == 4 to do post processing
+    function distill_post_process() {
+
+      if (!window.distillRunlevel || window.distillRunlevel < 4)
+        return;
+
+      // hide author/affiliations entirely if we have no authors
+      var front_matter = JSON.parse($("#distill-front-matter").html());
+      var have_authors = front_matter.authors && front_matter.authors.length > 0;
+      if (!have_authors)
+        $('d-byline').addClass('hidden');
+
+      // article with toc class
+      $('.d-contents').parent().addClass('d-article-with-toc');
+
+      // strip links that point to #
+      $('.authors-affiliations').find('a[href="#"]').removeAttr('href');
+
+      // add orcid ids
+      $('.authors-affiliations').find('.author').each(function(i, el) {
+        var orcid_id = front_matter.authors[i].orcidID;
+        if (orcid_id) {
+          var a = $('<a></a>');
+          a.attr('href', 'https://orcid.org/' + orcid_id);
+          var img = $('<img></img>');
+          img.addClass('orcid-id');
+          img.attr('alt', 'ORCID ID');
+          img.attr('src','data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA2ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo1N0NEMjA4MDI1MjA2ODExOTk0QzkzNTEzRjZEQTg1NyIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDozM0NDOEJGNEZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDozM0NDOEJGM0ZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M1IE1hY2ludG9zaCI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkZDN0YxMTc0MDcyMDY4MTE5NUZFRDc5MUM2MUUwNEREIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjU3Q0QyMDgwMjUyMDY4MTE5OTRDOTM1MTNGNkRBODU3Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+84NovQAAAR1JREFUeNpiZEADy85ZJgCpeCB2QJM6AMQLo4yOL0AWZETSqACk1gOxAQN+cAGIA4EGPQBxmJA0nwdpjjQ8xqArmczw5tMHXAaALDgP1QMxAGqzAAPxQACqh4ER6uf5MBlkm0X4EGayMfMw/Pr7Bd2gRBZogMFBrv01hisv5jLsv9nLAPIOMnjy8RDDyYctyAbFM2EJbRQw+aAWw/LzVgx7b+cwCHKqMhjJFCBLOzAR6+lXX84xnHjYyqAo5IUizkRCwIENQQckGSDGY4TVgAPEaraQr2a4/24bSuoExcJCfAEJihXkWDj3ZAKy9EJGaEo8T0QSxkjSwORsCAuDQCD+QILmD1A9kECEZgxDaEZhICIzGcIyEyOl2RkgwAAhkmC+eAm0TAAAAABJRU5ErkJggg==');
+          a.append(img);
+          $(this).append(a);
+        }
+      });
+
+      // hide elements of author/affiliations grid that have no value
+      function hide_byline_column(caption) {
+        $('d-byline').find('h3:contains("' + caption + '")').parent().css('visibility', 'hidden');
+      }
+
+      // affiliations
+      var have_affiliations = false;
+      for (var i = 0; i<front_matter.authors.length; ++i) {
+        var author = front_matter.authors[i];
+        if (author.affiliation !== "&nbsp;") {
+          have_affiliations = true;
+          break;
+        }
+      }
+      if (!have_affiliations)
+        $('d-byline').find('h3:contains("Affiliations")').css('visibility', 'hidden');
+
+      // published date
+      if (!front_matter.publishedDate)
+        hide_byline_column("Published");
+
+      // document object identifier
+      var doi = $('d-byline').find('h3:contains("DOI")');
+      var doi_p = doi.next().empty();
+      if (!front_matter.doi) {
+        // if we have a citation and valid citationText then link to that
+        if ($('#citation').length > 0 && front_matter.citationText) {
+          doi.html('Citation');
+          $('<a href="#citation"></a>')
+            .text(front_matter.citationText)
+            .appendTo(doi_p);
+        } else {
+          hide_byline_column("DOI");
+        }
+      } else {
+        $('<a></a>')
+           .attr('href', "https://doi.org/" + front_matter.doi)
+           .html(front_matter.doi)
+           .appendTo(doi_p);
+      }
+
+       // change plural form of authors/affiliations
+      if (front_matter.authors.length === 1) {
+        var grid = $('.authors-affiliations');
+        grid.children('h3:contains("Authors")').text('Author');
+        grid.children('h3:contains("Affiliations")').text('Affiliation');
+      }
+
+      // remove d-appendix and d-footnote-list local styles
+      $('d-appendix > style:first-child').remove();
+      $('d-footnote-list > style:first-child').remove();
+
+      // move appendix-bottom entries to the bottom
+      $('.appendix-bottom').appendTo('d-appendix').children().unwrap();
+      $('.appendix-bottom').remove();
+
+      // hoverable references
+      $('span.citation[data-cites]').each(function() {
+        var refHtml = $('#ref-' + $(this).attr('data-cites')).html();
+        window.tippy(this, {
+          allowHTML: true,
+          content: refHtml,
+          maxWidth: 500,
+          interactive: true,
+          interactiveBorder: 10,
+          theme: 'light-border',
+          placement: 'bottom-start'
+        });
+      });
+
+      // clear polling timer
+      clearInterval(tid);
+
+      // show body now that everything is ready
+      on_load_complete();
+    }
+
+    var tid = setInterval(distill_post_process, 50);
+    distill_post_process();
+
+  }
+
+  function init_downlevel() {
+
+    init_common();
+
+     // insert hr after d-title
+    $('.d-title').after($('<hr class="section-separator"/>'));
+
+    // check if we have authors
+    var front_matter = JSON.parse($("#distill-front-matter").html());
+    var have_authors = front_matter.authors && front_matter.authors.length > 0;
+
+    // manage byline/border
+    if (!have_authors)
+      $('.d-byline').remove();
+    $('.d-byline').after($('<hr class="section-separator"/>'));
+    $('.d-byline a').remove();
+
+    // remove toc
+    $('.d-contents').remove();
+
+    // move appendix elements
+    $('h1.appendix, h2.appendix').each(function(i, val) {
+      $(this).changeElementType('h3');
+    });
+    $('h3.appendix').each(function(i, val) {
+      $(this).nextUntil($('h1, h2, h3')).addBack().appendTo($('.d-appendix'));
+    });
+
+
+    // inject headers into references and footnotes
+    var refs_header = $('<h3></h3>');
+    refs_header.text('References');
+    $('#refs').prepend(refs_header);
+
+    var footnotes_header = $('<h3></h3');
+    footnotes_header.text('Footnotes');
+    $('.footnotes').children('hr').first().replaceWith(footnotes_header);
+
+    // move appendix-bottom entries to the bottom
+    $('.appendix-bottom').appendTo('.d-appendix').children().unwrap();
+    $('.appendix-bottom').remove();
+
+    // remove appendix if it's empty
+    if ($('.d-appendix').children().length === 0)
+      $('.d-appendix').remove();
+
+    // prepend separator above appendix
+    $('.d-appendix').before($('<hr class="section-separator" style="clear: both"/>'));
+
+    // trim code
+    $('pre>code').each(function(i, val) {
+      $(this).html($.trim($(this).html()));
+    });
+
+    // move posts-container right before article
+    $('.posts-container').insertBefore($('.d-article'));
+
+    $('body').addClass('downlevel');
+
+    on_load_complete();
+  }
+
+
+  function init_common() {
+
+    // jquery plugin to change element types
+    (function($) {
+      $.fn.changeElementType = function(newType) {
+        var attrs = {};
+
+        $.each(this[0].attributes, function(idx, attr) {
+          attrs[attr.nodeName] = attr.nodeValue;
+        });
+
+        this.replaceWith(function() {
+          return $("<" + newType + "/>", attrs).append($(this).contents());
+        });
+      };
+    })(jQuery);
+
+    // prevent underline for linked images
+    $('a > img').parent().css({'border-bottom' : 'none'});
+
+    // mark non-body figures created by knitr chunks as 100% width
+    $('.layout-chunk').each(function(i, val) {
+      var figures = $(this).find('img, .html-widget');
+      if ($(this).attr('data-layout') !== "l-body") {
+        figures.css('width', '100%');
+      } else {
+        figures.css('max-width', '100%');
+        figures.filter("[width]").each(function(i, val) {
+          var fig = $(this);
+          fig.css('width', fig.attr('width') + 'px');
+        });
+
+      }
+    });
+
+    // auto-append index.html to post-preview links in file: protocol
+    // and in rstudio ide preview
+    $('.post-preview').each(function(i, val) {
+      if (window.location.protocol === "file:")
+        $(this).attr('href', $(this).attr('href') + "index.html");
+    });
+
+    // get rid of index.html references in header
+    if (window.location.protocol !== "file:") {
+      $('.distill-site-header a[href]').each(function(i,val) {
+        $(this).attr('href', $(this).attr('href').replace("index.html", "./"));
+      });
+    }
+
+    // add class to pandoc style tables
+    $('tr.header').parent('thead').parent('table').addClass('pandoc-table');
+    $('.kable-table').children('table').addClass('pandoc-table');
+
+    // add figcaption style to table captions
+    $('caption').parent('table').addClass("figcaption");
+
+    // initialize posts list
+    if (window.init_posts_list)
+      window.init_posts_list();
+
+    // implmement disqus comment link
+    $('.disqus-comment-count').click(function() {
+      window.headroom_prevent_pin = true;
+      $('#disqus_thread').toggleClass('hidden');
+      if (!$('#disqus_thread').hasClass('hidden')) {
+        var offset = $(this).offset();
+        $(window).resize();
+        $('html, body').animate({
+          scrollTop: offset.top - 35
+        });
+      }
+    });
+  }
+
+  document.addEventListener('DOMContentLoaded', function() {
+    if (is_downlevel_browser())
+      init_downlevel();
+    else
+      window.addEventListener('WebComponentsReady', init_distill);
+  });
+
+  </script>
+
+  <!--/radix_placeholder_distill-->
+  <script src="machine-learning-explainability_files/header-attrs-2.9/header-attrs.js"></script>
+  <script src="machine-learning-explainability_files/jquery-1.11.3/jquery.min.js"></script>
+  <script src="machine-learning-explainability_files/popper-2.6.0/popper.min.js"></script>
+  <link href="machine-learning-explainability_files/tippy-6.2.7/tippy.css" rel="stylesheet" />
+  <link href="machine-learning-explainability_files/tippy-6.2.7/tippy-light-border.css" rel="stylesheet" />
+  <script src="machine-learning-explainability_files/tippy-6.2.7/tippy.umd.min.js"></script>
+  <script src="machine-learning-explainability_files/anchor-4.2.2/anchor.min.js"></script>
+  <script src="machine-learning-explainability_files/bowser-1.9.3/bowser.min.js"></script>
+  <script src="machine-learning-explainability_files/webcomponents-2.0.0/webcomponents.js"></script>
+  <script src="machine-learning-explainability_files/distill-2.2.21/template.v2.js"></script>
+  <!--radix_placeholder_site_in_header-->
+  <!--/radix_placeholder_site_in_header-->
+
+
+</head>
+
+<body>
+
+<!--radix_placeholder_front_matter-->
+
+<script id="distill-front-matter" type="text/json">
+{"title":"machine learning explainability","description":"feature importance, partial dependence plot, shap value 소개","authors":[{"author":"dondon","authorURL":{},"affiliation":"&nbsp;","affiliationURL":"#","orcidID":""}],"publishedDate":"2021-07-29T00:00:00.000+09:00","citationText":"dondon, 2021"}
+</script>
+
+<!--/radix_placeholder_front_matter-->
+<!--radix_placeholder_navigation_before_body-->
+<!--/radix_placeholder_navigation_before_body-->
+<!--radix_placeholder_site_before_body-->
+<!--/radix_placeholder_site_before_body-->
+
+<div class="d-title">
+<h1>machine learning explainability</h1>
+<!--radix_placeholder_categories-->
+<div class="dt-tags">
+<div class="dt=tag">Statistics</div>
+<div class="dt=tag">Machine learning</div>
+</div>
+<!--/radix_placeholder_categories-->
+<p><p>feature importance, partial dependence plot, shap value 소개</p></p>
+</div>
+
+<div class="d-byline">
+  dondon true 
+  
+<br/>07-29-2021
+</div>
+
+<div class="d-article">
+<div class="d-contents d-contents-float">
+<nav class="l-text toc figcaption" id="TOC">
+<h3>Contents</h3>
+<ul>
+<li><a href="#libraries">Libraries</a></li>
+<li><a href="#model-specific-method">Model-specific method</a>
+<ul>
+<li><a href="#random-forest">Random forest</a></li>
+<li><a href="#gini-importance-in-random-forest">Gini importance in random forest</a></li>
+<li><a href="#purmutation-importance-in-random-forest">Purmutation importance in random forest</a></li>
+</ul></li>
+<li><a href="#model-agnostic-method">Model-agnostic method</a>
+<ul>
+<li><a href="#permutation-importance">Permutation importance</a></li>
+<li><a href="#partial-dependence-plot">Partial dependence plot</a></li>
+<li><a href="#shapley-value">Shapley value</a></li>
+<li><a href="#dalex-패키지를-이용해서-shap을-그리는-방법">DALEX 패키지를 이용해서 SHAP을 그리는 방법</a></li>
+<li><a href="#fastshap-패키지를-이용한-방법">fastshap 패키지를 이용한 방법</a></li>
+</ul></li>
+</ul>
+</nav>
+</div>
+<p>머신러닝 모델을 해석하는 방법은 크게 두 가지 범주로 나뉜다. 특정 모델에 한정된 방법 (Model-specific method)과 모델에 상관없이 사용할 수 있는 방법(Model-agnostic method)이다. 각 방법론별로 대표적인 방법을 kaggle study 발표 자료를 준비하면서 정리해본다.</p>
+<h1 id="libraries">Libraries</h1>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://tidymodels.tidymodels.org'>tidymodels</a></span><span class='op'>)</span>
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://tidyverse.tidyverse.org'>tidyverse</a></span><span class='op'>)</span>
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://lubridate.tidyverse.org'>lubridate</a></span><span class='op'>)</span>
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://docs.ropensci.org/skimr/'>skimr</a></span><span class='op'>)</span>
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://magrittr.tidyverse.org'>magrittr</a></span><span class='op'>)</span>
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://r-datatable.com'>data.table</a></span><span class='op'>)</span>
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'>gridExtra</span><span class='op'>)</span>
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://github.com/koalaverse/vip/'>vip</a></span><span class='op'>)</span>
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://ModelOriented.github.io/DALEXtra/'>DALEXtra</a></span><span class='op'>)</span>
+
+<span class='fu'>theme_set</span><span class='op'>(</span><span class='fu'>theme_bw</span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span>
+</code></pre>
+</div>
+</div>
+<h1 id="model-specific-method">Model-specific method</h1>
+<p>Model-specific method는 random forest 모델만 다룬다.</p>
+<h2 id="random-forest">Random forest</h2>
+<figure>
+<img src="https://miro.medium.com/max/599/1*V1gaYbSzecaGE7s6WVIcsQ.png" alt="https://towardsdatascience.com/random-forest-learning-essential-understanding-1ca856a963cb" /><figcaption aria-hidden="true"><a href="https://towardsdatascience.com/random-forest-learning-essential-understanding-1ca856a963cb" class="uri">https://towardsdatascience.com/random-forest-learning-essential-understanding-1ca856a963cb</a></figcaption>
+</figure>
+<p>그림을 통해 random forest의 아이디어를 간단하게 설명하면 각 boostrap set(복원추출된 데이터) 별로 개별 tree를 하나씩 생성해서 나온 예측 결과를 aggregate해서 최종 예측 모델을 만드는 방법이다. 보통 random forest로 예측을 한 후에 <strong>feature importance plot</strong>을 통해 변수 중요도를 파악하게 된다. 변수 중요도가 어떻게 계산되는지 몰랐는데 이번 기회에 정리해본다.</p>
+<p>변수 중요도를 계산하는 방법은 크게 gini impurity를 이용한 방법과 permutation을 이용한 방법 2가지가 있다. 먼저 gini impurity를 이용한 방법부터 살펴보자.</p>
+<h2 id="gini-importance-in-random-forest">Gini importance in random forest</h2>
+<p>먼저 single tree에 대해 gini importance가 어떻게 계산되는지 보자.</p>
+<p><strong>Single tree 일 때</strong> <span class="math display">\[
+\begin{align*}
+&amp;VI_i = \sum_{n \in t, i_n = i} p(n) \boldsymbol{\Delta}_{gini}(n), \\
+&amp;i_n : \text{Sum over all nodes of the tree that use feature i} \\
+&amp;p(n) : \text{Probability of using that node for a sample data point} \\
+&amp;\boldsymbol{\Delta}_{gini}(n) : \text{Change in gini impurity at that node}
+\end{align*}
+\]</span></p>
+<p>각 feature별 gini importance 값은 해당 feature 노드의 gini impurity 값의 변화율을 이용해서 계산된다.</p>
+<p>밑에 예시를 통해 <span class="math inline">\(X_1\)</span>, <span class="math inline">\(X_2\)</span> 변수의 gini importance가 어떻게 계산되는지 알아보자.</p>
+<figure>
+<img src="image11.png" alt="https://www.youtube.com/watch?v=qC3PRqHqnfE" /><figcaption aria-hidden="true"><a href="https://www.youtube.com/watch?v=qC3PRqHqnfE" class="uri">https://www.youtube.com/watch?v=qC3PRqHqnfE</a></figcaption>
+</figure>
+<p>각 노드별로 gini impurity 값이 산출되었다고 했을 때, feature importance를 구하기 위해서는 <span class="math inline">\(\boldsymbol{\Delta_{gini}}\)</span>의 값을 구해야한다.</p>
+<p><span class="math inline">\(\boldsymbol{\Delta_{gini}}\)</span>를 어떻게 구하는지를 <span class="math inline">\(X_1\)</span> 변수를 기준으로 보면 기준노드의 gini impurity값과 split된 노드의 gini impurity값의 차이를 통해 계산된다. 정확히는 split된 노드에 해당하는 데이터의 비율을 gini impurity에 곱한 가중합과 기준 노드의 gini impurity 값의 차이를 통해 계산된다. <span class="math inline">\(X_1\)</span>의 <span class="math inline">\(\boldsymbol{\Delta_{gini}}\)</span>는 0.26으로 계산됨을 아래 이미지에서 확인할 수 있다.</p>
+<p>이렇게 기준 변수에 해당하는 노드의 <span class="math inline">\(\boldsymbol{\Delta_{gini}}\)</span>를 구했으면 마지막으로 <span class="math inline">\(p(n)\)</span> 즉, 해당 노드의 데이터의 비율을 가중합하면 개별 변수의 변수 중요도가 산출된다.</p>
+<p>정리하면 tree에서 가지를 뻗어나갈 때 해당 변수의 gini impurity가 얼마나 개선되었는지를 이용해서 변수 중요도를 산출한다고 볼 수 있다.</p>
+<p>이제 Random forest일 때로 돌아가보자.</p>
+<p><strong>Random forest일 때</strong></p>
+<p>Random forest일 때는 모델 특성상 각 부스트랩 샘플당 tree가 하나씩 나오게 되는데 각 tree에서 구한 <span class="math inline">\(VI_i\)</span> 값을 평균내주면 된다.</p>
+<p><span class="math display">\[
+\begin{align*}
+VI_i=\frac{1}{|B|} \sum_{t \in B} VI_i(t)
+\end{align*}
+\]</span></p>
+<h2 id="purmutation-importance-in-random-forest">Purmutation importance in random forest</h2>
+<p>위에서 설명한 gini importance는 gini impurity의 변화율을 활용해서 feature importance를 산출하는 방법이다. purmutation importance도 위의 gini importance와 방식은 동일하지만 gini 값이 아닌 다른 지표를 활용한다는 것에서만 차이가 있다.</p>
+<p>먼저 알고리즘에 대해 살펴보자(분류 문제일 때)</p>
+<p><span class="math display">\[
+\begin{align*}
+\text{within each tree } t \\
+&amp;VI^{(t)}(x_j) = \frac{\sum_{i=\bar B^{(t)}} I(y_i = \hat{y}_i^{(t)})}{|\bar B^{(t)}|} - \frac{\sum_{i=\bar B^{(t)}} I(y_i = \hat{y}_{i, \pi_j}^{(t)})}{|\bar B^{(t)}|}  \\
+&amp;\hat{y}_i^{(t)} = f^{(t)}(x_i) : \text{predicted class before permuting} \\
+&amp;\hat{y}_{i, \pi_j}^{(t)} = f^{(t)}(x_{i, \pi_j}) : \text{predicted class after permuting }X_j \\
+&amp;X_{i, \pi_j} = (x_{i,1}, \cdots, x_{i, j-1}, x_{\pi_j(i), j}, x_{i, j+1}, \cdots , x_{i, p}) \\ 
+&amp; \bar B^{(t)} = \text{out of bag sample} \\
+\text{over all trees:} \\ 
+&amp;\text{1. row importance : } VI(x_j) = \frac{\sum_{t = 1}^{ntree}VI^{(t)}(x_j)}{ntree} \\ 
+&amp;\text{2. scale importance : } sVI(x_j) = \frac{VI(x_j)}{\frac{\hat{\sigma}}{\sqrt ntree}} \\ 
+\end{align*}
+\]</span> 수식을 보면 개별 tree에 대해서 <span class="math inline">\(t=1\)</span>일 때 <span class="math inline">\(\sum_{i = B} I(y_i = \hat{y_i})\)</span>와 <span class="math inline">\(\sum_{i = B} I(y_i = \hat{y_i, \pi_j})\)</span> 의 차이를 통해 feature importance 값이 계산되고, 각 부스트랩 샘플에 해당하는 tree당 계산된 feature importance 값을 평균내주면 random forest에서의 feature importance 값이 계산된다. 여기서 purmutation 개념이 나오는데 아이디어는 간단하다. feature importance를 구하고자 하는 target variable만 다른 변수의 값은 고정한 채로 행 단위로 shuffling을 진행한다. 이렇게 무작위로 shuffling 했을 때의 예측값과 shuffling하지 않았을 때의 예측값의 차이를 이용해서 변수 중요도를 산출한다(permutation의 아이디어는 밑에 더 설명한다).</p>
+<p><strong>참고</strong></p>
+<p><a href="https://www.zeileis.org/papers/Lifestat-2008.pdf" class="uri">https://www.zeileis.org/papers/Lifestat-2008.pdf</a></p>
+<p><strong>R code</strong></p>
+<p>set_engine에 옵션으로 permutation or impurity을 지정해주면 된다.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='st'>"ames"</span><span class='op'>)</span>
+<span class='va'>ames_train</span> <span class='op'>&lt;-</span> <span class='va'>ames</span> <span class='op'>%&gt;%</span>
+    <span class='fu'>transmute</span><span class='op'>(</span>Sale_Price <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/Log.html'>log10</a></span><span class='op'>(</span><span class='va'>Sale_Price</span><span class='op'>)</span>,
+              Gr_Liv_Area <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/numeric.html'>as.numeric</a></span><span class='op'>(</span><span class='va'>Gr_Liv_Area</span><span class='op'>)</span>,
+              <span class='va'>Year_Built</span>, <span class='va'>Bldg_Type</span><span class='op'>)</span>
+
+<span class='va'>rf_model</span> <span class='op'>&lt;-</span> 
+    <span class='fu'>rand_forest</span><span class='op'>(</span>trees <span class='op'>=</span> <span class='fl'>1000</span><span class='op'>)</span> <span class='op'>%&gt;%</span> 
+    <span class='fu'>set_engine</span><span class='op'>(</span><span class='st'>"ranger"</span>, importance <span class='op'>=</span> <span class='st'>'impurity'</span><span class='op'>)</span> <span class='op'>%&gt;%</span> 
+    <span class='fu'>set_mode</span><span class='op'>(</span><span class='st'>"regression"</span><span class='op'>)</span>
+
+<span class='va'>rf_wflow</span> <span class='op'>&lt;-</span> 
+    <span class='fu'>workflow</span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span> 
+    <span class='fu'>add_formula</span><span class='op'>(</span>
+        <span class='va'>Sale_Price</span> <span class='op'>~</span> <span class='va'>Gr_Liv_Area</span> <span class='op'>+</span> <span class='va'>Year_Built</span> <span class='op'>+</span> <span class='va'>Bldg_Type</span><span class='op'>)</span> <span class='op'>%&gt;%</span> 
+    <span class='fu'>add_model</span><span class='op'>(</span><span class='va'>rf_model</span><span class='op'>)</span> 
+
+<span class='va'>rf_fit</span> <span class='op'>&lt;-</span> <span class='va'>rf_wflow</span> <span class='op'>%&gt;%</span> <span class='fu'>fit</span><span class='op'>(</span>data <span class='op'>=</span> <span class='va'>ames_train</span><span class='op'>)</span>
+
+<span class='va'>rf_fit</span> <span class='op'>%&gt;%</span> 
+  <span class='fu'>extract_fit_parsnip</span><span class='op'>(</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>parsnip model object
+
+Fit time:  770ms 
+Ranger result
+
+Call:
+ ranger::ranger(x = maybe_data_frame(x), y = y, num.trees = ~1000,      importance = ~&quot;impurity&quot;, num.threads = 1, verbose = FALSE,      seed = sample.int(10^5, 1)) 
+
+Type:                             Regression 
+Number of trees:                  1000 
+Sample size:                      2930 
+Number of independent variables:  3 
+Mtry:                             1 
+Target node size:                 5 
+Variable importance mode:         impurity 
+Splitrule:                        variance 
+OOB prediction error (MSE):       0.008707718 
+R squared (OOB):                  0.7220957 </code></pre>
+</div>
+<p><strong>Gini importance plot</strong></p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>rf_fit</span> <span class='op'>%&gt;%</span> 
+  <span class='fu'>extract_fit_parsnip</span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span> 
+  <span class='fu'><a href='https://rdrr.io/pkg/vip/man/vip.html'>vip</a></span><span class='op'>(</span>geom <span class='op'>=</span> <span class='st'>'point'</span><span class='op'>)</span>
+</code></pre>
+</div>
+<p><img src="machine-learning-explainability_files/figure-html5/unnamed-chunk-2-1.png" width="624" /></p>
+</div>
+<h1 id="model-agnostic-method">Model-agnostic method</h1>
+<h2 id="permutation-importance">Permutation importance</h2>
+<p>permutation importance는 <strong>모델을 학습시킨 이후(post-hoc)</strong> 특정 변수의 관측치를 shuffle했을 때의 예측력을 비교해서 feature importance를 계산하는 방법이다(random forest의 permutation importance도 aggregation이 추가된 것 외에 동일하다).</p>
+<p>알고리즘 특성상 특정 모델에 국한된 방법이 아니라 어떤 모델이든 적용할 수 있는 방법이다. permutation importance의 기본 아이디어에 대해 살펴보자.</p>
+<p><strong>Example</strong></p>
+<figure>
+<img src="image19.png" alt="https://www.kaggle.com/dansbecker/permutation-importance" /><figcaption aria-hidden="true"><a href="https://www.kaggle.com/dansbecker/permutation-importance" class="uri">https://www.kaggle.com/dansbecker/permutation-importance</a></figcaption>
+</figure>
+<p>사람의 10살 때의 정보를 이용해서 10년 후 20살 때의 키를 예측하려고 한다.</p>
+<p>직관적으로 변수 중 10살 때의 키에 관한 변수는 20살 때의 키를 예측하는데 중요한 변수이고, 10살 때 갖고 있는 양말의 수는 20살 때의 키를 예측하는데 중요한 변수가 아니다.</p>
+<p>이러한 직관에서 출발하면 다음과 같은 질문을 해볼 수 있다.</p>
+<p>validation set에서 특정 변수의 관측치를 shuffle하고, 나머지 변수를 고정시키면 예측 정확도에 어떤 영향을 미칠까?</p>
+<p>특정 한 변수의 관측치만 행방향으로 무작위로 섞기 때문에 당연히 모델의 예측력은 감소하게 될 것이다. 다만 변수별로 정도의 차이가 있을 수 있다. 즉, 위의 예시로 보면 10살 때의 키에 관한 변수를 shuffle 했을 때 모델의 예측력은 많이 떨어지지만, 10살 때 갖고 있는 양말의 수에 관한 변수를 shuffle 했을 때는 모델의 예측력에 큰 차이가 없을 수 있다. 이러한 직관이 purmutaion importance의 아이디어이다.</p>
+<p><strong>Process</strong></p>
+<ol type="1">
+<li>학습이 끝난 모델 세팅</li>
+<li>한 변수의 관측치를 shuffling한 데이터를 이용해서 동일하게 예측을 진행</li>
+<li>예측치와 실제값의 차이인 손실함수를 이용해서 shuffling 후에 얼마나 loss가 커졌는지 계산</li>
+<li>loss의 증감을 이용해서 feature importance를 계산</li>
+<li>모든 변수에 대해 반복</li>
+</ol>
+<p><strong>장점</strong></p>
+<ul>
+<li><p>계산 속도가 빠름</p>
+<ul>
+<li>특정 변수를 제거하고 재학습을 시키는 것이 아니라 특정 변수 하나를 permutation하는 것이므로 상대적으로 계산량 감소</li>
+</ul></li>
+<li><p>사용 범위가 넓고, 직관적임</p></li>
+<li><p>상대적으로 일관된 feature importance를 측정할 수 있음</p></li>
+</ul>
+<p><strong>단점</strong></p>
+<ul>
+<li><p>무작위로 shuffling 하다보면 비현실적인 값이 나올 수도 있음</p></li>
+<li><p>weight의 구간을 이용한 해석 필요</p></li>
+</ul>
+<p><strong>R code</strong></p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>svm_spec</span> <span class='op'>&lt;-</span> <span class='fu'>svm_poly</span><span class='op'>(</span>degree <span class='op'>=</span> <span class='fl'>1</span>, cost <span class='op'>=</span> <span class='fl'>1</span><span class='op'>/</span><span class='fl'>4</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>set_engine</span><span class='op'>(</span><span class='st'>"kernlab"</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>set_mode</span><span class='op'>(</span><span class='st'>"regression"</span><span class='op'>)</span>
+
+<span class='va'>svm_wflow</span> <span class='op'>&lt;-</span> 
+    <span class='fu'>workflow</span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span> 
+    <span class='fu'>add_formula</span><span class='op'>(</span>
+        <span class='va'>Sale_Price</span> <span class='op'>~</span> <span class='va'>Gr_Liv_Area</span> <span class='op'>+</span> <span class='va'>Year_Built</span> <span class='op'>+</span> <span class='va'>Bldg_Type</span><span class='op'>)</span> <span class='op'>%&gt;%</span> 
+    <span class='fu'>add_model</span><span class='op'>(</span><span class='va'>svm_spec</span><span class='op'>)</span>
+
+<span class='va'>svm_fit</span> <span class='op'>&lt;-</span> <span class='va'>svm_wflow</span> <span class='op'>%&gt;%</span> <span class='fu'>fit</span><span class='op'>(</span>data <span class='op'>=</span> <span class='va'>ames_train</span><span class='op'>)</span>
+
+<span class='va'>svm_fit</span> <span class='op'>%&gt;%</span> 
+  <span class='fu'>extract_fit_parsnip</span><span class='op'>(</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>parsnip model object
+
+Fit time:  680ms 
+Support Vector Machine object of class &quot;ksvm&quot; 
+
+SV type: eps-svr  (regression) 
+ parameter : epsilon = 0.1  cost C = 0.25 
+
+Polynomial kernel function. 
+ Hyperparameters : degree =  1  scale =  1  offset =  1 
+
+Number of Support Vectors : 2344 
+
+Objective Function Value : -204.8838 
+Training error : 0.278962 </code></pre>
+</div>
+<p><strong>permutation importance plot</strong></p>
+<p>tidymodels는 vip 패키지와 연동해서 feature importance plot을 그릴 수 있다. method = “permute”를 지정해주는 것이 중요하다.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>svm_fit</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>extract_fit_parsnip</span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/pkg/vip/man/vip.html'>vip</a></span><span class='op'>(</span>method <span class='op'>=</span> <span class='st'>"permute"</span>, 
+      target <span class='op'>=</span> <span class='st'>"Sale_Price"</span>, metric <span class='op'>=</span> <span class='st'>"rsquared"</span>,
+      pred_wrapper <span class='op'>=</span> <span class='fu'>kernlab</span><span class='fu'>::</span><span class='va'>predict</span>, train <span class='op'>=</span> <span class='va'>ames_train</span><span class='op'>)</span>
+</code></pre>
+</div>
+<p><img src="machine-learning-explainability_files/figure-html5/unnamed-chunk-4-1.png" width="624" /></p>
+</div>
+<p>permutation을 여러번 반복해서 평균을 낼 수도 있다.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>svm_fit</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>extract_fit_parsnip</span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/pkg/vip/man/vip.html'>vip</a></span><span class='op'>(</span>method <span class='op'>=</span> <span class='st'>"permute"</span>, 
+      target <span class='op'>=</span> <span class='st'>"Sale_Price"</span>, metric <span class='op'>=</span> <span class='st'>"rsquared"</span>, nsim <span class='op'>=</span> <span class='fl'>20</span>, all_permutations <span class='op'>=</span> <span class='cn'>TRUE</span>, 
+      geom <span class='op'>=</span> <span class='st'>"boxplot"</span>,
+      mapping <span class='op'>=</span> <span class='fu'>aes_string</span><span class='op'>(</span>fill <span class='op'>=</span> <span class='st'>"Variable"</span><span class='op'>)</span>,
+      pred_wrapper <span class='op'>=</span> <span class='fu'>kernlab</span><span class='fu'>::</span><span class='va'>predict</span>, train <span class='op'>=</span> <span class='va'>ames_train</span><span class='op'>)</span>
+</code></pre>
+</div>
+<p><img src="machine-learning-explainability_files/figure-html5/unnamed-chunk-5-1.png" width="624" /></p>
+</div>
+<p><strong>참고</strong> <a href="https://koalaverse.github.io/vip/articles/vip.html" class="uri">https://koalaverse.github.io/vip/articles/vip.html</a></p>
+<h2 id="partial-dependence-plot">Partial dependence plot</h2>
+<p>feature importance는 어떤 변수가 예측에 큰 영향을 미쳤는지를 보여준다. 반면에 partial dependence plot은 변수가 target variable에 어떤 영향을 미쳤는지를 보여준다.</p>
+<p>partial dependence plot은 pumutation importance와 마찬가지로 <strong>모델을 학습한 후(post-hoc)</strong> 계산된다.</p>
+<p>먼저 예제를 살펴보자.</p>
+<p><strong>Example</strong></p>
+<ul>
+<li><p>모든 주택에 관한 변수를 통제할 때, 위·경도는 주택가격에 어떤 영향을 미치는가?</p></li>
+<li><p>두 그룹의 건강에 대한 예측 결과의 차이는 식단 때문인가? 아니면 다른 요인 때문인가?</p></li>
+</ul>
+<p>이런 질문에 간접적인 답을 할 수 있는 방법이 partial dependence plot이다. 즉 개별 변수별로 그래프를 그려서 target variable에 어떤 영향을 미쳤는지 설명할 수 있다.</p>
+<p><strong>Process</strong></p>
+<p><span class="math display">\[
+\begin{align*}
+\hat{f}_{x_s}(x_s) = E_{x_c}[\hat{f}(x_s, x_c)] &amp;= \int \hat{f}(x_s, x_c)dP(x_c) \\
+&amp;\approx \frac{1}{n} \sum_{i=1}^n \hat{f}(x_s, x_c^{(i)})\quad  \text{using Monte Carlo}\\
+&amp;\hat{f} : \text{학습이 완료된 임의의 모델} \\ 
+&amp; x_s : \text{plot하고자 하는 변수} \\
+&amp; x_c : x_s\text{ 외 나머지 변수}
+\end{align*}
+\]</span></p>
+<p><span class="math inline">\(\hat{f}\)</span>를 안다고 할 때, <span class="math inline">\(x_{c}^{(i)}\)</span> 는 데이터셋으로 부터 주어진 값이므로 <span class="math inline">\(x_s\)</span>에 값을 넣어서 값을 얻을 수 있다. <span class="math inline">\(\hat{f}\)</span>는 학습이 완료된 모델이지만 적분이 불가능하므로 monte carlo integration을 이용해서 근사적으로 계산한다.</p>
+<p><strong>즉, 관심변수 외에 다른 변수들의 값이 고정되어 있을 때 관심 변수 값에 따라 모델의 예측값이 어떻게 변화하는지를 보는 것이다.</strong></p>
+<p>partial dependence plot은 회귀분석에서 회귀계수를 해석하는 방식과 동일하며, 관심 변수와 관심변수 외의 변수들 간의 <strong>독립</strong>을 가정하는 것 또한 동일하다.</p>
+<p><strong>장점</strong></p>
+<ul>
+<li><p>해석이 직관적임</p></li>
+<li><p>상대적으로 구현하기 쉬움</p></li>
+</ul>
+<p><strong>단점</strong></p>
+<ul>
+<li><p>2차원으로 표현되기 때문에 변수 2개에 대해서만 해석 가능</p></li>
+<li><p>계산량이 많음</p></li>
+<li><p>독립성 가정</p></li>
+</ul>
+<p><strong>R code</strong></p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>ames</span><span class='op'>)</span>
+<span class='va'>ames_train</span> <span class='op'>&lt;-</span> <span class='va'>ames</span> <span class='op'>%&gt;%</span>
+    <span class='fu'>transmute</span><span class='op'>(</span>Sale_Price <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/Log.html'>log10</a></span><span class='op'>(</span><span class='va'>Sale_Price</span><span class='op'>)</span>,
+              Gr_Liv_Area <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/numeric.html'>as.numeric</a></span><span class='op'>(</span><span class='va'>Gr_Liv_Area</span><span class='op'>)</span>, 
+              <span class='va'>Year_Built</span>, <span class='va'>Bldg_Type</span><span class='op'>)</span>
+
+<span class='va'>rf_model</span> <span class='op'>&lt;-</span> 
+    <span class='fu'>rand_forest</span><span class='op'>(</span>trees <span class='op'>=</span> <span class='fl'>1000</span><span class='op'>)</span> <span class='op'>%&gt;%</span> 
+    <span class='fu'>set_engine</span><span class='op'>(</span><span class='st'>"ranger"</span><span class='op'>)</span> <span class='op'>%&gt;%</span> 
+    <span class='fu'>set_mode</span><span class='op'>(</span><span class='st'>"regression"</span><span class='op'>)</span>
+
+<span class='va'>rf_wflow</span> <span class='op'>&lt;-</span> 
+    <span class='fu'>workflow</span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span> 
+    <span class='fu'>add_formula</span><span class='op'>(</span>
+        <span class='va'>Sale_Price</span> <span class='op'>~</span> <span class='va'>Gr_Liv_Area</span> <span class='op'>+</span> <span class='va'>Year_Built</span> <span class='op'>+</span> <span class='va'>Bldg_Type</span><span class='op'>)</span> <span class='op'>%&gt;%</span> 
+    <span class='fu'>add_model</span><span class='op'>(</span><span class='va'>rf_model</span><span class='op'>)</span> 
+
+<span class='va'>rf_fit</span> <span class='op'>&lt;-</span> <span class='va'>rf_wflow</span> <span class='op'>%&gt;%</span> <span class='fu'>fit</span><span class='op'>(</span>data <span class='op'>=</span> <span class='va'>ames_train</span><span class='op'>)</span>
+</code></pre>
+</div>
+</div>
+<p><strong>Partial Dependence Plot</strong> DALEXtra 패키지를 이용해서 partial dependence plot을 그릴 수 있다. model_profile 함수 안에 variable = ""에 그리고 싶은 변수를 지정하면 된다. group별 plot을 보고 싶으면 group 옵션을 선택할 수 있다.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://ModelOriented.github.io/DALEXtra/'>DALEXtra</a></span><span class='op'>)</span>
+
+<span class='va'>explainer_rf</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://ModelOriented.github.io/DALEXtra/reference/explain_tidymodels.html'>explain_tidymodels</a></span><span class='op'>(</span>
+    <span class='va'>rf_fit</span>, 
+    data <span class='op'>=</span> <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='va'>ames_train</span>, <span class='op'>-</span><span class='va'>Sale_Price</span><span class='op'>)</span>, 
+    y <span class='op'>=</span> <span class='va'>ames_train</span><span class='op'>$</span><span class='va'>Sale_Price</span>,
+    label <span class='op'>=</span> <span class='st'>"random forest"</span>
+<span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>Preparation of a new explainer is initiated
+  -&gt; model label       :  random forest 
+  -&gt; data              :  2930  rows  3  cols 
+  -&gt; data              :  tibble converted into a data.frame 
+  -&gt; target variable   :  2930  values 
+  -&gt; predict function  :  yhat.workflow  will be used ( [33m default [39m )
+  -&gt; predicted values  :  No value for predict function target column. ( [33m default [39m )
+  -&gt; model_info        :  package tidymodels , ver. 0.1.3 , task regression ( [33m default [39m ) 
+  -&gt; predicted values  :  numerical, min =  4.907879 , mean =  5.220641 , max =  5.507599  
+  -&gt; residual function :  difference between y and yhat ( [33m default [39m )
+  -&gt; residuals         :  numerical, min =  -0.8210589 , mean =  -3.0817e-07 , max =  0.3742423  
+ [32m A new explainer has been created! [39m </code></pre>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>pdp_rf</span> <span class='op'>&lt;-</span> <span class='fu'>model_profile</span><span class='op'>(</span><span class='va'>explainer_rf</span>, N <span class='op'>=</span> <span class='cn'>NULL</span>, 
+                        variables <span class='op'>=</span> <span class='st'>"Gr_Liv_Area"</span>, groups <span class='op'>=</span> <span class='st'>"Bldg_Type"</span><span class='op'>)</span>
+
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>pdp_rf</span><span class='op'>)</span>
+</code></pre>
+</div>
+<p><img src="machine-learning-explainability_files/figure-html5/unnamed-chunk-7-1.png" width="624" /></p>
+</div>
+<h2 id="shapley-value">Shapley value</h2>
+<p>Shapley value는 Lloyd Shapley가 정의한 협동적 게임이론을 근거로 한 방법론이다. 협동적 게임이론은 몰라도 되는 것 같다…</p>
+<figure>
+<img src="image18.png" alt="https://www.youtube.com/watch?v=9haIOplEIGM&amp;t=152s" /><figcaption aria-hidden="true"><a href="https://www.youtube.com/watch?v=9haIOplEIGM&amp;t=152s" class="uri">https://www.youtube.com/watch?v=9haIOplEIGM&amp;t=152s</a></figcaption>
+</figure>
+<p>그림을 통해 보면 4명이 팀을 이뤄서 kaggle competition에 우승을 했다고 해보자. 우승 상금을 분배해야하는데 어떻게 하면 공정하게 분배할 수 있을까?</p>
+<p>가장 공평한 방법은 개별 팀원의 기여도를 통해서 우승에 크게 기여한 사람에게 큰 금액을, 우승에 작게 기여한 사람에게 적은 금액을 부여하는 것이다. 여기서 한 가지 문제는 기여도를 어떻게 측정할 것인지에 대한 측도가 필요하다. 가장 쉬운 방법은 한명이 빠졌을 때의 상금과 4명이 우승했을 때의 상금을 비교하는 것이다.</p>
+<p>그림으로 예를 들면 파란색 팀원은 도메인 전문가로 팀에 상당한 기여를 했다고 가정해보자. 파란색 팀원이 빠졌을 경우 팀은 3등으로 순위가 떨어져 상금을 3000 달러 밖에 수령하지 못한다고 가정해보면 파란색 팀원은 대략 7000달러의 기여도를 갖고 있다고 볼 수 있다.</p>
+<p>이렇게 개별 팀원이 빠졌을 때와 빠지지 않았을 때를 비교해서 쉽게 기여도를 계산할 수 있지만, 문제점은 개별 팀원 사이에 관계를 고려하지 못하는 것이다.</p>
+<p>shapley value는 이러한 문제를 극복하기 위해서 개별 팀원이 빠졌을 때와 빠지지 않았을 때의 모든 경우의 수를 고려해서 개별 팀원의 기여도를 계산하는 방식을 채택한다.</p>
+<figure>
+<img src="image12.png" alt="https://www.youtube.com/watch?v=9haIOplEIGM&amp;t=152s" /><figcaption aria-hidden="true"><a href="https://www.youtube.com/watch?v=9haIOplEIGM&amp;t=152s" class="uri">https://www.youtube.com/watch?v=9haIOplEIGM&amp;t=152s</a></figcaption>
+</figure>
+<p>머신러닝 모델로 일반화를 하면 팀 내의 개별 팀원은 feature로 볼 수 있고, Game은 Black box 모델, Payout은 prediction 값으로 볼 수 있다. 정리하면 shapley value는 각 feature가 예측에 얼마나 기여를 했는지 측정하는 측도로 볼 수 있고, 이 측도를 구하기 위해서 모든 하위 부분집합의 값을 계산하는 방법을 채택한다. 이를 <strong>marginal contribution</strong> 이라고 하며, 각 feature 별로 계산된 <strong>marginal contribution</strong>을 평균내서 최종 shapley value 값을 산출한다.</p>
+<p><strong>process</strong></p>
+<p><span class="math display">\[
+\begin{align*}
+\phi_j(val) &amp;= \sum_{S \subseteq\{x_1, \cdots, x_p\}\setminus \{x_j\}} \frac{|S|!(P-|S|-1)!}{p!}(val(S \cup\{x_j\})-val(S)) \\
+&amp;S : \text{subset of the features} \\
+&amp;p : \text{the number of features} \\
+&amp;x : \text{the vector of feature values of instance to be explained} \\
+&amp;val : \text{prediction for feature values}
+\end{align*}
+\]</span></p>
+<p>shapley value를 구하는 순서는 간략하게 다음과 같다.</p>
+<ol type="1">
+<li>기준변수를 제외했을 때와 제외하지 않았을 때 예측값의 차이를 계산</li>
+<li>가중치 계산</li>
+<li>가중합 계산</li>
+</ol>
+<p><strong>Example</strong></p>
+<p>위의 kaggle competition 예제로 다시 돌아가서 kaggle competition에 참여한 3명의 player가 있다고 가정해보자. 여기서 각 player에 대한 상금의 기여분에 대한 경우의 수는 다음과 같다.</p>
+<p><span class="math display">\[
+\begin{align*}
+&amp;val(1) = 100, \, val(2) = 125, \, val(3) = 50, \\
+&amp;val(1, 2) = 270, \, val(1, 3) = 375, \, val(2, 3) = 350, \\
+&amp;\, val(1, 2, 3) = 500
+\end{align*}
+\]</span></p>
+<p>즉, 3명의 player가 모두 참여했을 때는 500$를 수령할 수 있지만, 1번 player만 참여했을 때는 100$, 2번 player만 참여했을 때는 125$, 1번과 2번 player가 동시에 참여했을 때는 270$ .. etc 으로 해석할 수 있다(실제 ML model에서 val은 prediction value이므로 주어진 값이다).</p>
+<p>이제 각 player별 <strong>marginal contribution</strong>을 계산할 수 있는데 아래 table과 같이 계산된다.</p>
+<table>
+<caption><a href="http://faculty.econ.ucdavis.edu/faculty/bonanno/teaching/122/Shapley.pdf" class="uri">http://faculty.econ.ucdavis.edu/faculty/bonanno/teaching/122/Shapley.pdf</a></caption>
+<colgroup>
+<col style="width: 5%" />
+<col style="width: 8%" />
+<col style="width: 15%" />
+<col style="width: 29%" />
+<col style="width: 40%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Probability</th>
+<th>combination</th>
+<th>1’s marginal contribution</th>
+<th>2’s marginal contribution</th>
+<th>3’s marginal contribution</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><span class="math display">\[
+ \frac{1}{6}
+ \]</span></td>
+<td><p>first 1, then2, then3:</p>
+<p><span class="math display">\[
+               123
+               \]</span></p></td>
+<td><span class="math display">\[
+                             val(1) = 100
+                             \]</span></td>
+<td><span class="math display">\[
+                                                         val(1,2)-val(1) = 170
+                                                         \]</span></td>
+<td><span class="math display">\[
+                                                                                     val(1,2,3)-val(1,2) = 230
+                                                                                     \]</span></td>
+</tr>
+<tr class="even">
+<td><span class="math display">\[
+ \frac{1}{6}
+ \]</span></td>
+<td><span class="math display">\[
+               132
+               \]</span></td>
+<td><span class="math display">\[
+                             val(1)=100
+                             \]</span></td>
+<td><span class="math display">\[
+                                                         val(1,2,3)=val(1,3)=125
+                                                         \]</span></td>
+<td><span class="math display">\[
+                                                                                     val(1,3)-val(1)=275
+                                                                                     \]</span></td>
+</tr>
+<tr class="odd">
+<td><span class="math display">\[
+ \frac{1}{6}
+ \]</span></td>
+<td><span class="math display">\[
+               213
+               \]</span></td>
+<td><span class="math display">\[
+val(1,2)-val(2)=145
+\]</span></td>
+<td><span class="math display">\[
+val(2)=125
+\]</span></td>
+<td><span class="math display">\[
+val(1,2,3)-val(1,2)=230
+\]</span></td>
+</tr>
+<tr class="even">
+<td><span class="math display">\[
+ \frac{1}{6}
+ \]</span></td>
+<td><span class="math display">\[
+               231
+               \]</span></td>
+<td><span class="math display">\[
+val(1,2,3)-val(2,3)=150
+\]</span></td>
+<td><span class="math display">\[
+val(2)=125
+\]</span></td>
+<td><span class="math display">\[
+val(2,3)-val(2)=225
+\]</span></td>
+</tr>
+<tr class="odd">
+<td><span class="math display">\[
+ \frac{1}{6}
+ \]</span></td>
+<td><span class="math display">\[
+               312
+               \]</span></td>
+<td><span class="math display">\[
+val(1,3)-val(3)=375
+\]</span></td>
+<td><span class="math display">\[
+val(1,2,3)-val(1,3)=125
+\]</span></td>
+<td><span class="math display">\[
+val(3)=50
+\]</span></td>
+</tr>
+<tr class="even">
+<td><span class="math display">\[
+ \frac{1}{6}
+ \]</span></td>
+<td><span class="math display">\[
+               321
+               \]</span></td>
+<td><span class="math display">\[
+val(1,2,3)-val(2,3)=150
+\]</span></td>
+<td><span class="math display">\[
+val(2,3)-val(3)=300
+\]</span></td>
+<td><span class="math display">\[
+val(3)=50
+\]</span></td>
+</tr>
+</tbody>
+</table>
+<p>각 변수별 expected marginal contribution, 즉 shapley value를 구해보면 다음과 같다.</p>
+<p><span class="math inline">\(\phi_1(val)\)</span>(1’s expected marginal contribution) : <span class="math inline">\(\frac{1}{6}(100+100+145+150+325+150)=\frac{970}{6}\)</span></p>
+<p><span class="math inline">\(\phi_2(val)\)</span>(2’s expected marginal contribution) : <span class="math inline">\(\frac{1}{6}(170+125+125+125+125+300)=\frac{970}{6}\)</span></p>
+<p><span class="math inline">\(\phi_3(val)\)</span>(3’s expected marginal contribution) : <span class="math inline">\(\frac{1}{6}(230+275+230+225+50+50)=\frac{1060}{6}\)</span></p>
+<p>1’s, 2’s, 3’s expected marginal contribution을 모두 합하면 500이 되고, 이 값은 <span class="math inline">\(val(1,2,3)\)</span> 값과 같다.</p>
+<p><span class="math inline">\(\frac{970+970+1060}{6}=\frac{3000}{6} = 500=val(1,2,3)\)</span></p>
+<p><strong>R code</strong></p>
+<p><strong>package: fastshap, DALEX, iml, shapper등이 있음</strong></p>
+<h2 id="dalex-패키지를-이용해서-shap을-그리는-방법">DALEX 패키지를 이용해서 SHAP을 그리는 방법</h2>
+<ul>
+<li><p>tidymodels workflow를 동일하게 수행</p></li>
+<li><p>fit함수의 결과를 변수에 저장</p></li>
+</ul>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://dalex.drwhy.ai'>DALEX</a></span><span class='op'>)</span>
+<span class='va'>titanic</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://rdrr.io/r/base/NA.html'>is.na</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://rdrr.io/r/base/colSums.html'>colSums</a></span><span class='op'>(</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>  gender      age    class embarked  country     fare    sibsp 
+       0        2        0        0       81       26       10 
+   parch survived 
+      10        0 </code></pre>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>titanic_rec</span> <span class='op'>&lt;-</span> <span class='va'>titanic</span> <span class='op'>%&gt;%</span> 
+  <span class='fu'>recipe</span><span class='op'>(</span><span class='va'>survived</span> <span class='op'>~</span> <span class='va'>class</span> <span class='op'>+</span> <span class='va'>gender</span> <span class='op'>+</span> <span class='va'>age</span> <span class='op'>+</span> 
+                <span class='va'>sibsp</span> <span class='op'>+</span> <span class='va'>parch</span> <span class='op'>+</span> <span class='va'>fare</span> <span class='op'>+</span> <span class='va'>embarked</span><span class='op'>)</span> <span class='op'>%&gt;%</span> 
+  <span class='fu'>step_bagimpute</span><span class='op'>(</span><span class='va'>age</span>, <span class='va'>fare</span>, <span class='va'>sibsp</span>, <span class='va'>parch</span><span class='op'>)</span>
+  
+<span class='va'>rf_model</span> <span class='op'>&lt;-</span> 
+    <span class='fu'>rand_forest</span><span class='op'>(</span>trees <span class='op'>=</span> <span class='fl'>1000</span><span class='op'>)</span> <span class='op'>%&gt;%</span> 
+    <span class='fu'>set_engine</span><span class='op'>(</span><span class='st'>"ranger"</span><span class='op'>)</span> <span class='op'>%&gt;%</span> 
+    <span class='fu'>set_mode</span><span class='op'>(</span><span class='st'>"classification"</span><span class='op'>)</span>
+
+<span class='va'>rf_wflow</span> <span class='op'>&lt;-</span> 
+  <span class='fu'>workflow</span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span> 
+  <span class='fu'>add_model</span><span class='op'>(</span><span class='va'>rf_model</span><span class='op'>)</span> <span class='op'>%&gt;%</span> 
+  <span class='fu'>add_recipe</span><span class='op'>(</span><span class='va'>titanic_rec</span><span class='op'>)</span>
+  
+
+<span class='va'>rf_fit</span> <span class='op'>&lt;-</span> <span class='va'>rf_wflow</span> <span class='op'>%&gt;%</span> <span class='fu'>fit</span><span class='op'>(</span>data <span class='op'>=</span> <span class='va'>titanic</span> <span class='op'>%&gt;%</span> <span class='fu'>select</span><span class='op'>(</span><span class='op'>-</span><span class='va'>country</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>rf_ex_fit</span> <span class='op'>&lt;-</span> <span class='va'>rf_fit</span> <span class='op'>%&gt;%</span> <span class='fu'>extract_fit_parsnip</span><span class='op'>(</span><span class='op'>)</span>
+</code></pre>
+</div>
+</div>
+<ul>
+<li><p>explain()</p>
+<ul>
+<li><p>model : fitting 완료된 모델</p></li>
+<li><p>data : target 변수 제외한 데이터프레임</p></li>
+<li><p>y : target 변수</p></li>
+</ul></li>
+<li><p>다른 라이브러리를 이용해서 모델을 fitting 했을 때 구조가 서로 다를 수 있으므로 explain 함수를 이용해서 균일한 인터페이스를 갖는 객체로 만들어줌</p></li>
+<li><p>shapley value가 계산되는 것은 아님</p></li>
+</ul>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://dalex.drwhy.ai'>DALEX</a></span><span class='op'>)</span>
+<span class='va'>titanic_rf_exp</span> <span class='op'>&lt;-</span><span class='fu'>DALEX</span><span class='fu'>::</span><span class='fu'><a href='https://dalex.drwhy.ai/reference/explain.html'>explain</a></span><span class='op'>(</span>model <span class='op'>=</span> <span class='va'>rf_fit</span>, 
+                       data <span class='op'>=</span> <span class='va'>titanic</span> <span class='op'>%&gt;%</span> <span class='fu'>select</span><span class='op'>(</span><span class='op'>-</span><span class='va'>country</span><span class='op'>)</span>,
+                       y <span class='op'>=</span> <span class='va'>titanic_imputed</span><span class='op'>$</span><span class='va'>survived</span> <span class='op'>==</span> <span class='st'>"yes"</span>, 
+                       label <span class='op'>=</span> <span class='st'>"Random Forest"</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>Preparation of a new explainer is initiated
+  -&gt; model label       :  Random Forest 
+  -&gt; data              :  2207  rows  8  cols 
+  -&gt; target variable   :  2207  values 
+  -&gt; predict function  :  yhat.workflow  will be used ( [33m default [39m )
+  -&gt; predicted values  :  No value for predict function target column. ( [33m default [39m )
+  -&gt; model_info        :  package tidymodels , ver. 0.1.3 , task classification ( [33m default [39m ) 
+  -&gt; model_info        :  Model info detected classification task but &#39;y&#39; is a logical . Converted to numeric.  ( [33m NOTE [39m )
+  -&gt; predicted values  :  numerical, min =  0.01244641 , mean =  0.3221946 , max =  0.9881611  
+  -&gt; residual function :  difference between y and yhat ( [33m default [39m )
+  -&gt; residuals         :  numerical, min =  -0.9881611 , mean =  -0.3221946 , max =  -0.01244641  
+ [32m A new explainer has been created! [39m </code></pre>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>henry</span> <span class='op'>&lt;-</span> <span class='fu'>archivist</span><span class='fu'>::</span><span class='fu'><a href='https://pbiecek.github.io/archivist/reference/aread.html'>aread</a></span><span class='op'>(</span><span class='st'>"pbiecek/models/a6538"</span><span class='op'>)</span> 
+<span class='va'>henry</span>
+</code></pre>
+</div>
+<pre><code>  class gender age sibsp parch fare  embarked
+1   1st   male  47     0     0   25 Cherbourg</code></pre>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/stats/predict.html'>predict</a></span><span class='op'>(</span><span class='va'>titanic_rf_exp</span>, <span class='va'>henry</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>      yes 
+0.3163465 </code></pre>
+</div>
+<p><strong>shapley value 계산</strong></p>
+<ul>
+<li><p>predict_parts()</p>
+<ul>
+<li><p>explainer : explain 함수를 적용한 모델</p></li>
+<li><p>new_observation : obs</p></li>
+<li><p>type : shap, oscillations, oscillations_uni, oscillations_emp, break_down or break_down_interactions 등의 다양한 옵션이 있음</p></li>
+<li><p>B : 25(default), shapley value 계산할 때 설명변수의 무작위 순서의 조합 개수</p></li>
+</ul></li>
+</ul>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>shap_henry</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://dalex.drwhy.ai/reference/predict_parts.html'>predict_parts</a></span><span class='op'>(</span>explainer <span class='op'>=</span> <span class='va'>titanic_rf_exp</span>,
+                      new_observation <span class='op'>=</span> <span class='va'>henry</span>, 
+                                 type <span class='op'>=</span> <span class='st'>"shap"</span>,
+                                    B <span class='op'>=</span> <span class='fl'>25</span><span class='op'>)</span>
+<span class='va'>shap_henry</span>
+</code></pre>
+</div>
+<pre><code>                                            min           q1
+Random Forest: age = 47             -0.10148021 -0.069040921
+Random Forest: class = 1st           0.11825608  0.137872313
+Random Forest: embarked = Cherbourg  0.01609401  0.023990286
+Random Forest: fare = 25            -0.03695000 -0.017632917
+Random Forest: gender = male        -0.12813767 -0.114902287
+Random Forest: parch = 0            -0.01631725 -0.002677757
+Random Forest: sibsp = 0            -0.02490941 -0.015620362
+                                          median         mean
+Random Forest: age = 47             -0.055207539 -0.056452252
+Random Forest: class = 1st           0.143205056  0.146011900
+Random Forest: embarked = Cherbourg  0.025664837  0.033808514
+Random Forest: fare = 25            -0.012694829 -0.010978626
+Random Forest: gender = male        -0.108891086 -0.109722079
+Random Forest: parch = 0            -0.002571315 -0.002464873
+Random Forest: sibsp = 0            -0.005006134 -0.006050714
+                                               q3          max
+Random Forest: age = 47             -0.0397487117 -0.030168812
+Random Forest: class = 1st           0.1532274799  0.183527775
+Random Forest: embarked = Cherbourg  0.0398575999  0.061901491
+Random Forest: fare = 25            -0.0041515453  0.019977101
+Random Forest: gender = male        -0.1025975497 -0.091165124
+Random Forest: parch = 0            -0.0007044177  0.003460460
+Random Forest: sibsp = 0             0.0028295595  0.009513894</code></pre>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>shap_henry</span><span class='op'>)</span>
+</code></pre>
+</div>
+<p><img src="machine-learning-explainability_files/figure-html5/unnamed-chunk-11-1.png" width="624" /></p>
+</div>
+<ul>
+<li><p>henry의 나이는 47세로 shapley value 값이 음수로 표시되고, age는 생존에 부정적인 기여를 했다고 해석할 수 있음</p></li>
+<li><p>henry의 class는 1등석으로 shapley value 값이 양수로 표시되고, class는 생존에 매우 긍정적인 기여를 했다고 해석할 수 있음</p></li>
+</ul>
+<h2 id="fastshap-패키지를-이용한-방법">fastshap 패키지를 이용한 방법</h2>
+<ul>
+<li><p>fastshap::explain()</p>
+<ul>
+<li><p>model : extract_fit_parsnip() 적용한 모델</p></li>
+<li><p>X : data</p></li>
+<li><p>pred_wrapper : 예측값, classification의 경우 기준 범주의 확률</p>
+<ul>
+<li><p>xgb, lm은 적용안하고 exact = T만 해줘도 됨</p></li>
+<li><p>나머지 모델은 pred_wrapper을 넣어줘야함</p></li>
+</ul></li>
+<li><p>exact = T : 근사값이 아닌 정확한 shapley value 계산</p></li>
+</ul></li>
+</ul>
+<p><strong>Shapley feature importance</strong></p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='st'>"titanic_imputed"</span><span class='op'>)</span>  
+
+<span class='va'>titanic_rec</span> <span class='op'>&lt;-</span> <span class='va'>titanic_imputed</span> <span class='op'>%&gt;%</span> 
+  <span class='fu'>recipe</span><span class='op'>(</span><span class='va'>survived</span> <span class='op'>~</span> <span class='va'>.</span><span class='op'>)</span> <span class='op'>%&gt;%</span> 
+  <span class='fu'>step_mutate</span><span class='op'>(</span>survived <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/factor.html'>as.factor</a></span><span class='op'>(</span><span class='va'>survived</span><span class='op'>)</span><span class='op'>)</span>
+  
+<span class='va'>rf_model</span> <span class='op'>&lt;-</span> 
+    <span class='fu'>rand_forest</span><span class='op'>(</span>trees <span class='op'>=</span> <span class='fl'>1000</span><span class='op'>)</span> <span class='op'>%&gt;%</span> 
+    <span class='fu'>set_engine</span><span class='op'>(</span><span class='st'>"ranger"</span><span class='op'>)</span> <span class='op'>%&gt;%</span> 
+    <span class='fu'>set_mode</span><span class='op'>(</span><span class='st'>"classification"</span><span class='op'>)</span>
+
+<span class='va'>rf_wflow</span> <span class='op'>&lt;-</span> 
+  <span class='fu'>workflow</span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span> 
+  <span class='fu'>add_model</span><span class='op'>(</span><span class='va'>rf_model</span><span class='op'>)</span> <span class='op'>%&gt;%</span> 
+  <span class='fu'>add_recipe</span><span class='op'>(</span><span class='va'>titanic_rec</span><span class='op'>)</span>
+  
+
+<span class='va'>rf_fit</span> <span class='op'>&lt;-</span> <span class='va'>rf_wflow</span> <span class='op'>%&gt;%</span> <span class='fu'>fit</span><span class='op'>(</span>data <span class='op'>=</span> <span class='va'>titanic_imputed</span><span class='op'>)</span>
+<span class='va'>rf_ex_fit</span> <span class='op'>&lt;-</span> <span class='va'>rf_fit</span> <span class='op'>%&gt;%</span> <span class='fu'>extract_fit_parsnip</span><span class='op'>(</span><span class='op'>)</span>
+</code></pre>
+</div>
+</div>
+<ul>
+<li>shap &lt;- explain(xgb_ex_fit$fit, X = X, exact = T)</li>
+<li>xgboost, lm만 exact = T 가능, 나머지 불가능(공식 문서 참고)</li>
+</ul>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://github.com/bgreenwell/fastshap'>fastshap</a></span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/stats/predict.html'>predict</a></span><span class='op'>(</span><span class='va'>rf_ex_fit</span><span class='op'>$</span><span class='va'>fit</span>, <span class='va'>titanic_imputed</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>Ranger prediction
+
+Type:                             Probability estimation 
+Sample size:                      2207 
+Number of independent variables:  7 </code></pre>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/stats/predict.html'>predict</a></span><span class='op'>(</span><span class='va'>rf_ex_fit</span><span class='op'>$</span><span class='va'>fit</span>, <span class='va'>titanic_imputed</span><span class='op'>)</span><span class='op'>$</span><span class='va'>predictions</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>             0          1
+[1,] 0.9005977 0.09940235
+[2,] 0.7393042 0.26069579
+[3,] 0.8603494 0.13965064
+[4,] 0.4115457 0.58845434
+[5,] 0.2984262 0.70157385
+[6,] 0.7680580 0.23194202</code></pre>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>pred_fun</span> <span class='op'>&lt;-</span> <span class='kw'>function</span><span class='op'>(</span><span class='va'>X.model</span>, <span class='va'>newdata</span><span class='op'>)</span> <span class='op'>{</span>
+  <span class='fu'><a href='https://rdrr.io/r/stats/predict.html'>predict</a></span><span class='op'>(</span><span class='va'>X.model</span>, <span class='va'>newdata</span><span class='op'>)</span><span class='op'>$</span><span class='va'>predictions</span><span class='op'>[</span>,<span class='fl'>2</span><span class='op'>]</span>
+<span class='op'>}</span>
+
+<span class='va'>shap</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/fastshap/man/explain.html'>explain</a></span><span class='op'>(</span><span class='va'>rf_ex_fit</span><span class='op'>$</span><span class='va'>fit</span>, X <span class='op'>=</span> <span class='va'>titanic_imputed</span>, pred_wrapper <span class='op'>=</span> <span class='va'>pred_fun</span>, nsim <span class='op'>=</span> <span class='fl'>20</span><span class='op'>)</span>
+
+<span class='fu'>autoplot</span><span class='op'>(</span><span class='va'>shap</span><span class='op'>)</span>
+</code></pre>
+</div>
+<p><img src="machine-learning-explainability_files/figure-html5/unnamed-chunk-13-1.png" width="624" /></p>
+</div>
+<p><strong>Shapley dependence plot</strong></p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>pred_fun</span> <span class='op'>&lt;-</span> <span class='kw'>function</span><span class='op'>(</span><span class='va'>X.model</span>, <span class='va'>newdata</span><span class='op'>)</span> <span class='op'>{</span>
+  <span class='fu'><a href='https://rdrr.io/r/stats/predict.html'>predict</a></span><span class='op'>(</span><span class='va'>X.model</span>, <span class='va'>newdata</span><span class='op'>)</span><span class='op'>$</span><span class='va'>predictions</span><span class='op'>[</span>,<span class='fl'>2</span><span class='op'>]</span>
+<span class='op'>}</span>
+
+<span class='fu'>autoplot</span><span class='op'>(</span><span class='va'>shap</span>, type <span class='op'>=</span> <span class='st'>"dependence"</span>, feature <span class='op'>=</span> <span class='st'>"fare"</span>, X <span class='op'>=</span> <span class='va'>titanic_imputed</span>, smooth <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
+</code></pre>
+</div>
+<p><img src="machine-learning-explainability_files/figure-html5/unnamed-chunk-14-1.png" width="624" /></p>
+</div>
+<p><strong>contribution plot</strong></p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'>autoplot</span><span class='op'>(</span><span class='va'>shap</span>, type <span class='op'>=</span> <span class='st'>"contribution"</span>, row_num <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span>
+</code></pre>
+</div>
+<p><img src="machine-learning-explainability_files/figure-html5/unnamed-chunk-15-1.png" width="624" /></p>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/pkg/fastshap/man/forceplot.html'>force_plot</a></span><span class='op'>(</span><span class='va'>shap</span><span class='op'>[</span><span class='fl'>1</span>,<span class='op'>]</span>, baseline <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span><span class='op'>(</span><span class='fu'>pred_fun</span><span class='op'>(</span><span class='va'>rf_ex_fit</span>, <span class='va'>titanic_imputed</span><span class='op'>)</span><span class='op'>)</span>, feature_values <span class='op'>=</span> <span class='va'>titanic_imputed</span><span class='op'>[</span><span class='fl'>1</span>,<span class='op'>]</span>, display <span class='op'>=</span> <span class='st'>"html"</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>Error in file(con, &quot;r&quot;): 커넥션을 열 수 없습니다</code></pre>
+</div>
+<p><a href="http://xai-tools.drwhy.ai/fastshap.html" class="uri">http://xai-tools.drwhy.ai/fastshap.html</a></p>
+<p><strong>참고자료</strong></p>
+<p><a href="https://www.kaggle.com/dansbecker/use-cases-for-model-insights" class="uri">https://www.kaggle.com/dansbecker/use-cases-for-model-insights</a></p>
+<p><a href="https://www.kaggle.com/dansbecker/permutation-importance" class="uri">https://www.kaggle.com/dansbecker/permutation-importance</a></p>
+<p><a href="https://www.kaggle.com/dansbecker/partial-plots?scriptVersionId=64768853&amp;cellId=1" class="uri">https://www.kaggle.com/dansbecker/partial-plots?scriptVersionId=64768853&amp;cellId=1</a></p>
+<p><a href="https://christophm.github.io/interpretable-ml-book/pdp.html" class="uri">https://christophm.github.io/interpretable-ml-book/pdp.html</a></p>
+<p><a href="https://juliasilge.com/blog/mario-kart/" class="uri">https://juliasilge.com/blog/mario-kart/</a></p>
+<p><a href="https://www.hfshr.xyz/posts/2020-06-07-variable-importance-with-fastshap/#ref-R-vip" class="uri">https://www.hfshr.xyz/posts/2020-06-07-variable-importance-with-fastshap/#ref-R-vip</a></p>
+<p><a href="https://stackoverflow.com/questions/67634344/r-partial-dependence-plots-from-workflow" class="uri">https://stackoverflow.com/questions/67634344/r-partial-dependence-plots-from-workflow</a></p>
+<p><a href="https://cran.r-project.org/web/packages/fastshap/fastshap.pdf" class="uri">https://cran.r-project.org/web/packages/fastshap/fastshap.pdf</a></p>
+<p><a href="https://www.youtube.com/watch?v=lIT5-piVtRw" class="uri">https://www.youtube.com/watch?v=lIT5-piVtRw</a></p>
+<p><a href="https://www.hfshr.xyz/posts/2020-06-07-variable-importance-with-fastshap/" class="uri">https://www.hfshr.xyz/posts/2020-06-07-variable-importance-with-fastshap/</a></p>
+<p><a href="https://bradleyboehmke.github.io/HOML/iml.html" class="uri">https://bradleyboehmke.github.io/HOML/iml.html</a></p>
+<p><a href="https://ema.drwhy.ai/shapley.html#SHAPRcode" class="uri">https://ema.drwhy.ai/shapley.html#SHAPRcode</a></p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
+<!--radix_placeholder_article_footer-->
+<!--/radix_placeholder_article_footer-->
+</div>
+
+<div class="d-appendix">
+</div>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+<!--radix_placeholder_site_after_body-->
+<!--/radix_placeholder_site_after_body-->
+<!--radix_placeholder_appendices-->
+<div class="appendix-bottom"></div>
+<!--/radix_placeholder_appendices-->
+<!--radix_placeholder_navigation_after_body-->
+<!--/radix_placeholder_navigation_after_body-->
+
+</body>
+
+</html>

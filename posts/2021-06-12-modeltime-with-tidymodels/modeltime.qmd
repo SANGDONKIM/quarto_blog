@@ -1,0 +1,331 @@
+---
+title: "Modeltime with tidymodels"
+description: |
+  tidymodels를 이용한 시계열 모델링 
+author: "Don Don"
+date: "2021-05-08"
+categories: [R, timeseries, tidymodels]
+image: "https://i0.wp.com/www.business-science.io/assets/2020-06-29-modeltime/logo-modeltime.png?w=578&ssl=1"
+---
+
+
+# Introduction
+
+modeltime 패키지는 tidymodels와 연동이 가능한 시계열 모델링 관련 패키지이다. tidymodels에도 auto arima, ma 모형 같은 간단한 시계열 모델이 있지만 다른 머신러닝 모델에 비해서 쓸 수 있는 모델이 제한적이다. 이러한 단점을 modeltime 패키지가 해결해준다.
+
+modeltime 시계열 모델링에 특화된 패키지로 시계열에 특화된 모델링과 전처리 관련 함수가 내장되어 있고, tidymodels의 워크플로우를 거의 그대로 이용할 수 있어서 향후 tidymodels가 R의 대표적인 머신러닝 패키지가 된다면 시계열 파트에서는 modeltime 패키지가 주축이 될 것 같다.
+
+modeltime 패키지는 하나의 단일 패키지가 아니라 다양한 머신러닝 패키지와 연동해서 하나의 시계열 생태계를 구축하고 있다. 대표적인 패키지는 다음과 같다.
+
+-   Modeltime : 시계열 머신러닝 관련 패키지
+
+-   Modeltime H2O : H2O의 autoML과 연동이 가능함
+
+-   Modeltime GluonTS : 시계열 관련 딥러닝 패키지
+
+-   Modeltime Ensemble : Modeltime 관련 앙상블 패키지
+
+-   Modeltime Resample : Backtesting 관련 패키지
+
+-   Timetk : feature engineering, Data wrangling, time series visualization
+
+# Modeltiem workflow
+
+Modeltime 패키지는 시계열 모델링에 맞는 고유한 워크플로우가 존재하며, tidymodels와 마찬가지로 이 워크플로우 그대로 진행을 해야만 에러 없이 동작한다. 사실 실제 모델링할 때와 동일한 매커니즘이어서 어색함 없이 따라할 수 있다.
+
+workflow의 순서는 다음과 같다.
+
+1.  create modeltime table
+
+    -   다양한 모델을 training data에 fitting하고 modeltime table에 저장하는 단계
+
+    -   모델이 재대로 fitting 되었는지 확인 및 이후 워크플로우에 맞는 table 구성
+
+2.  calibrate
+
+    -   modeltime table에 저장된 모델을 test 데이터에 fitting하는 단계
+
+    -   test data에 fitting함으로써 모델의 성능 파악 가능
+
+3.  Refit
+
+    -   training data, test data를 합친 original data에 refit하는 단계
+
+    -   refit한 모델을 이용해서 forecast를 진행
+
+# Model
+
+Modeltime 패키지는 다양한 시계열 모델을 지원하는데 대표적인 모델은 다음과 같다.
+
+-   auto_arima_boost: a automatic ARIMA boosted model specification
+-   arima_reg : arima regression model
+-   exp_smoothing : automated exponential smoothing
+-   prophet_boost: a prophet model specification
+-   prophet_boost_log: a prophet model specification with logarithmic growth
+-   mars: a Multivariate Adaptive Regression Splines model specification
+-   nnetar: a Neural network time series model specification
+
+Modeltime 패키지의 한 가지 단점은 패키지를 만든 저자가 business-science라는 course를 운영 중인 것 같은데 modeltime 관련 세부 자료는 유료 course에서 공개를 하는 것 같다... 하지만 R CRAN에도 등록이 되어있고 튜토리얼도 제공되기 때문에 앞으로 사용하는 사람이 많아지면 관련 자료도 많아질 것 같다.
+
+# Modeltime tutorial
+
+데이터는 데이콘에서 제공하는 발전량 데이터 일부를 뽑아서 활용했다.
+
+## Preparations (준비작업)
+
+### Libraries
+
+```{r load_lib, message=FALSE, warning=FALSE}
+library(tidyverse)
+library(tidymodels)
+library(lubridate)
+library(data.table)
+library(skimr)
+library(timetk)
+library(modeltime)
+library(gt)
+library(timetk)
+library(tidyquant)
+library(sknifedatar)
+
+# Visualization
+library(ggthemes)
+library(ggsci)
+library(viridis)
+library(ggExtra)
+
+
+theme_set(theme_bw())
+```
+
+### Data load
+
+```{r, echo=TRUE}
+file_path <- getwd()
+files <- list.files(file_path)
+files
+
+rdata <- read.csv(file.path(file_path, "rdata.csv"), fileEncoding = "CP949", encoding = "UTF-8")
+```
+
+## Data overview (데이터 기본정보)
+
+### Data
+
+```{r}
+glimpse(rdata)
+skim(rdata)
+```
+
+## Data preprocessing
+
+```{r}
+rdata %>% 
+    select(-hour) %>% 
+    mutate(time = ymd_hms(time)) %>% 
+    filter(between(time, ymd('2018-03-01'), ymd('2021-01-31'))) -> rdata
+rdata %>% glimpse()  
+rdata %>% 
+  summarise(across(.fns = ~sum(is.na(.))/length(.)))
+
+```
+
+## Univariate timeseries analysis
+
+울산 지역의 전력 발전량 데이터만 활용할 것이기 때문에 날짜 변수를 제외한 나머지 변수는 제거했다.
+
+```{r}
+ulsan <- rdata %>% 
+  select(-c(dangjin, warehouse, floating)) %>% 
+  select(time, ulsan) %>% 
+  rename(date = time, value = ulsan)
+```
+
+### Time series visualization
+
+tidymodels의 경우 train/test 분리를 위해서 initial_split()을 활용했는데 시계열 데이터의 경우 특정 날짜를 기준으로 잘라야하기 때문에 Modeltime 패키지에 내장되어있는 initial_time_split()을 이용한다. 특정 날짜를 기준으로 자르고 싶을 경우 timeseries_split()을 이용할 수도 있다.
+
+-   tk_time_series_cv_plan() : split된 object를 데이터프레임으로 전환
+
+-   plot_time_series_cv_plan() : sampling된 데이터를 이용해서 시계열 그래프 생성
+
+```{r}
+initial_time_split(data = ulsan, prop = 0.9) %>% 
+  tk_time_series_cv_plan() %>% 
+  plot_time_series_cv_plan(date, value,
+                           .interact = FALSE, 
+                           .title = "Partition Train / Test")
+
+```
+
+### Split train/test
+
+```{r}
+months <- 1
+
+total_months <- lubridate::interval(base::min(ulsan$date),
+                                    base::max(ulsan$date)) %/%  
+                                    base::months(1)
+
+
+prop <- (total_months - months) / total_months
+
+splits <- rsample::initial_time_split(ulsan, prop = prop)
+
+
+splits %>%
+  timetk::tk_time_series_cv_plan() %>%  
+  timetk::plot_time_series_cv_plan(date, value) 
+
+```
+
+### Model fitting
+
+모델 fitting은 tidymodels 패키지의 방식과 동일하다. 현재는 default 세팅으로 모델을 fitting했지만 튜닝 파라미터가 있을 경우 이전에 tidymodels에서 했던 방식 그대로 grid_latin_hypercube(), grid_random, bayes tuning 등을 이용해서 최적의 파라미터를 찾고 모델을 fitting 해야한다.
+
+```{r}
+
+# Exponential smoothing 
+model_fit_ets <- modeltime::exp_smoothing() %>%
+    parsnip::set_engine(engine = "ets") %>%
+    parsnip::fit(value ~ date, data = training(splits))
+
+
+# ARIMA 
+model_fit_arima <- modeltime::arima_reg() %>%
+    parsnip::set_engine("auto_arima") %>%
+    parsnip::fit(
+        value ~ date, 
+        data = training(splits))
+
+
+# ARIMA Boost
+model_fit_arima_boost <- modeltime::arima_boost() %>%
+    parsnip::set_engine("auto_arima_xgboost") %>%
+    parsnip::fit(
+        value ~ date + as.numeric(date) + month(date), 
+        data = training(splits))
+
+# Prophet
+model_fit_prophet <- modeltime::prophet_reg() %>%
+    parsnip::set_engine("prophet") %>%
+    parsnip::fit(
+        value ~ date, 
+        data = training(splits))
+
+
+# Prophet Boost
+model_fit_prophet_boost <- modeltime::prophet_boost() %>%
+    parsnip::set_engine("prophet_xgboost") %>%
+    parsnip::fit(
+        value ~ date + as.numeric(date) + month(date), 
+        data = training(splits))
+```
+
+### Model time table
+
+modeltime_table에 fitting한 모델을 추가한다. modeltime_table은 이전에 서술했다시피 각 모델이 재대로 적합되었는지 확인하고, 이후 예측 워크플로우를 위해서 modeltime_table 구조를 이용하므로 model table을 에러 없이 세팅하는 것이 중요하다.
+
+```{r}
+model_tbl <- modeltime::modeltime_table(
+    model_fit_ets,
+    model_fit_arima,
+    model_fit_arima_boost,
+    model_fit_prophet,
+    model_fit_prophet_boost)
+
+model_tbl
+```
+
+### calibration
+
+이전에 만든 modeltime_table을 test 데이터에 적합시켜서 보정을 하는 단계이다.
+
+```{r}
+calibration_tbl <- model_tbl %>%
+    modeltime::modeltime_calibrate(testing(splits))  
+```
+
+```{r}
+calibration_tbl %>%
+    modeltime::modeltime_accuracy() %>%   
+    flextable::flextable() %>% 
+    flextable::bold(part = "header") %>% 
+    flextable::bg(bg = "#D3D3D3", part = "header") %>% 
+    flextable::autofit()
+```
+
+### visualization the forecast test
+
+```{r}
+calibration_tbl %>%
+    modeltime::modeltime_forecast(new_data = testing(splits), 
+                                  actual_data = ulsan,
+                                  conf_interval = 0.90) %>%
+    modeltime::plot_modeltime_forecast(.legend_show = TRUE, 
+                                       .legend_max_width = 20)
+```
+
+### Refit
+
+train/test를 합한 original 데이터를 이용해서 refitting을 진행하는 단계이다.
+
+```{r}
+refit_tbl <- calibration_tbl %>%
+    modeltime::modeltime_refit(data = ulsan)
+```
+
+### forecast
+
+refitting된 모델을 이용해서 지정한 time interval에 대해 forecast를 수행하는 단계이다.
+
+```{r}
+forecast_tbl <- refit_tbl %>%
+    modeltime::modeltime_forecast(
+        h = "1 month",
+        actual_data = ulsan,
+        conf_interval = 0.90
+    ) 
+
+forecast_tbl %>%
+    modeltime::plot_modeltime_forecast(.interactive = TRUE,
+                                       .legend_max_width = 20)
+```
+
+### Aggregate model
+
+Accuracy 향상을 위해서 적합시킨 5 가지 모델을 평균내서 최종 모델을 산출한다. Modeltime.ensemble을 이용하면 더 세련된 앙상블 기법을 이용할 수 있다.
+
+```{r}
+mean_forecast_tbl <- forecast_tbl %>%
+    dplyr::filter(.key != "actual") %>%
+    dplyr::group_by(.key, .index) %>%
+    dplyr::summarise(across(.value:.conf_hi, mean)) %>%
+    dplyr::mutate(
+        .model_id   = 6,
+        .model_desc = "AVERAGE OF MODELS"
+    )
+
+
+# Visualize aggregate model 
+forecast_tbl %>%
+    dplyr::filter(.key == "actual") %>%
+    dplyr::bind_rows(mean_forecast_tbl) %>%
+    modeltime::plot_modeltime_forecast()  
+```
+
+### 참고 자료
+
+H2O 관련
+
+<https://www.r-bloggers.com/2021/03/introducing-modeltime-h2o-automatic-forecasting-with-h2o-automl/>
+
+gluonTS 관련
+
+<https://cran.r-project.org/web/packages/modeltime.gluonts/vignettes/getting-started.html#references>
+
+Modeltime 관련
+
+<https://cran.r-project.org/web/packages/modeltime/vignettes/getting-started-with-modeltime.html>
+
+<https://www.adam-d-mckinnon.com/posts/2020-10-10-forecastpeopleanalytics/>

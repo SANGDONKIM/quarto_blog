@@ -1,0 +1,3246 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1"/>
+  <meta name="generator" content="distill" />
+
+  <style type="text/css">
+  /* Hide doc at startup (prevent jankiness while JS renders/transforms) */
+  body {
+    visibility: hidden;
+  }
+  </style>
+
+ <!--radix_placeholder_import_source-->
+ <!--/radix_placeholder_import_source-->
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css" data-origin="pandoc">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ad0000; } /* Alert */
+code span.an { color: #5e5e5e; } /* Annotation */
+code span.at { } /* Attribute */
+code span.bn { color: #ad0000; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007ba5; } /* ControlFlow */
+code span.ch { color: #20794d; } /* Char */
+code span.cn { color: #8f5902; } /* Constant */
+code span.co { color: #5e5e5e; } /* Comment */
+code span.cv { color: #5e5e5e; font-style: italic; } /* CommentVar */
+code span.do { color: #5e5e5e; font-style: italic; } /* Documentation */
+code span.dt { color: #ad0000; } /* DataType */
+code span.dv { color: #ad0000; } /* DecVal */
+code span.er { color: #ad0000; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #ad0000; } /* Float */
+code span.fu { color: #4758ab; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #5e5e5e; } /* Information */
+code span.kw { color: #007ba5; } /* Keyword */
+code span.op { color: #5e5e5e; } /* Operator */
+code span.ot { color: #007ba5; } /* Other */
+code span.pp { color: #ad0000; } /* Preprocessor */
+code span.sc { color: #5e5e5e; } /* SpecialChar */
+code span.ss { color: #20794d; } /* SpecialString */
+code span.st { color: #20794d; } /* String */
+code span.va { color: #111111; } /* Variable */
+code span.vs { color: #20794d; } /* VerbatimString */
+code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
+</style>
+
+  <!--radix_placeholder_meta_tags-->
+  <title>stacking with tidymodels and caret</title>
+
+  <meta property="description" itemprop="description" content="tidymodels, caret을 이용한 stacking"/>
+
+
+  <!--  https://schema.org/Article -->
+  <meta property="article:published" itemprop="datePublished" content="2021-06-01"/>
+  <meta property="article:created" itemprop="dateCreated" content="2021-06-01"/>
+  <meta name="article:author" content="dondon"/>
+
+  <!--  https://developers.facebook.com/docs/sharing/webmasters#markup -->
+  <meta property="og:title" content="stacking with tidymodels and caret"/>
+  <meta property="og:type" content="article"/>
+  <meta property="og:description" content="tidymodels, caret을 이용한 stacking"/>
+  <meta property="og:locale" content="en_US"/>
+
+  <!--  https://dev.twitter.com/cards/types/summary -->
+  <meta property="twitter:card" content="summary"/>
+  <meta property="twitter:title" content="stacking with tidymodels and caret"/>
+  <meta property="twitter:description" content="tidymodels, caret을 이용한 stacking"/>
+
+  <!--/radix_placeholder_meta_tags-->
+  <!--radix_placeholder_rmarkdown_metadata-->
+
+  <script type="text/json" id="radix-rmarkdown-metadata">
+  {"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","description","author","date","output","categories"]}},"value":[{"type":"character","attributes":{},"value":["stacking with tidymodels and caret"]},{"type":"character","attributes":{},"value":["tidymodels, caret을 이용한 stacking  \n"]},{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","url"]}},"value":[{"type":"character","attributes":{},"value":["dondon"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":[]}},"value":[]}]}]},{"type":"character","attributes":{},"value":["2021-06-01"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["distill::distill_article"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["toc","toc_depth","self_contained","highlight","highlight_downlit","code_folding"]}},"value":[{"type":"logical","attributes":{},"value":[true]},{"type":"integer","attributes":{},"value":[3]},{"type":"logical","attributes":{},"value":[false]},{"type":"character","attributes":{},"value":["default"]},{"type":"logical","attributes":{},"value":[true]},{"type":"logical","attributes":{},"value":[false]}]}]},{"type":"character","attributes":{},"value":["Machine learning","tidymodels","caret","R"]}]}
+  </script>
+  <!--/radix_placeholder_rmarkdown_metadata-->
+  
+  <script type="text/json" id="radix-resource-manifest">
+  {"type":"character","attributes":{},"value":["stacking-with-tidymodels-and-caret_files/figure-html5/unnamed-chunk-11-1.png","stacking-with-tidymodels-and-caret_files/figure-html5/unnamed-chunk-14-1.png","stacking-with-tidymodels-and-caret_files/figure-html5/unnamed-chunk-18-1.png","stacking-with-tidymodels-and-caret_files/figure-html5/unnamed-chunk-22-1.png","stacking-with-tidymodels-and-caret_files/figure-html5/unnamed-chunk-24-1.png","stacking-with-tidymodels-and-caret_files/figure-html5/unnamed-chunk-25-1.png","stacking-with-tidymodels-and-caret_files/figure-html5/unnamed-chunk-25-2.png","temps.csv"]}
+  </script>
+  <!--radix_placeholder_navigation_in_header-->
+  <!--/radix_placeholder_navigation_in_header-->
+  <!--radix_placeholder_distill-->
+
+  <style type="text/css">
+
+  body {
+    background-color: white;
+  }
+
+  .pandoc-table {
+    width: 100%;
+  }
+
+  .pandoc-table>caption {
+    margin-bottom: 10px;
+  }
+
+  .pandoc-table th:not([align]) {
+    text-align: left;
+  }
+
+  .pagedtable-footer {
+    font-size: 15px;
+  }
+
+  d-byline .byline {
+    grid-template-columns: 2fr 2fr;
+  }
+
+  d-byline .byline h3 {
+    margin-block-start: 1.5em;
+  }
+
+  d-byline .byline .authors-affiliations h3 {
+    margin-block-start: 0.5em;
+  }
+
+  .authors-affiliations .orcid-id {
+    width: 16px;
+    height:16px;
+    margin-left: 4px;
+    margin-right: 4px;
+    vertical-align: middle;
+    padding-bottom: 2px;
+  }
+
+  d-title .dt-tags {
+    margin-top: 1em;
+    grid-column: text;
+  }
+
+  .dt-tags .dt-tag {
+    text-decoration: none;
+    display: inline-block;
+    color: rgba(0,0,0,0.6);
+    padding: 0em 0.4em;
+    margin-right: 0.5em;
+    margin-bottom: 0.4em;
+    font-size: 70%;
+    border: 1px solid rgba(0,0,0,0.2);
+    border-radius: 3px;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+
+  d-article table.gt_table td,
+  d-article table.gt_table th {
+    border-bottom: none;
+  }
+
+  .html-widget {
+    margin-bottom: 2.0em;
+  }
+
+  .l-screen-inset {
+    padding-right: 16px;
+  }
+
+  .l-screen .caption {
+    margin-left: 10px;
+  }
+
+  .shaded {
+    background: rgb(247, 247, 247);
+    padding-top: 20px;
+    padding-bottom: 20px;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  }
+
+  .shaded .html-widget {
+    margin-bottom: 0;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+  }
+
+  .shaded .shaded-content {
+    background: white;
+  }
+
+  .text-output {
+    margin-top: 0;
+    line-height: 1.5em;
+  }
+
+  .hidden {
+    display: none !important;
+  }
+
+  d-article {
+    padding-top: 2.5rem;
+    padding-bottom: 30px;
+  }
+
+  d-appendix {
+    padding-top: 30px;
+  }
+
+  d-article>p>img {
+    width: 100%;
+  }
+
+  d-article h2 {
+    margin: 1rem 0 1.5rem 0;
+  }
+
+  d-article h3 {
+    margin-top: 1.5rem;
+  }
+
+  d-article iframe {
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    margin-bottom: 2.0em;
+    width: 100%;
+  }
+
+  /* Tweak code blocks */
+
+  d-article div.sourceCode code,
+  d-article pre code {
+    font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+  }
+
+  d-article pre,
+  d-article div.sourceCode,
+  d-article div.sourceCode pre {
+    overflow: auto;
+  }
+
+  d-article div.sourceCode {
+    background-color: white;
+  }
+
+  d-article div.sourceCode pre {
+    padding-left: 10px;
+    font-size: 12px;
+    border-left: 2px solid rgba(0,0,0,0.1);
+  }
+
+  d-article pre {
+    font-size: 12px;
+    color: black;
+    background: none;
+    margin-top: 0;
+    text-align: left;
+    white-space: pre;
+    word-spacing: normal;
+    word-break: normal;
+    word-wrap: normal;
+    line-height: 1.5;
+
+    -moz-tab-size: 4;
+    -o-tab-size: 4;
+    tab-size: 4;
+
+    -webkit-hyphens: none;
+    -moz-hyphens: none;
+    -ms-hyphens: none;
+    hyphens: none;
+  }
+
+  d-article pre a {
+    border-bottom: none;
+  }
+
+  d-article pre a:hover {
+    border-bottom: none;
+    text-decoration: underline;
+  }
+
+  d-article details {
+    grid-column: text;
+    margin-bottom: 0.8em;
+  }
+
+  @media(min-width: 768px) {
+
+  d-article pre,
+  d-article div.sourceCode,
+  d-article div.sourceCode pre {
+    overflow: visible !important;
+  }
+
+  d-article div.sourceCode pre {
+    padding-left: 18px;
+    font-size: 14px;
+  }
+
+  d-article pre {
+    font-size: 14px;
+  }
+
+  }
+
+  figure img.external {
+    background: white;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    box-shadow: 0 1px 8px rgba(0, 0, 0, 0.1);
+    padding: 18px;
+    box-sizing: border-box;
+  }
+
+  /* CSS for d-contents */
+
+  .d-contents {
+    grid-column: text;
+    color: rgba(0,0,0,0.8);
+    font-size: 0.9em;
+    padding-bottom: 1em;
+    margin-bottom: 1em;
+    padding-bottom: 0.5em;
+    margin-bottom: 1em;
+    padding-left: 0.25em;
+    justify-self: start;
+  }
+
+  @media(min-width: 1000px) {
+    .d-contents.d-contents-float {
+      height: 0;
+      grid-column-start: 1;
+      grid-column-end: 4;
+      justify-self: center;
+      padding-right: 3em;
+      padding-left: 2em;
+    }
+  }
+
+  .d-contents nav h3 {
+    font-size: 18px;
+    margin-top: 0;
+    margin-bottom: 1em;
+  }
+
+  .d-contents li {
+    list-style-type: none
+  }
+
+  .d-contents nav > ul {
+    padding-left: 0;
+  }
+
+  .d-contents ul {
+    padding-left: 1em
+  }
+
+  .d-contents nav ul li {
+    margin-top: 0.6em;
+    margin-bottom: 0.2em;
+  }
+
+  .d-contents nav a {
+    font-size: 13px;
+    border-bottom: none;
+    text-decoration: none
+    color: rgba(0, 0, 0, 0.8);
+  }
+
+  .d-contents nav a:hover {
+    text-decoration: underline solid rgba(0, 0, 0, 0.6)
+  }
+
+  .d-contents nav > ul > li > a {
+    font-weight: 600;
+  }
+
+  .d-contents nav > ul > li > ul {
+    font-weight: inherit;
+  }
+
+  .d-contents nav > ul > li > ul > li {
+    margin-top: 0.2em;
+  }
+
+
+  .d-contents nav ul {
+    margin-top: 0;
+    margin-bottom: 0.25em;
+  }
+
+  .d-article-with-toc h2:nth-child(2) {
+    margin-top: 0;
+  }
+
+
+  /* Figure */
+
+  .figure {
+    position: relative;
+    margin-bottom: 2.5em;
+    margin-top: 1.5em;
+  }
+
+  .figure img {
+    width: 100%;
+  }
+
+  .figure .caption {
+    color: rgba(0, 0, 0, 0.6);
+    font-size: 12px;
+    line-height: 1.5em;
+  }
+
+  .figure img.external {
+    background: white;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    box-shadow: 0 1px 8px rgba(0, 0, 0, 0.1);
+    padding: 18px;
+    box-sizing: border-box;
+  }
+
+  .figure .caption a {
+    color: rgba(0, 0, 0, 0.6);
+  }
+
+  .figure .caption b,
+  .figure .caption strong, {
+    font-weight: 600;
+    color: rgba(0, 0, 0, 1.0);
+  }
+
+  /* Citations */
+
+  d-article .citation {
+    color: inherit;
+    cursor: inherit;
+  }
+
+  div.hanging-indent{
+    margin-left: 1em; text-indent: -1em;
+  }
+
+  /* Citation hover box */
+
+  .tippy-box[data-theme~=light-border] {
+    background-color: rgba(250, 250, 250, 0.95);
+  }
+
+  .tippy-content > p {
+    margin-bottom: 0;
+    padding: 2px;
+  }
+
+
+  /* Tweak 1000px media break to show more text */
+
+  @media(min-width: 1000px) {
+    .base-grid,
+    distill-header,
+    d-title,
+    d-abstract,
+    d-article,
+    d-appendix,
+    distill-appendix,
+    d-byline,
+    d-footnote-list,
+    d-citation-list,
+    distill-footer {
+      grid-template-columns: [screen-start] 1fr [page-start kicker-start] 80px [middle-start] 50px [text-start kicker-end] 65px 65px 65px 65px 65px 65px 65px 65px [text-end gutter-start] 65px [middle-end] 65px [page-end gutter-end] 1fr [screen-end];
+      grid-column-gap: 16px;
+    }
+
+    .grid {
+      grid-column-gap: 16px;
+    }
+
+    d-article {
+      font-size: 1.06rem;
+      line-height: 1.7em;
+    }
+    figure .caption, .figure .caption, figure figcaption {
+      font-size: 13px;
+    }
+  }
+
+  @media(min-width: 1180px) {
+    .base-grid,
+    distill-header,
+    d-title,
+    d-abstract,
+    d-article,
+    d-appendix,
+    distill-appendix,
+    d-byline,
+    d-footnote-list,
+    d-citation-list,
+    distill-footer {
+      grid-template-columns: [screen-start] 1fr [page-start kicker-start] 60px [middle-start] 60px [text-start kicker-end] 60px 60px 60px 60px 60px 60px 60px 60px [text-end gutter-start] 60px [middle-end] 60px [page-end gutter-end] 1fr [screen-end];
+      grid-column-gap: 32px;
+    }
+
+    .grid {
+      grid-column-gap: 32px;
+    }
+  }
+
+
+  /* Get the citation styles for the appendix (not auto-injected on render since
+     we do our own rendering of the citation appendix) */
+
+  d-appendix .citation-appendix,
+  .d-appendix .citation-appendix {
+    font-size: 11px;
+    line-height: 15px;
+    border-left: 1px solid rgba(0, 0, 0, 0.1);
+    padding-left: 18px;
+    border: 1px solid rgba(0,0,0,0.1);
+    background: rgba(0, 0, 0, 0.02);
+    padding: 10px 18px;
+    border-radius: 3px;
+    color: rgba(150, 150, 150, 1);
+    overflow: hidden;
+    margin-top: -12px;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+  }
+
+  /* Include appendix styles here so they can be overridden */
+
+  d-appendix {
+    contain: layout style;
+    font-size: 0.8em;
+    line-height: 1.7em;
+    margin-top: 60px;
+    margin-bottom: 0;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    color: rgba(0,0,0,0.5);
+    padding-top: 60px;
+    padding-bottom: 48px;
+  }
+
+  d-appendix h3 {
+    grid-column: page-start / text-start;
+    font-size: 15px;
+    font-weight: 500;
+    margin-top: 1em;
+    margin-bottom: 0;
+    color: rgba(0,0,0,0.65);
+  }
+
+  d-appendix h3 + * {
+    margin-top: 1em;
+  }
+
+  d-appendix ol {
+    padding: 0 0 0 15px;
+  }
+
+  @media (min-width: 768px) {
+    d-appendix ol {
+      padding: 0 0 0 30px;
+      margin-left: -30px;
+    }
+  }
+
+  d-appendix li {
+    margin-bottom: 1em;
+  }
+
+  d-appendix a {
+    color: rgba(0, 0, 0, 0.6);
+  }
+
+  d-appendix > * {
+    grid-column: text;
+  }
+
+  d-appendix > d-footnote-list,
+  d-appendix > d-citation-list,
+  d-appendix > distill-appendix {
+    grid-column: screen;
+  }
+
+  /* Include footnote styles here so they can be overridden */
+
+  d-footnote-list {
+    contain: layout style;
+  }
+
+  d-footnote-list > * {
+    grid-column: text;
+  }
+
+  d-footnote-list a.footnote-backlink {
+    color: rgba(0,0,0,0.3);
+    padding-left: 0.5em;
+  }
+
+
+
+  /* Anchor.js */
+
+  .anchorjs-link {
+    /*transition: all .25s linear; */
+    text-decoration: none;
+    border-bottom: none;
+  }
+  *:hover > .anchorjs-link {
+    margin-left: -1.125em !important;
+    text-decoration: none;
+    border-bottom: none;
+  }
+
+  /* Social footer */
+
+  .social_footer {
+    margin-top: 30px;
+    margin-bottom: 0;
+    color: rgba(0,0,0,0.67);
+  }
+
+  .disqus-comments {
+    margin-right: 30px;
+  }
+
+  .disqus-comment-count {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.4);
+    cursor: pointer;
+  }
+
+  #disqus_thread {
+    margin-top: 30px;
+  }
+
+  .article-sharing a {
+    border-bottom: none;
+    margin-right: 8px;
+  }
+
+  .article-sharing a:hover {
+    border-bottom: none;
+  }
+
+  .sidebar-section.subscribe {
+    font-size: 12px;
+    line-height: 1.6em;
+  }
+
+  .subscribe p {
+    margin-bottom: 0.5em;
+  }
+
+
+  .article-footer .subscribe {
+    font-size: 15px;
+    margin-top: 45px;
+  }
+
+
+  .sidebar-section.custom {
+    font-size: 12px;
+    line-height: 1.6em;
+  }
+
+  .custom p {
+    margin-bottom: 0.5em;
+  }
+
+  /* Styles for listing layout (hide title) */
+  .layout-listing d-title, .layout-listing .d-title {
+    display: none;
+  }
+
+  /* Styles for posts lists (not auto-injected) */
+
+
+  .posts-with-sidebar {
+    padding-left: 45px;
+    padding-right: 45px;
+  }
+
+  .posts-list .description h2,
+  .posts-list .description p {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", Arial, sans-serif;
+  }
+
+  .posts-list .description h2 {
+    font-weight: 700;
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+
+  .posts-list h2.post-tag {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+    padding-bottom: 12px;
+  }
+  .posts-list {
+    margin-top: 60px;
+    margin-bottom: 24px;
+  }
+
+  .posts-list .post-preview {
+    text-decoration: none;
+    overflow: hidden;
+    display: block;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    padding: 24px 0;
+  }
+
+  .post-preview-last {
+    border-bottom: none !important;
+  }
+
+  .posts-list .posts-list-caption {
+    grid-column: screen;
+    font-weight: 400;
+  }
+
+  .posts-list .post-preview h2 {
+    margin: 0 0 6px 0;
+    line-height: 1.2em;
+    font-style: normal;
+    font-size: 24px;
+  }
+
+  .posts-list .post-preview p {
+    margin: 0 0 12px 0;
+    line-height: 1.4em;
+    font-size: 16px;
+  }
+
+  .posts-list .post-preview .thumbnail {
+    box-sizing: border-box;
+    margin-bottom: 24px;
+    position: relative;
+    max-width: 500px;
+  }
+  .posts-list .post-preview img {
+    width: 100%;
+    display: block;
+  }
+
+  .posts-list .metadata {
+    font-size: 12px;
+    line-height: 1.4em;
+    margin-bottom: 18px;
+  }
+
+  .posts-list .metadata > * {
+    display: inline-block;
+  }
+
+  .posts-list .metadata .publishedDate {
+    margin-right: 2em;
+  }
+
+  .posts-list .metadata .dt-authors {
+    display: block;
+    margin-top: 0.3em;
+    margin-right: 2em;
+  }
+
+  .posts-list .dt-tags {
+    display: block;
+    line-height: 1em;
+  }
+
+  .posts-list .dt-tags .dt-tag {
+    display: inline-block;
+    color: rgba(0,0,0,0.6);
+    padding: 0.3em 0.4em;
+    margin-right: 0.2em;
+    margin-bottom: 0.4em;
+    font-size: 60%;
+    border: 1px solid rgba(0,0,0,0.2);
+    border-radius: 3px;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+
+  .posts-list img {
+    opacity: 1;
+  }
+
+  .posts-list img[data-src] {
+    opacity: 0;
+  }
+
+  .posts-more {
+    clear: both;
+  }
+
+
+  .posts-sidebar {
+    font-size: 16px;
+  }
+
+  .posts-sidebar h3 {
+    font-size: 16px;
+    margin-top: 0;
+    margin-bottom: 0.5em;
+    font-weight: 400;
+    text-transform: uppercase;
+  }
+
+  .sidebar-section {
+    margin-bottom: 30px;
+  }
+
+  .categories ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .categories li {
+    color: rgba(0, 0, 0, 0.8);
+    margin-bottom: 0;
+  }
+
+  .categories li>a {
+    border-bottom: none;
+  }
+
+  .categories li>a:hover {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.4);
+  }
+
+  .categories .active {
+    font-weight: 600;
+  }
+
+  .categories .category-count {
+    color: rgba(0, 0, 0, 0.4);
+  }
+
+
+  @media(min-width: 768px) {
+    .posts-list .post-preview h2 {
+      font-size: 26px;
+    }
+    .posts-list .post-preview .thumbnail {
+      float: right;
+      width: 30%;
+      margin-bottom: 0;
+    }
+    .posts-list .post-preview .description {
+      float: left;
+      width: 45%;
+    }
+    .posts-list .post-preview .metadata {
+      float: left;
+      width: 20%;
+      margin-top: 8px;
+    }
+    .posts-list .post-preview p {
+      margin: 0 0 12px 0;
+      line-height: 1.5em;
+      font-size: 16px;
+    }
+    .posts-with-sidebar .posts-list {
+      float: left;
+      width: 75%;
+    }
+    .posts-with-sidebar .posts-sidebar {
+      float: right;
+      width: 20%;
+      margin-top: 60px;
+      padding-top: 24px;
+      padding-bottom: 24px;
+    }
+  }
+
+
+  /* Improve display for browsers without grid (IE/Edge <= 15) */
+
+  .downlevel {
+    line-height: 1.6em;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", Arial, sans-serif;
+    margin: 0;
+  }
+
+  .downlevel .d-title {
+    padding-top: 6rem;
+    padding-bottom: 1.5rem;
+  }
+
+  .downlevel .d-title h1 {
+    font-size: 50px;
+    font-weight: 700;
+    line-height: 1.1em;
+    margin: 0 0 0.5rem;
+  }
+
+  .downlevel .d-title p {
+    font-weight: 300;
+    font-size: 1.2rem;
+    line-height: 1.55em;
+    margin-top: 0;
+  }
+
+  .downlevel .d-byline {
+    padding-top: 0.8em;
+    padding-bottom: 0.8em;
+    font-size: 0.8rem;
+    line-height: 1.8em;
+  }
+
+  .downlevel .section-separator {
+    border: none;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+  }
+
+  .downlevel .d-article {
+    font-size: 1.06rem;
+    line-height: 1.7em;
+    padding-top: 1rem;
+    padding-bottom: 2rem;
+  }
+
+
+  .downlevel .d-appendix {
+    padding-left: 0;
+    padding-right: 0;
+    max-width: none;
+    font-size: 0.8em;
+    line-height: 1.7em;
+    margin-bottom: 0;
+    color: rgba(0,0,0,0.5);
+    padding-top: 40px;
+    padding-bottom: 48px;
+  }
+
+  .downlevel .footnotes ol {
+    padding-left: 13px;
+  }
+
+  .downlevel .base-grid,
+  .downlevel .distill-header,
+  .downlevel .d-title,
+  .downlevel .d-abstract,
+  .downlevel .d-article,
+  .downlevel .d-appendix,
+  .downlevel .distill-appendix,
+  .downlevel .d-byline,
+  .downlevel .d-footnote-list,
+  .downlevel .d-citation-list,
+  .downlevel .distill-footer,
+  .downlevel .appendix-bottom,
+  .downlevel .posts-container {
+    padding-left: 40px;
+    padding-right: 40px;
+  }
+
+  @media(min-width: 768px) {
+    .downlevel .base-grid,
+    .downlevel .distill-header,
+    .downlevel .d-title,
+    .downlevel .d-abstract,
+    .downlevel .d-article,
+    .downlevel .d-appendix,
+    .downlevel .distill-appendix,
+    .downlevel .d-byline,
+    .downlevel .d-footnote-list,
+    .downlevel .d-citation-list,
+    .downlevel .distill-footer,
+    .downlevel .appendix-bottom,
+    .downlevel .posts-container {
+    padding-left: 150px;
+    padding-right: 150px;
+    max-width: 900px;
+  }
+  }
+
+  .downlevel pre code {
+    display: block;
+    border-left: 2px solid rgba(0, 0, 0, .1);
+    padding: 0 0 0 20px;
+    font-size: 14px;
+  }
+
+  .downlevel code, .downlevel pre {
+    color: black;
+    background: none;
+    font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+    text-align: left;
+    white-space: pre;
+    word-spacing: normal;
+    word-break: normal;
+    word-wrap: normal;
+    line-height: 1.5;
+
+    -moz-tab-size: 4;
+    -o-tab-size: 4;
+    tab-size: 4;
+
+    -webkit-hyphens: none;
+    -moz-hyphens: none;
+    -ms-hyphens: none;
+    hyphens: none;
+  }
+
+  .downlevel .posts-list .post-preview {
+    color: inherit;
+  }
+
+
+
+  </style>
+
+  <script type="application/javascript">
+
+  function is_downlevel_browser() {
+    if (bowser.isUnsupportedBrowser({ msie: "12", msedge: "16"},
+                                   window.navigator.userAgent)) {
+      return true;
+    } else {
+      return window.load_distill_framework === undefined;
+    }
+  }
+
+  // show body when load is complete
+  function on_load_complete() {
+
+    // add anchors
+    if (window.anchors) {
+      window.anchors.options.placement = 'left';
+      window.anchors.add('d-article > h2, d-article > h3, d-article > h4, d-article > h5');
+    }
+
+
+    // set body to visible
+    document.body.style.visibility = 'visible';
+
+    // force redraw for leaflet widgets
+    if (window.HTMLWidgets) {
+      var maps = window.HTMLWidgets.findAll(".leaflet");
+      $.each(maps, function(i, el) {
+        var map = this.getMap();
+        map.invalidateSize();
+        map.eachLayer(function(layer) {
+          if (layer instanceof L.TileLayer)
+            layer.redraw();
+        });
+      });
+    }
+
+    // trigger 'shown' so htmlwidgets resize
+    $('d-article').trigger('shown');
+  }
+
+  function init_distill() {
+
+    init_common();
+
+    // create front matter
+    var front_matter = $('<d-front-matter></d-front-matter>');
+    $('#distill-front-matter').wrap(front_matter);
+
+    // create d-title
+    $('.d-title').changeElementType('d-title');
+
+    // create d-byline
+    var byline = $('<d-byline></d-byline>');
+    $('.d-byline').replaceWith(byline);
+
+    // create d-article
+    var article = $('<d-article></d-article>');
+    $('.d-article').wrap(article).children().unwrap();
+
+    // move posts container into article
+    $('.posts-container').appendTo($('d-article'));
+
+    // create d-appendix
+    $('.d-appendix').changeElementType('d-appendix');
+
+    // flag indicating that we have appendix items
+    var appendix = $('.appendix-bottom').children('h3').length > 0;
+
+    // replace footnotes with <d-footnote>
+    $('.footnote-ref').each(function(i, val) {
+      appendix = true;
+      var href = $(this).attr('href');
+      var id = href.replace('#', '');
+      var fn = $('#' + id);
+      var fn_p = $('#' + id + '>p');
+      fn_p.find('.footnote-back').remove();
+      var text = fn_p.html();
+      var dtfn = $('<d-footnote></d-footnote>');
+      dtfn.html(text);
+      $(this).replaceWith(dtfn);
+    });
+    // remove footnotes
+    $('.footnotes').remove();
+
+    // move refs into #references-listing
+    $('#references-listing').replaceWith($('#refs'));
+
+    $('h1.appendix, h2.appendix').each(function(i, val) {
+      $(this).changeElementType('h3');
+    });
+    $('h3.appendix').each(function(i, val) {
+      var id = $(this).attr('id');
+      $('.d-contents a[href="#' + id + '"]').parent().remove();
+      appendix = true;
+      $(this).nextUntil($('h1, h2, h3')).addBack().appendTo($('d-appendix'));
+    });
+
+    // show d-appendix if we have appendix content
+    $("d-appendix").css('display', appendix ? 'grid' : 'none');
+
+    // localize layout chunks to just output
+    $('.layout-chunk').each(function(i, val) {
+
+      // capture layout
+      var layout = $(this).attr('data-layout');
+
+      // apply layout to markdown level block elements
+      var elements = $(this).children().not('details, div.sourceCode, pre, script');
+      elements.each(function(i, el) {
+        var layout_div = $('<div class="' + layout + '"></div>');
+        if (layout_div.hasClass('shaded')) {
+          var shaded_content = $('<div class="shaded-content"></div>');
+          $(this).wrap(shaded_content);
+          $(this).parent().wrap(layout_div);
+        } else {
+          $(this).wrap(layout_div);
+        }
+      });
+
+
+      // unwrap the layout-chunk div
+      $(this).children().unwrap();
+    });
+
+    // remove code block used to force  highlighting css
+    $('.distill-force-highlighting-css').parent().remove();
+
+    // remove empty line numbers inserted by pandoc when using a
+    // custom syntax highlighting theme
+    $('code.sourceCode a:empty').remove();
+
+    // load distill framework
+    load_distill_framework();
+
+    // wait for window.distillRunlevel == 4 to do post processing
+    function distill_post_process() {
+
+      if (!window.distillRunlevel || window.distillRunlevel < 4)
+        return;
+
+      // hide author/affiliations entirely if we have no authors
+      var front_matter = JSON.parse($("#distill-front-matter").html());
+      var have_authors = front_matter.authors && front_matter.authors.length > 0;
+      if (!have_authors)
+        $('d-byline').addClass('hidden');
+
+      // article with toc class
+      $('.d-contents').parent().addClass('d-article-with-toc');
+
+      // strip links that point to #
+      $('.authors-affiliations').find('a[href="#"]').removeAttr('href');
+
+      // add orcid ids
+      $('.authors-affiliations').find('.author').each(function(i, el) {
+        var orcid_id = front_matter.authors[i].orcidID;
+        if (orcid_id) {
+          var a = $('<a></a>');
+          a.attr('href', 'https://orcid.org/' + orcid_id);
+          var img = $('<img></img>');
+          img.addClass('orcid-id');
+          img.attr('alt', 'ORCID ID');
+          img.attr('src','data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA2ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo1N0NEMjA4MDI1MjA2ODExOTk0QzkzNTEzRjZEQTg1NyIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDozM0NDOEJGNEZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDozM0NDOEJGM0ZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M1IE1hY2ludG9zaCI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkZDN0YxMTc0MDcyMDY4MTE5NUZFRDc5MUM2MUUwNEREIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjU3Q0QyMDgwMjUyMDY4MTE5OTRDOTM1MTNGNkRBODU3Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+84NovQAAAR1JREFUeNpiZEADy85ZJgCpeCB2QJM6AMQLo4yOL0AWZETSqACk1gOxAQN+cAGIA4EGPQBxmJA0nwdpjjQ8xqArmczw5tMHXAaALDgP1QMxAGqzAAPxQACqh4ER6uf5MBlkm0X4EGayMfMw/Pr7Bd2gRBZogMFBrv01hisv5jLsv9nLAPIOMnjy8RDDyYctyAbFM2EJbRQw+aAWw/LzVgx7b+cwCHKqMhjJFCBLOzAR6+lXX84xnHjYyqAo5IUizkRCwIENQQckGSDGY4TVgAPEaraQr2a4/24bSuoExcJCfAEJihXkWDj3ZAKy9EJGaEo8T0QSxkjSwORsCAuDQCD+QILmD1A9kECEZgxDaEZhICIzGcIyEyOl2RkgwAAhkmC+eAm0TAAAAABJRU5ErkJggg==');
+          a.append(img);
+          $(this).append(a);
+        }
+      });
+
+      // hide elements of author/affiliations grid that have no value
+      function hide_byline_column(caption) {
+        $('d-byline').find('h3:contains("' + caption + '")').parent().css('visibility', 'hidden');
+      }
+
+      // affiliations
+      var have_affiliations = false;
+      for (var i = 0; i<front_matter.authors.length; ++i) {
+        var author = front_matter.authors[i];
+        if (author.affiliation !== "&nbsp;") {
+          have_affiliations = true;
+          break;
+        }
+      }
+      if (!have_affiliations)
+        $('d-byline').find('h3:contains("Affiliations")').css('visibility', 'hidden');
+
+      // published date
+      if (!front_matter.publishedDate)
+        hide_byline_column("Published");
+
+      // document object identifier
+      var doi = $('d-byline').find('h3:contains("DOI")');
+      var doi_p = doi.next().empty();
+      if (!front_matter.doi) {
+        // if we have a citation and valid citationText then link to that
+        if ($('#citation').length > 0 && front_matter.citationText) {
+          doi.html('Citation');
+          $('<a href="#citation"></a>')
+            .text(front_matter.citationText)
+            .appendTo(doi_p);
+        } else {
+          hide_byline_column("DOI");
+        }
+      } else {
+        $('<a></a>')
+           .attr('href', "https://doi.org/" + front_matter.doi)
+           .html(front_matter.doi)
+           .appendTo(doi_p);
+      }
+
+       // change plural form of authors/affiliations
+      if (front_matter.authors.length === 1) {
+        var grid = $('.authors-affiliations');
+        grid.children('h3:contains("Authors")').text('Author');
+        grid.children('h3:contains("Affiliations")').text('Affiliation');
+      }
+
+      // remove d-appendix and d-footnote-list local styles
+      $('d-appendix > style:first-child').remove();
+      $('d-footnote-list > style:first-child').remove();
+
+      // move appendix-bottom entries to the bottom
+      $('.appendix-bottom').appendTo('d-appendix').children().unwrap();
+      $('.appendix-bottom').remove();
+
+      // hoverable references
+      $('span.citation[data-cites]').each(function() {
+        var refs = $(this).attr('data-cites').split(" ");
+        var refHtml = refs.map(function(ref) {
+          return "<p>" + $('#ref-' + ref).html() + "</p>";
+        }).join("\n");
+        window.tippy(this, {
+          allowHTML: true,
+          content: refHtml,
+          maxWidth: 500,
+          interactive: true,
+          interactiveBorder: 10,
+          theme: 'light-border',
+          placement: 'bottom-start'
+        });
+      });
+
+      // clear polling timer
+      clearInterval(tid);
+
+      // show body now that everything is ready
+      on_load_complete();
+    }
+
+    var tid = setInterval(distill_post_process, 50);
+    distill_post_process();
+
+  }
+
+  function init_downlevel() {
+
+    init_common();
+
+     // insert hr after d-title
+    $('.d-title').after($('<hr class="section-separator"/>'));
+
+    // check if we have authors
+    var front_matter = JSON.parse($("#distill-front-matter").html());
+    var have_authors = front_matter.authors && front_matter.authors.length > 0;
+
+    // manage byline/border
+    if (!have_authors)
+      $('.d-byline').remove();
+    $('.d-byline').after($('<hr class="section-separator"/>'));
+    $('.d-byline a').remove();
+
+    // remove toc
+    $('.d-contents').remove();
+
+    // move appendix elements
+    $('h1.appendix, h2.appendix').each(function(i, val) {
+      $(this).changeElementType('h3');
+    });
+    $('h3.appendix').each(function(i, val) {
+      $(this).nextUntil($('h1, h2, h3')).addBack().appendTo($('.d-appendix'));
+    });
+
+
+    // inject headers into references and footnotes
+    var refs_header = $('<h3></h3>');
+    refs_header.text('References');
+    $('#refs').prepend(refs_header);
+
+    var footnotes_header = $('<h3></h3');
+    footnotes_header.text('Footnotes');
+    $('.footnotes').children('hr').first().replaceWith(footnotes_header);
+
+    // move appendix-bottom entries to the bottom
+    $('.appendix-bottom').appendTo('.d-appendix').children().unwrap();
+    $('.appendix-bottom').remove();
+
+    // remove appendix if it's empty
+    if ($('.d-appendix').children().length === 0)
+      $('.d-appendix').remove();
+
+    // prepend separator above appendix
+    $('.d-appendix').before($('<hr class="section-separator" style="clear: both"/>'));
+
+    // trim code
+    $('pre>code').each(function(i, val) {
+      $(this).html($.trim($(this).html()));
+    });
+
+    // move posts-container right before article
+    $('.posts-container').insertBefore($('.d-article'));
+
+    $('body').addClass('downlevel');
+
+    on_load_complete();
+  }
+
+
+  function init_common() {
+
+    // jquery plugin to change element types
+    (function($) {
+      $.fn.changeElementType = function(newType) {
+        var attrs = {};
+
+        $.each(this[0].attributes, function(idx, attr) {
+          attrs[attr.nodeName] = attr.nodeValue;
+        });
+
+        this.replaceWith(function() {
+          return $("<" + newType + "/>", attrs).append($(this).contents());
+        });
+      };
+    })(jQuery);
+
+    // prevent underline for linked images
+    $('a > img').parent().css({'border-bottom' : 'none'});
+
+    // mark non-body figures created by knitr chunks as 100% width
+    $('.layout-chunk').each(function(i, val) {
+      var figures = $(this).find('img, .html-widget');
+      if ($(this).attr('data-layout') !== "l-body") {
+        figures.css('width', '100%');
+      } else {
+        figures.css('max-width', '100%');
+        figures.filter("[width]").each(function(i, val) {
+          var fig = $(this);
+          fig.css('width', fig.attr('width') + 'px');
+        });
+
+      }
+    });
+
+    // auto-append index.html to post-preview links in file: protocol
+    // and in rstudio ide preview
+    $('.post-preview').each(function(i, val) {
+      if (window.location.protocol === "file:")
+        $(this).attr('href', $(this).attr('href') + "index.html");
+    });
+
+    // get rid of index.html references in header
+    if (window.location.protocol !== "file:") {
+      $('.distill-site-header a[href]').each(function(i,val) {
+        $(this).attr('href', $(this).attr('href').replace("index.html", "./"));
+      });
+    }
+
+    // add class to pandoc style tables
+    $('tr.header').parent('thead').parent('table').addClass('pandoc-table');
+    $('.kable-table').children('table').addClass('pandoc-table');
+
+    // add figcaption style to table captions
+    $('caption').parent('table').addClass("figcaption");
+
+    // initialize posts list
+    if (window.init_posts_list)
+      window.init_posts_list();
+
+    // implmement disqus comment link
+    $('.disqus-comment-count').click(function() {
+      window.headroom_prevent_pin = true;
+      $('#disqus_thread').toggleClass('hidden');
+      if (!$('#disqus_thread').hasClass('hidden')) {
+        var offset = $(this).offset();
+        $(window).resize();
+        $('html, body').animate({
+          scrollTop: offset.top - 35
+        });
+      }
+    });
+  }
+
+  document.addEventListener('DOMContentLoaded', function() {
+    if (is_downlevel_browser())
+      init_downlevel();
+    else
+      window.addEventListener('WebComponentsReady', init_distill);
+  });
+
+  </script>
+
+  <!--/radix_placeholder_distill-->
+  <script src="stacking-with-tidymodels-and-caret_files/header-attrs-2.8/header-attrs.js"></script>
+  <script src="stacking-with-tidymodels-and-caret_files/jquery-1.11.3/jquery.min.js"></script>
+  <script src="stacking-with-tidymodels-and-caret_files/popper-2.6.0/popper.min.js"></script>
+  <link href="stacking-with-tidymodels-and-caret_files/tippy-6.2.7/tippy.css" rel="stylesheet" />
+  <link href="stacking-with-tidymodels-and-caret_files/tippy-6.2.7/tippy-light-border.css" rel="stylesheet" />
+  <script src="stacking-with-tidymodels-and-caret_files/tippy-6.2.7/tippy.umd.min.js"></script>
+  <script src="stacking-with-tidymodels-and-caret_files/anchor-4.2.2/anchor.min.js"></script>
+  <script src="stacking-with-tidymodels-and-caret_files/bowser-1.9.3/bowser.min.js"></script>
+  <script src="stacking-with-tidymodels-and-caret_files/webcomponents-2.0.0/webcomponents.js"></script>
+  <script src="stacking-with-tidymodels-and-caret_files/distill-2.2.21/template.v2.js"></script>
+  <!--radix_placeholder_site_in_header-->
+  <!--/radix_placeholder_site_in_header-->
+
+
+</head>
+
+<body>
+
+<!--radix_placeholder_front_matter-->
+
+<script id="distill-front-matter" type="text/json">
+{"title":"stacking with tidymodels and caret","description":"tidymodels, caret을 이용한 stacking","authors":[{"author":"dondon","authorURL":{},"affiliation":"&nbsp;","affiliationURL":"#","orcidID":""}],"publishedDate":"2021-06-01T00:00:00.000+09:00","citationText":"dondon, 2021"}
+</script>
+
+<!--/radix_placeholder_front_matter-->
+<!--radix_placeholder_navigation_before_body-->
+<!--/radix_placeholder_navigation_before_body-->
+<!--radix_placeholder_site_before_body-->
+<!--/radix_placeholder_site_before_body-->
+
+<div class="d-title">
+<h1>stacking with tidymodels and caret</h1>
+<!--radix_placeholder_categories-->
+<div class="dt-tags">
+<div class="dt=tag">Machine learning</div>
+<div class="dt=tag">tidymodels</div>
+<div class="dt=tag">caret</div>
+<div class="dt=tag">R</div>
+</div>
+<!--/radix_placeholder_categories-->
+<p><p>tidymodels, caret을 이용한 stacking</p></p>
+</div>
+
+<div class="d-byline">
+  dondon true 
+  
+<br/>2021-06-01
+</div>
+
+<div class="d-article">
+<div class="d-contents d-contents-float">
+<nav class="l-text toc figcaption" id="TOC">
+<h3>Contents</h3>
+<ul>
+<li><a href="#machine-learning-tutorial">Machine learning tutorial</a>
+<ul>
+<li><a href="#packages">packages</a></li>
+</ul></li>
+<li><a href="#시계열-온도-예측-모델">1. 시계열 온도 예측 모델</a>
+<ul>
+<li><a href="#data-description">Data description</a></li>
+<li><a href="#data-preprocessing">Data preprocessing</a>
+<ul>
+<li><a href="#데이터-불러오기">데이터 불러오기</a></li>
+<li><a href="#변수-속성-확인">변수 속성 확인</a></li>
+<li><a href="#변수-삭제-날짜-변수-처리">변수 삭제, 날짜 변수 처리</a></li>
+<li><a href="#결측치-확인">결측치 확인</a></li>
+<li><a href="#traintest-split">train/test split</a></li>
+</ul></li>
+<li><a href="#random-forest-model-fitting">Random forest Model fitting</a>
+<ul>
+<li><a href="#recipe">Recipe</a></li>
+<li><a href="#create-cv">create cv</a></li>
+<li><a href="#model-fitting">Model fitting</a></li>
+<li><a href="#model-performance-check">Model performance check</a></li>
+<li><a href="#feature-importance-plot">Feature importance plot</a></li>
+</ul></li>
+<li><a href="#svm-model-fitting">SVM Model fitting</a>
+<ul>
+<li><a href="#model-fitting-1">Model fitting</a></li>
+<li><a href="#model-performance-check-1">Model performance check</a></li>
+<li><a href="#feature-importance-plot-1">Feature importance plot</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#추가-모델-fitting">추가 모델 fitting</a>
+<ul>
+<li><a href="#trace-plot">trace plot</a></li>
+<li><a href="#stacking-with-tidymodels">stacking with tidymodels</a></li>
+<li><a href="#support-vector-machine-svm">Support Vector Machine (SVM)</a></li>
+<li><a href="#random-forest-rf">Random Forest (RF)</a></li>
+<li><a href="#두-모델-중에-어떤-모델이-좋은지-선택하고-설명하기">두 모델 중에 어떤 모델이 좋은지 선택하고 설명하기</a></li>
+<li><a href="#선택한-모델의-한계점을-설명하고-한계점을-해결할-방법-설명하기">선택한 모델의 한계점을 설명하고 한계점을 해결할 방법 설명하기</a></li>
+</ul></li>
+<li><a href="#tidymodels-설치-안될-경우..-제발-설치되라..">tidymodels 설치 안될 경우.. (제발 설치되라..)</a>
+<ul>
+<li><a href="#변수-중요도-그림">변수 중요도 그림</a></li>
+<li><a href="#caret을-이용한-모형-적합">Caret을 이용한 모형 적합</a></li>
+<li><a href="#stacking-ensemble">stacking ensemble</a>
+<ul>
+<li><a href="#참고자료">참고자료</a></li>
+</ul></li>
+</ul></li>
+</ul>
+</nav>
+</div>
+<h1 id="machine-learning-tutorial">Machine learning tutorial</h1>
+<p>adp 시험을 대비해서 대표적인 machine learning 모델 몇 가지를 골라서 tutorial 자료를 만들고자 한다. tidymodels 의 workflow는 패키지가 달라도 항상 동일하기 때문에 튜닝 파라미터를 제외하면 달라지는건 없는 것 같다. 시험이 3일 남았지만 이번 기회에 한번 정리를 해본다(ADP 관련 내용은 관련 후기 글을 보고 비슷하게 따라해본 내용이므로 참고만 하는 것이 좋다).</p>
+<h2 id="packages">packages</h2>
+<h1 id="시계열-온도-예측-모델">1. 시계열 온도 예측 모델</h1>
+<ul>
+<li><p>데이터 전처리 : 결측값 처리, 필요없는 칼럼 삭제, 데이터 전처리가 되었다는 증명, train/test 분리</p></li>
+<li><p>Random forest 모델 적합</p></li>
+<li><p>Random forest 예측 한계선을 설정하는 방법을 말하고 어떤 방법을 써야하는지 설명</p></li>
+<li><p>Random forest를 활용해 예측 및 검증, 파라미터 튜닝</p></li>
+<li><p>변수 중요도 시각화</p></li>
+<li><p>svm을 이용해 예측 및 검증, 파라미터 튜닝</p></li>
+<li><p>변수 중요도 시각화</p></li>
+<li><p>svm과 rf 장·단점 설명하기</p></li>
+<li><p>두 모델 중에 어떤 모델이 좋은지 선택하고 설명하기</p></li>
+<li><p>선택한 모델의 한계점을 설명하고 한계점을 해결할 방법 설명하기</p></li>
+</ul>
+<h2 id="data-description">Data description</h2>
+<ul>
+<li>temp_2 : 2일 전 최대 온도</li>
+<li>temp_1 : 1일 전 최대 온도</li>
+<li>average : 과거 평균 최대 온도</li>
+<li>actual : 실제 최대 온도</li>
+<li>friend : 친구의 예측값, random number</li>
+<li>기타 등등..</li>
+</ul>
+<h2 id="data-preprocessing">Data preprocessing</h2>
+<h3 id="데이터-불러오기">데이터 불러오기</h3>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>dat</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://Rdatatable.gitlab.io/data.table/reference/fread.html'>fread</a></span><span class='op'>(</span><span class='st'>'temps.csv'</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='va'>dat</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>   year month day week temp_2 temp_1 average actual forecast_noaa
+1: 2016     1   1  Fri     45     45    45.6     45            43
+2: 2016     1   2  Sat     44     45    45.7     44            41
+3: 2016     1   3  Sun     45     44    45.8     41            43
+4: 2016     1   4  Mon     44     41    45.9     40            44
+5: 2016     1   5 Tues     41     40    46.0     44            46
+6: 2016     1   6  Wed     40     44    46.1     51            43
+   forecast_acc forecast_under friend
+1:           50             44     29
+2:           50             44     61
+3:           46             47     56
+4:           48             46     53
+5:           46             46     41
+6:           49             48     40</code></pre>
+</div>
+<h3 id="변수-속성-확인">변수 속성 확인</h3>
+<p>날짜 변수의 속성이 integer이므로 변환이 필요해보인다.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'>glimpse</span><span class='op'>(</span><span class='va'>dat</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>Rows: 348
+Columns: 12
+$ year           &lt;int&gt; 2016, 2016, 2016, 2016, 2016, 2016, 2016, 201~
+$ month          &lt;int&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, ~
+$ day            &lt;int&gt; 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14~
+$ week           &lt;chr&gt; &quot;Fri&quot;, &quot;Sat&quot;, &quot;Sun&quot;, &quot;Mon&quot;, &quot;Tues&quot;, &quot;Wed&quot;, &quot;T~
+$ temp_2         &lt;int&gt; 45, 44, 45, 44, 41, 40, 44, 51, 45, 48, 50, 5~
+$ temp_1         &lt;int&gt; 45, 45, 44, 41, 40, 44, 51, 45, 48, 50, 52, 4~
+$ average        &lt;dbl&gt; 45.6, 45.7, 45.8, 45.9, 46.0, 46.1, 46.2, 46.~
+$ actual         &lt;int&gt; 45, 44, 41, 40, 44, 51, 45, 48, 50, 52, 45, 4~
+$ forecast_noaa  &lt;int&gt; 43, 41, 43, 44, 46, 43, 45, 43, 46, 45, 42, 4~
+$ forecast_acc   &lt;int&gt; 50, 50, 46, 48, 46, 49, 49, 47, 50, 48, 48, 5~
+$ forecast_under &lt;int&gt; 44, 44, 47, 46, 46, 48, 46, 46, 45, 48, 48, 4~
+$ friend         &lt;int&gt; 29, 61, 56, 53, 41, 40, 38, 34, 47, 49, 39, 6~</code></pre>
+</div>
+<h3 id="변수-삭제-날짜-변수-처리">변수 삭제, 날짜 변수 처리</h3>
+<p>year, month, day를 하나로 묶어서 date라는 파생변수를 만들었다. 파생 변수를 만들지 않고, 날짜 변수 각각을 lubridate로 처리하려고 하면 골치아프다. 파생변수 date를 이용해서 date를 다시 만들고, year 변수의 경우 2016년만 있기 때문에 제외했다. week 변수의 경우 factor로 변경했다.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>dat</span> <span class='op'>%&gt;%</span> <span class='fu'>select</span><span class='op'>(</span><span class='op'>-</span><span class='fu'>starts_with</span><span class='op'>(</span><span class='st'>'forecast_'</span><span class='op'>)</span>, <span class='op'>-</span><span class='va'>friend</span><span class='op'>)</span> <span class='op'>%&gt;%</span> 
+                <span class='fu'>mutate</span><span class='op'>(</span>date <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span><span class='op'>(</span><span class='va'>year</span>, <span class='st'>'-'</span>, <span class='va'>month</span>, <span class='st'>'-'</span>, <span class='va'>day</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span> 
+                <span class='fu'>select</span><span class='op'>(</span><span class='op'>-</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='va'>year</span>, <span class='va'>month</span>, <span class='va'>day</span>, <span class='va'>week</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span> 
+                <span class='fu'>mutate</span><span class='op'>(</span>date <span class='op'>=</span> <span class='fu'><a href='http://lubridate.tidyverse.org/reference/ymd.html'>ymd</a></span><span class='op'>(</span><span class='va'>date</span><span class='op'>)</span>, 
+                       year <span class='op'>=</span> <span class='fu'><a href='http://lubridate.tidyverse.org/reference/year.html'>year</a></span><span class='op'>(</span><span class='va'>date</span><span class='op'>)</span>, 
+                       month <span class='op'>=</span> <span class='fu'><a href='http://lubridate.tidyverse.org/reference/month.html'>month</a></span><span class='op'>(</span><span class='va'>date</span><span class='op'>)</span>, 
+                       day <span class='op'>=</span> <span class='fu'><a href='http://lubridate.tidyverse.org/reference/day.html'>day</a></span><span class='op'>(</span><span class='va'>date</span><span class='op'>)</span>, 
+                       week <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/weekday.POSIXt.html'>weekdays</a></span><span class='op'>(</span><span class='va'>date</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span> 
+                <span class='fu'>select</span><span class='op'>(</span><span class='op'>-</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='va'>date</span>, <span class='va'>year</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span> 
+                <span class='fu'>select</span><span class='op'>(</span><span class='va'>month</span>, <span class='va'>week</span>, <span class='va'>day</span>, <span class='fu'>everything</span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span> 
+                <span class='fu'>mutate</span><span class='op'>(</span>week <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/factor.html'>as.factor</a></span><span class='op'>(</span><span class='va'>week</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>-&gt;</span> <span class='va'>dat</span>
+                
+<span class='fu'>glimpse</span><span class='op'>(</span><span class='va'>dat</span><span class='op'>)</span>                
+</code></pre>
+</div>
+<pre><code>Rows: 348
+Columns: 7
+$ month   &lt;int&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1~
+$ week    &lt;fct&gt; 금요일, 토요일, 일요일, 월요일, 화요일, 수요일, 목요~
+$ day     &lt;int&gt; 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 1~
+$ temp_2  &lt;int&gt; 45, 44, 45, 44, 41, 40, 44, 51, 45, 48, 50, 52, 45, ~
+$ temp_1  &lt;int&gt; 45, 45, 44, 41, 40, 44, 51, 45, 48, 50, 52, 45, 49, ~
+$ average &lt;dbl&gt; 45.6, 45.7, 45.8, 45.9, 46.0, 46.1, 46.2, 46.3, 46.4~
+$ actual  &lt;int&gt; 45, 44, 41, 40, 44, 51, 45, 48, 50, 52, 45, 49, 55, ~</code></pre>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>dat</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>     month            week         day            temp_2      
+ Min.   : 1.000   금요일:50   Min.   : 1.00   Min.   : 35.00  
+ 1st Qu.: 3.000   목요일:49   1st Qu.: 8.00   1st Qu.: 54.00  
+ Median : 6.000   수요일:49   Median :15.00   Median : 62.50  
+ Mean   : 6.477   월요일:49   Mean   :15.51   Mean   : 62.65  
+ 3rd Qu.:10.000   일요일:49   3rd Qu.:23.00   3rd Qu.: 71.00  
+ Max.   :12.000   토요일:50   Max.   :31.00   Max.   :117.00  
+                  화요일:52                                   
+     temp_1         average          actual     
+ Min.   : 35.0   Min.   :45.10   Min.   :35.00  
+ 1st Qu.: 54.0   1st Qu.:49.98   1st Qu.:54.00  
+ Median : 62.5   Median :58.20   Median :62.50  
+ Mean   : 62.7   Mean   :59.76   Mean   :62.54  
+ 3rd Qu.: 71.0   3rd Qu.:69.03   3rd Qu.:71.00  
+ Max.   :117.0   Max.   :77.40   Max.   :92.00  
+                                                </code></pre>
+</div>
+<h3 id="결측치-확인">결측치 확인</h3>
+<p>n_missing을 보면 결측치는 존재하지 않는 것으로 확인된다.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'>skimr</span><span class='fu'>::</span><span class='fu'><a href='https://docs.ropensci.org/skimr/reference/skim.html'>skim</a></span><span class='op'>(</span><span class='va'>dat</span><span class='op'>)</span>
+</code></pre>
+</div>
+<table>
+<caption><span id="tab:unnamed-chunk-5">Table 1: </span>Data summary</caption>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Name</td>
+<td style="text-align: left;">dat</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Number of rows</td>
+<td style="text-align: left;">348</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Number of columns</td>
+<td style="text-align: left;">7</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Key</td>
+<td style="text-align: left;">NULL</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">_______________________</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Column type frequency:</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">factor</td>
+<td style="text-align: left;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">numeric</td>
+<td style="text-align: left;">6</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">________________________</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Group variables</td>
+<td style="text-align: left;">None</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Variable type: factor</strong></p>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;">skim_variable</th>
+<th style="text-align: right;">n_missing</th>
+<th style="text-align: right;">complete_rate</th>
+<th style="text-align: left;">ordered</th>
+<th style="text-align: right;">n_unique</th>
+<th style="text-align: left;">top_counts</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">week</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: left;">FALSE</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: left;">화요일: 52, 금요일: 50, 토요일: 50, 목요일: 49</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Variable type: numeric</strong></p>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;">skim_variable</th>
+<th style="text-align: right;">n_missing</th>
+<th style="text-align: right;">complete_rate</th>
+<th style="text-align: right;">mean</th>
+<th style="text-align: right;">sd</th>
+<th style="text-align: right;">p0</th>
+<th style="text-align: right;">p25</th>
+<th style="text-align: right;">p50</th>
+<th style="text-align: right;">p75</th>
+<th style="text-align: right;">p100</th>
+<th style="text-align: left;">hist</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">month</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">6.48</td>
+<td style="text-align: right;">3.50</td>
+<td style="text-align: right;">1.0</td>
+<td style="text-align: right;">3.00</td>
+<td style="text-align: right;">6.0</td>
+<td style="text-align: right;">10.00</td>
+<td style="text-align: right;">12.0</td>
+<td style="text-align: left;">▇▆▆▅▇</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">day</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">15.51</td>
+<td style="text-align: right;">8.77</td>
+<td style="text-align: right;">1.0</td>
+<td style="text-align: right;">8.00</td>
+<td style="text-align: right;">15.0</td>
+<td style="text-align: right;">23.00</td>
+<td style="text-align: right;">31.0</td>
+<td style="text-align: left;">▇▇▆▆▆</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">temp_2</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">62.65</td>
+<td style="text-align: right;">12.17</td>
+<td style="text-align: right;">35.0</td>
+<td style="text-align: right;">54.00</td>
+<td style="text-align: right;">62.5</td>
+<td style="text-align: right;">71.00</td>
+<td style="text-align: right;">117.0</td>
+<td style="text-align: left;">▃▇▆▁▁</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">temp_1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">62.70</td>
+<td style="text-align: right;">12.12</td>
+<td style="text-align: right;">35.0</td>
+<td style="text-align: right;">54.00</td>
+<td style="text-align: right;">62.5</td>
+<td style="text-align: right;">71.00</td>
+<td style="text-align: right;">117.0</td>
+<td style="text-align: left;">▃▇▆▁▁</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">average</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">59.76</td>
+<td style="text-align: right;">10.53</td>
+<td style="text-align: right;">45.1</td>
+<td style="text-align: right;">49.98</td>
+<td style="text-align: right;">58.2</td>
+<td style="text-align: right;">69.03</td>
+<td style="text-align: right;">77.4</td>
+<td style="text-align: left;">▇▅▃▅▆</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">actual</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">62.54</td>
+<td style="text-align: right;">11.79</td>
+<td style="text-align: right;">35.0</td>
+<td style="text-align: right;">54.00</td>
+<td style="text-align: right;">62.5</td>
+<td style="text-align: right;">71.00</td>
+<td style="text-align: right;">92.0</td>
+<td style="text-align: left;">▂▆▇▅▂</td>
+</tr>
+</tbody>
+</table>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>dat</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://rdrr.io/r/base/NA.html'>is.na</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://rdrr.io/r/base/colSums.html'>colSums</a></span><span class='op'>(</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>  month    week     day  temp_2  temp_1 average  actual 
+      0       0       0       0       0       0       0 </code></pre>
+</div>
+<h3 id="traintest-split">train/test split</h3>
+<p>train/test를 7:3 비율로 나눠주었다.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span><span class='op'>(</span><span class='fl'>123</span><span class='op'>)</span>
+<span class='va'>splits</span> <span class='op'>&lt;-</span> <span class='fu'>initial_split</span><span class='op'>(</span><span class='va'>dat</span>, prop <span class='op'>=</span> <span class='fl'>0.7</span>, strata <span class='op'>=</span> <span class='va'>actual</span><span class='op'>)</span>
+<span class='va'>train</span> <span class='op'>&lt;-</span> <span class='fu'>training</span><span class='op'>(</span><span class='va'>splits</span><span class='op'>)</span>
+<span class='va'>test</span> <span class='op'>&lt;-</span> <span class='fu'>testing</span><span class='op'>(</span><span class='va'>splits</span><span class='op'>)</span>
+</code></pre>
+</div>
+</div>
+<h2 id="random-forest-model-fitting">Random forest Model fitting</h2>
+<h3 id="recipe">Recipe</h3>
+<p>week 변수를 one-hot encoding 으로 변환해주었다.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>model_rec</span> <span class='op'>&lt;-</span> <span class='va'>train</span> <span class='op'>%&gt;%</span> <span class='fu'>recipe</span><span class='op'>(</span><span class='va'>actual</span><span class='op'>~</span><span class='va'>.</span><span class='op'>)</span> <span class='op'>%&gt;%</span> 
+                <span class='fu'>step_dummy</span><span class='op'>(</span><span class='va'>week</span>, one_hot <span class='op'>=</span> <span class='cn'>T</span><span class='op'>)</span> 
+
+<span class='va'>train2</span> <span class='op'>&lt;-</span> <span class='va'>model_rec</span> <span class='op'>%&gt;%</span> <span class='fu'>prep</span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span> <span class='fu'>juice</span><span class='op'>(</span><span class='op'>)</span>
+<span class='va'>test2</span> <span class='op'>&lt;-</span> <span class='va'>model_rec</span> <span class='op'>%&gt;%</span> <span class='fu'>prep</span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span> <span class='fu'>bake</span><span class='op'>(</span>new_data <span class='op'>=</span> <span class='va'>test</span><span class='op'>)</span>
+</code></pre>
+</div>
+</div>
+<h3 id="create-cv">create cv</h3>
+<p>모델 평가를 위해서 validation set을 생성해주었다.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span><span class='op'>(</span><span class='fl'>123</span><span class='op'>)</span>
+<span class='va'>vb_folds</span> <span class='op'>&lt;-</span> <span class='fu'>vfold_cv</span><span class='op'>(</span><span class='va'>train2</span>, v <span class='op'>=</span> <span class='fl'>3</span>, strata <span class='op'>=</span> <span class='va'>actual</span><span class='op'>)</span>
+</code></pre>
+</div>
+</div>
+<h3 id="model-fitting">Model fitting</h3>
+<p>random forest를 적합시키고 파라미터 튜닝을 실시했다.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>rf_spec</span> <span class='op'>&lt;-</span> <span class='fu'>rand_forest</span><span class='op'>(</span>
+                mtry <span class='op'>=</span> <span class='fu'>tune</span><span class='op'>(</span><span class='op'>)</span>, 
+                trees <span class='op'>=</span> <span class='fl'>100</span><span class='op'>)</span> <span class='op'>%&gt;%</span> 
+                <span class='fu'>set_mode</span><span class='op'>(</span><span class='st'>'regression'</span><span class='op'>)</span> <span class='op'>%&gt;%</span> 
+                <span class='fu'>set_engine</span><span class='op'>(</span><span class='st'>'ranger'</span><span class='op'>)</span>
+
+<span class='va'>rf_wf</span> <span class='op'>&lt;-</span> <span class='fu'>workflow</span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span> 
+                <span class='fu'>add_formula</span><span class='op'>(</span><span class='va'>actual</span><span class='op'>~</span><span class='va'>.</span><span class='op'>)</span> <span class='op'>%&gt;%</span> 
+                <span class='fu'>add_model</span><span class='op'>(</span><span class='va'>rf_spec</span><span class='op'>)</span>
+
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://github.com/collectivemedia/tictoc'>tictoc</a></span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/pkg/tictoc/man/tic.html'>tic</a></span><span class='op'>(</span><span class='op'>)</span>
+
+
+<span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span><span class='op'>(</span><span class='fl'>1234</span><span class='op'>)</span>
+<span class='va'>rf_res</span> <span class='op'>&lt;-</span> <span class='fu'>tune_grid</span><span class='op'>(</span>
+    <span class='va'>rf_wf</span>,  
+    resamples <span class='op'>=</span> <span class='va'>vb_folds</span>, 
+    grid <span class='op'>=</span> <span class='fl'>30</span>,
+    metrics <span class='op'>=</span> <span class='fu'>metric_set</span><span class='op'>(</span><span class='va'>rmse</span><span class='op'>)</span>, 
+    control <span class='op'>=</span> <span class='fu'>control_grid</span><span class='op'>(</span>save_pred <span class='op'>=</span> <span class='cn'>T</span><span class='op'>)</span>  
+<span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/pkg/tictoc/man/tic.html'>toc</a></span><span class='op'>(</span><span class='op'>)</span> <span class='co'># 10.5 sec</span>
+</code></pre>
+</div>
+<pre><code>10.72 sec elapsed</code></pre>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>best_param_rf</span> <span class='op'>&lt;-</span> <span class='fu'>select_best</span><span class='op'>(</span><span class='va'>rf_res</span><span class='op'>)</span> 
+<span class='va'>final_rf</span> <span class='op'>&lt;-</span> <span class='fu'>finalize_workflow</span><span class='op'>(</span><span class='va'>rf_wf</span>, <span class='va'>best_param_rf</span><span class='op'>)</span>
+<span class='va'>final_rf</span>
+</code></pre>
+</div>
+<pre><code>== Workflow ==========================================================
+Preprocessor: Formula
+Model: rand_forest()
+
+-- Preprocessor ------------------------------------------------------
+actual ~ .
+
+-- Model -------------------------------------------------------------
+Random Forest Model Specification (regression)
+
+Main Arguments:
+  mtry = 4
+  trees = 100
+
+Computational engine: ranger </code></pre>
+</div>
+<h3 id="model-performance-check">Model performance check</h3>
+<p>모델 성능을 확인해보았다.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>final_rf_model</span> <span class='op'>&lt;-</span> <span class='fu'>finalize_model</span><span class='op'>(</span><span class='va'>rf_spec</span>, <span class='va'>best_param_rf</span><span class='op'>)</span> 
+<span class='va'>final_rf_workflow</span> <span class='op'>&lt;-</span> <span class='va'>rf_wf</span> <span class='op'>%&gt;%</span> <span class='fu'>update_model</span><span class='op'>(</span><span class='va'>final_rf_model</span><span class='op'>)</span>
+<span class='va'>rf_fit</span> <span class='op'>&lt;-</span> <span class='fu'>fit</span><span class='op'>(</span><span class='va'>final_rf_workflow</span>, data <span class='op'>=</span> <span class='va'>train2</span><span class='op'>)</span>
+
+<span class='va'>pred</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/predict.html'>predict</a></span><span class='op'>(</span><span class='va'>rf_fit</span>, <span class='va'>test2</span> <span class='op'>%&gt;%</span> <span class='fu'>select</span><span class='op'>(</span><span class='op'>-</span><span class='va'>actual</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>actual</span> <span class='op'>&lt;-</span> <span class='va'>test2</span><span class='op'>$</span><span class='va'>actual</span>
+
+<span class='va'>results</span> <span class='op'>&lt;-</span> <span class='fu'>tibble</span><span class='op'>(</span><span class='va'>pred</span>, <span class='va'>actual</span><span class='op'>)</span>
+
+<span class='fu'>metrics</span><span class='op'>(</span><span class='va'>results</span>, truth <span class='op'>=</span> <span class='va'>actual</span>, estimate <span class='op'>=</span> <span class='va'>.pred</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code># A tibble: 3 x 3
+  .metric .estimator .estimate
+  &lt;chr&gt;   &lt;chr&gt;          &lt;dbl&gt;
+1 rmse    standard       4.94 
+2 rsq     standard       0.828
+3 mae     standard       3.84 </code></pre>
+</div>
+<h3 id="feature-importance-plot">Feature importance plot</h3>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://github.com/koalaverse/vip/'>vip</a></span><span class='op'>)</span>
+
+<span class='va'>imp_spec</span> <span class='op'>&lt;-</span> <span class='va'>rf_spec</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>finalize_model</span><span class='op'>(</span><span class='va'>best_param_rf</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>set_engine</span><span class='op'>(</span><span class='st'>"ranger"</span>, importance <span class='op'>=</span> <span class='st'>"permutation"</span><span class='op'>)</span>
+
+<span class='fu'>workflow</span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>add_recipe</span><span class='op'>(</span><span class='va'>model_rec</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>add_model</span><span class='op'>(</span><span class='va'>imp_spec</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>fit</span><span class='op'>(</span><span class='va'>train</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>pull_workflow_fit</span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/pkg/vip/man/vip.html'>vip</a></span><span class='op'>(</span>aesthetics <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>alpha <span class='op'>=</span> <span class='fl'>0.8</span>, fill <span class='op'>=</span> <span class='st'>"midnightblue"</span><span class='op'>)</span><span class='op'>)</span>
+</code></pre>
+</div>
+<p><img src="stacking-with-tidymodels-and-caret_files/figure-html5/unnamed-chunk-11-1.png" width="624" /></p>
+</div>
+<h2 id="svm-model-fitting">SVM Model fitting</h2>
+<p>SVM 모델을 적합하고 파라미터 튜닝을 실시했다.</p>
+<h3 id="model-fitting-1">Model fitting</h3>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>svm_spec</span> <span class='op'>&lt;-</span> <span class='fu'>svm_poly</span><span class='op'>(</span>cost <span class='op'>=</span> <span class='fu'>tune</span><span class='op'>(</span><span class='op'>)</span>, degree <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span> <span class='op'>%&gt;%</span> 
+    <span class='fu'>set_engine</span><span class='op'>(</span><span class='st'>'kernlab'</span><span class='op'>)</span> <span class='op'>%&gt;%</span> 
+    <span class='fu'>set_mode</span><span class='op'>(</span><span class='st'>'regression'</span><span class='op'>)</span>
+
+<span class='va'>svm_wf</span> <span class='op'>&lt;-</span> <span class='fu'>workflow</span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span> 
+                <span class='fu'>add_formula</span><span class='op'>(</span><span class='va'>actual</span><span class='op'>~</span><span class='va'>.</span><span class='op'>)</span> <span class='op'>%&gt;%</span> 
+                <span class='fu'>add_model</span><span class='op'>(</span><span class='va'>svm_spec</span><span class='op'>)</span>
+
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://github.com/collectivemedia/tictoc'>tictoc</a></span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/pkg/tictoc/man/tic.html'>tic</a></span><span class='op'>(</span><span class='op'>)</span>
+
+<span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span><span class='op'>(</span><span class='fl'>1234</span><span class='op'>)</span>
+<span class='va'>svm_res</span> <span class='op'>&lt;-</span> <span class='fu'>tune_grid</span><span class='op'>(</span>
+    <span class='va'>svm_wf</span>,  
+    resamples <span class='op'>=</span> <span class='va'>vb_folds</span>, 
+    grid <span class='op'>=</span> <span class='fl'>30</span>,
+    metrics <span class='op'>=</span> <span class='fu'>metric_set</span><span class='op'>(</span><span class='va'>rmse</span><span class='op'>)</span>, 
+    control <span class='op'>=</span> <span class='fu'>control_grid</span><span class='op'>(</span>save_pred <span class='op'>=</span> <span class='cn'>T</span><span class='op'>)</span>  
+<span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/pkg/tictoc/man/tic.html'>toc</a></span><span class='op'>(</span><span class='op'>)</span> <span class='co'># 10.5 sec</span>
+</code></pre>
+</div>
+<pre><code>23.81 sec elapsed</code></pre>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>best_param_svm</span> <span class='op'>&lt;-</span> <span class='fu'>select_best</span><span class='op'>(</span><span class='va'>svm_res</span><span class='op'>)</span> 
+<span class='va'>final_svm</span> <span class='op'>&lt;-</span> <span class='fu'>finalize_workflow</span><span class='op'>(</span><span class='va'>svm_wf</span>, <span class='va'>best_param_svm</span><span class='op'>)</span>
+<span class='va'>final_svm</span>
+</code></pre>
+</div>
+<pre><code>== Workflow ==========================================================
+Preprocessor: Formula
+Model: svm_poly()
+
+-- Preprocessor ------------------------------------------------------
+actual ~ .
+
+-- Model -------------------------------------------------------------
+Polynomial Support Vector Machine Specification (regression)
+
+Main Arguments:
+  cost = 0.639348902476866
+  degree = 1
+
+Computational engine: kernlab </code></pre>
+</div>
+<h3 id="model-performance-check-1">Model performance check</h3>
+<p>모델 성능을 확인해보았다.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>final_svm_model</span> <span class='op'>&lt;-</span> <span class='fu'>finalize_model</span><span class='op'>(</span><span class='va'>svm_spec</span>, <span class='va'>best_param_svm</span><span class='op'>)</span> 
+
+<span class='va'>final_svm_workflow</span> <span class='op'>&lt;-</span> <span class='va'>svm_wf</span> <span class='op'>%&gt;%</span> <span class='fu'>update_model</span><span class='op'>(</span><span class='va'>final_svm_model</span><span class='op'>)</span>
+
+<span class='va'>svm_fit</span> <span class='op'>&lt;-</span> <span class='fu'>fit</span><span class='op'>(</span><span class='va'>final_svm_workflow</span>, data <span class='op'>=</span> <span class='va'>train2</span><span class='op'>)</span>
+
+<span class='va'>pred</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/predict.html'>predict</a></span><span class='op'>(</span><span class='va'>svm_fit</span>, <span class='va'>test2</span> <span class='op'>%&gt;%</span> <span class='fu'>select</span><span class='op'>(</span><span class='op'>-</span><span class='va'>actual</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>actual</span> <span class='op'>&lt;-</span> <span class='va'>test2</span><span class='op'>$</span><span class='va'>actual</span>
+
+<span class='va'>results</span> <span class='op'>&lt;-</span> <span class='fu'>tibble</span><span class='op'>(</span><span class='va'>pred</span>, <span class='va'>actual</span><span class='op'>)</span>
+
+<span class='fu'>metrics</span><span class='op'>(</span><span class='va'>results</span>, truth <span class='op'>=</span> <span class='va'>actual</span>, estimate <span class='op'>=</span> <span class='va'>.pred</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code># A tibble: 3 x 3
+  .metric .estimator .estimate
+  &lt;chr&gt;   &lt;chr&gt;          &lt;dbl&gt;
+1 rmse    standard       5.82 
+2 rsq     standard       0.757
+3 mae     standard       4.04 </code></pre>
+</div>
+<h3 id="feature-importance-plot-1">Feature importance plot</h3>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://github.com/koalaverse/vip/'>vip</a></span><span class='op'>)</span>
+
+<span class='va'>imp_svm_spec</span> <span class='op'>&lt;-</span> <span class='va'>svm_spec</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>finalize_model</span><span class='op'>(</span><span class='va'>best_param_svm</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+    <span class='fu'>set_engine</span><span class='op'>(</span><span class='st'>'kernlab'</span><span class='op'>)</span> 
+
+<span class='va'>svm_fit</span> <span class='op'>%&gt;%</span> 
+    <span class='fu'>pull_workflow_fit</span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span> 
+    <span class='fu'><a href='https://rdrr.io/pkg/vip/man/vip.html'>vip</a></span><span class='op'>(</span>method <span class='op'>=</span> <span class='st'>'permute'</span>, target <span class='op'>=</span> <span class='st'>"actual"</span>, metric <span class='op'>=</span> <span class='st'>"rsquared"</span>,
+      pred_wrapper <span class='op'>=</span> <span class='fu'>kernlab</span><span class='fu'>::</span><span class='va'>predict</span>, train <span class='op'>=</span> <span class='va'>train2</span><span class='op'>)</span>
+</code></pre>
+</div>
+<p><img src="stacking-with-tidymodels-and-caret_files/figure-html5/unnamed-chunk-14-1.png" width="624" /></p>
+</div>
+<h1 id="추가-모델-fitting">추가 모델 fitting</h1>
+<ul>
+<li><p>LASSO</p></li>
+<li><p>Ridge</p></li>
+<li><p>Elastic Net</p></li>
+<li><p>Decision Tree</p></li>
+</ul>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://stacks.tidymodels.org/'>stacks</a></span><span class='op'>)</span>
+<span class='co'># stacks </span>
+<span class='va'>ctrl_grid</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://stacks.tidymodels.org/reference/control_stack.html'>control_stack_grid</a></span><span class='op'>(</span><span class='op'>)</span>
+
+<span class='co'># LASSO </span>
+<span class='va'>lasso_spec</span> <span class='op'>&lt;-</span> <span class='fu'>linear_reg</span><span class='op'>(</span>penalty <span class='op'>=</span> <span class='fu'>tune</span><span class='op'>(</span><span class='op'>)</span>, mixture <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span> <span class='op'>%&gt;%</span> <span class='co'># mixture = 1 : LASSO, 0 : ridge </span>
+  <span class='fu'>set_engine</span><span class='op'>(</span><span class='st'>"glmnet"</span><span class='op'>)</span>
+
+<span class='co'># Ridge </span>
+<span class='va'>ridge_spec</span> <span class='op'>&lt;-</span> <span class='fu'>linear_reg</span><span class='op'>(</span>penalty <span class='op'>=</span> <span class='fu'>tune</span><span class='op'>(</span><span class='op'>)</span>, mixture <span class='op'>=</span> <span class='fl'>0</span><span class='op'>)</span> <span class='op'>%&gt;%</span> <span class='co'># mixture = 1 : LASSO, 0 : ridge </span>
+  <span class='fu'>set_engine</span><span class='op'>(</span><span class='st'>"glmnet"</span><span class='op'>)</span>
+
+<span class='co'># elastic net </span>
+<span class='va'>elastic_spec</span> <span class='op'>&lt;-</span> <span class='fu'>linear_reg</span><span class='op'>(</span>penalty <span class='op'>=</span> <span class='fu'>tune</span><span class='op'>(</span><span class='op'>)</span>, mixture <span class='op'>=</span> <span class='fu'>tune</span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span>  
+  <span class='fu'>set_engine</span><span class='op'>(</span><span class='st'>"glmnet"</span><span class='op'>)</span>
+
+
+<span class='co'># Decision tree </span>
+<span class='va'>tree_spec</span> <span class='op'>&lt;-</span> <span class='fu'>decision_tree</span><span class='op'>(</span>
+  cost_complexity <span class='op'>=</span> <span class='fu'>tune</span><span class='op'>(</span><span class='op'>)</span>,
+  tree_depth <span class='op'>=</span> <span class='fu'>tune</span><span class='op'>(</span><span class='op'>)</span>,
+  min_n <span class='op'>=</span> <span class='fu'>tune</span><span class='op'>(</span><span class='op'>)</span>
+<span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>set_engine</span><span class='op'>(</span><span class='st'>"rpart"</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>set_mode</span><span class='op'>(</span><span class='st'>"regression"</span><span class='op'>)</span>
+</code></pre>
+</div>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>lasso_wf</span> <span class='op'>&lt;-</span> <span class='fu'>workflow</span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span> 
+    <span class='fu'>add_formula</span><span class='op'>(</span><span class='va'>actual</span> <span class='op'>~</span><span class='va'>.</span><span class='op'>)</span> <span class='op'>%&gt;%</span> 
+    <span class='fu'>add_model</span><span class='op'>(</span><span class='va'>lasso_spec</span><span class='op'>)</span>
+
+<span class='va'>ridge_wf</span> <span class='op'>&lt;-</span> <span class='fu'>workflow</span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span> 
+    <span class='fu'>add_formula</span><span class='op'>(</span><span class='va'>actual</span> <span class='op'>~</span><span class='va'>.</span><span class='op'>)</span> <span class='op'>%&gt;%</span> 
+    <span class='fu'>add_model</span><span class='op'>(</span><span class='va'>ridge_spec</span><span class='op'>)</span>
+
+<span class='va'>elastic_wf</span> <span class='op'>&lt;-</span> <span class='fu'>workflow</span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span> 
+    <span class='fu'>add_formula</span><span class='op'>(</span><span class='va'>actual</span> <span class='op'>~</span><span class='va'>.</span><span class='op'>)</span> <span class='op'>%&gt;%</span> 
+    <span class='fu'>add_model</span><span class='op'>(</span><span class='va'>elastic_spec</span><span class='op'>)</span>
+
+<span class='va'>tree_wf</span> <span class='op'>&lt;-</span> <span class='fu'>workflow</span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span> 
+    <span class='fu'>add_formula</span><span class='op'>(</span><span class='va'>actual</span> <span class='op'>~</span><span class='va'>.</span><span class='op'>)</span> <span class='op'>%&gt;%</span> 
+    <span class='fu'>add_model</span><span class='op'>(</span><span class='va'>tree_spec</span><span class='op'>)</span>
+</code></pre>
+</div>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>lambda_grid</span> <span class='op'>&lt;-</span> <span class='fu'>grid_regular</span><span class='op'>(</span><span class='fu'>penalty</span><span class='op'>(</span><span class='op'>)</span>, levels <span class='op'>=</span> <span class='fl'>10</span><span class='op'>)</span>
+<span class='va'>elastic_grid</span> <span class='op'>&lt;-</span> <span class='fu'>grid_regular</span><span class='op'>(</span><span class='fu'>penalty</span><span class='op'>(</span><span class='op'>)</span>, <span class='fu'>mixture</span><span class='op'>(</span><span class='op'>)</span>, levels <span class='op'>=</span> <span class='fl'>10</span><span class='op'>)</span>
+<span class='va'>tree_grid</span> <span class='op'>&lt;-</span> <span class='fu'>grid_regular</span><span class='op'>(</span><span class='fu'>cost_complexity</span><span class='op'>(</span><span class='op'>)</span>, <span class='fu'>tree_depth</span><span class='op'>(</span><span class='op'>)</span>, <span class='fu'>min_n</span><span class='op'>(</span><span class='op'>)</span>, levels <span class='op'>=</span> <span class='fl'>4</span><span class='op'>)</span>
+
+
+<span class='va'>lasso_res</span> <span class='op'>&lt;-</span> <span class='fu'>tune_grid</span><span class='op'>(</span>
+    <span class='va'>lasso_wf</span>, 
+    resamples <span class='op'>=</span> <span class='va'>vb_folds</span>, 
+    grid <span class='op'>=</span> <span class='va'>lambda_grid</span>, 
+    control <span class='op'>=</span> <span class='va'>ctrl_grid</span>, 
+<span class='op'>)</span>
+
+<span class='va'>ridge_res</span> <span class='op'>&lt;-</span> <span class='fu'>tune_grid</span><span class='op'>(</span>
+    <span class='va'>ridge_wf</span>, 
+    resamples <span class='op'>=</span> <span class='va'>vb_folds</span>, 
+    grid <span class='op'>=</span> <span class='va'>lambda_grid</span>, 
+    control <span class='op'>=</span> <span class='va'>ctrl_grid</span>, 
+<span class='op'>)</span>
+
+<span class='va'>elastic_res</span> <span class='op'>&lt;-</span> <span class='fu'>tune_grid</span><span class='op'>(</span>
+    <span class='va'>elastic_wf</span>, 
+    resamples <span class='op'>=</span> <span class='va'>vb_folds</span>, 
+    grid <span class='op'>=</span> <span class='va'>elastic_grid</span>, 
+    control <span class='op'>=</span> <span class='va'>ctrl_grid</span>, 
+<span class='op'>)</span>
+
+<span class='va'>tree_res</span> <span class='op'>&lt;-</span> <span class='fu'>tune_grid</span><span class='op'>(</span>
+  <span class='va'>tree_wf</span>, 
+  resamples <span class='op'>=</span> <span class='va'>vb_folds</span>, 
+  grid <span class='op'>=</span> <span class='va'>tree_grid</span>, 
+  control <span class='op'>=</span> <span class='va'>ctrl_grid</span>, 
+<span class='op'>)</span>
+</code></pre>
+</div>
+</div>
+<h3 id="trace-plot">trace plot</h3>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>lasso_res</span> <span class='op'>%&gt;%</span> 
+    <span class='fu'>collect_metrics</span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span> 
+    <span class='fu'>ggplot</span><span class='op'>(</span><span class='fu'>aes</span><span class='op'>(</span><span class='va'>penalty</span>, <span class='va'>mean</span>, color <span class='op'>=</span> <span class='va'>.metric</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span> <span class='co'># .metric : rmse </span>
+    <span class='fu'>geom_errorbar</span><span class='op'>(</span><span class='fu'>aes</span><span class='op'>(</span>ymin <span class='op'>=</span> <span class='va'>mean</span> <span class='op'>-</span> <span class='va'>std_err</span>, ymax <span class='op'>=</span> <span class='va'>mean</span> <span class='op'>+</span> <span class='va'>std_err</span><span class='op'>)</span>, alpha <span class='op'>=</span> <span class='fl'>0.5</span><span class='op'>)</span> <span class='op'>+</span> 
+    <span class='fu'>geom_line</span><span class='op'>(</span>size <span class='op'>=</span> <span class='fl'>1.5</span>, show.legend <span class='op'>=</span> <span class='cn'>F</span><span class='op'>)</span> <span class='op'>+</span> 
+    <span class='fu'>facet_wrap</span><span class='op'>(</span><span class='op'>~</span><span class='va'>.metric</span>, scales <span class='op'>=</span> <span class='st'>'free'</span>, nrow <span class='op'>=</span> <span class='fl'>2</span><span class='op'>)</span>
+</code></pre>
+</div>
+<p><img src="stacking-with-tidymodels-and-caret_files/figure-html5/unnamed-chunk-18-1.png" width="624" /></p>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>best_param_lasso</span> <span class='op'>&lt;-</span> <span class='fu'>select_best</span><span class='op'>(</span><span class='va'>lasso_res</span>, <span class='st'>'rmse'</span><span class='op'>)</span>
+<span class='va'>final_lasso</span> <span class='op'>&lt;-</span> <span class='fu'>finalize_workflow</span><span class='op'>(</span><span class='va'>lasso_wf</span>, <span class='va'>best_param_lasso</span><span class='op'>)</span>
+<span class='va'>lasso_fit</span> <span class='op'>&lt;-</span> <span class='fu'>fit</span><span class='op'>(</span><span class='va'>final_lasso</span>, data <span class='op'>=</span> <span class='fu'>training</span><span class='op'>(</span><span class='va'>splits</span><span class='op'>)</span><span class='op'>)</span>
+
+<span class='va'>best_param_ridge</span> <span class='op'>&lt;-</span> <span class='fu'>select_best</span><span class='op'>(</span><span class='va'>ridge_res</span>, <span class='st'>'rmse'</span><span class='op'>)</span>
+<span class='va'>final_ridge</span> <span class='op'>&lt;-</span> <span class='fu'>finalize_workflow</span><span class='op'>(</span><span class='va'>ridge_wf</span>, <span class='va'>best_param_ridge</span><span class='op'>)</span>
+<span class='va'>ridge_fit</span> <span class='op'>&lt;-</span> <span class='fu'>fit</span><span class='op'>(</span><span class='va'>final_ridge</span>, data <span class='op'>=</span> <span class='fu'>training</span><span class='op'>(</span><span class='va'>splits</span><span class='op'>)</span><span class='op'>)</span>
+
+<span class='va'>best_param_elastic</span> <span class='op'>&lt;-</span> <span class='fu'>select_best</span><span class='op'>(</span><span class='va'>elastic_res</span>, <span class='st'>'rmse'</span><span class='op'>)</span>
+<span class='va'>final_elastic</span> <span class='op'>&lt;-</span> <span class='fu'>finalize_workflow</span><span class='op'>(</span><span class='va'>elastic_wf</span>, <span class='va'>best_param_elastic</span><span class='op'>)</span>
+<span class='va'>elastic_fit</span> <span class='op'>&lt;-</span> <span class='fu'>fit</span><span class='op'>(</span><span class='va'>final_elastic</span>, data <span class='op'>=</span> <span class='fu'>training</span><span class='op'>(</span><span class='va'>splits</span><span class='op'>)</span><span class='op'>)</span>
+
+<span class='va'>best_param_tree</span> <span class='op'>&lt;-</span> <span class='fu'>select_best</span><span class='op'>(</span><span class='va'>tree_res</span>, <span class='st'>'rmse'</span><span class='op'>)</span>
+<span class='va'>final_tree</span> <span class='op'>&lt;-</span> <span class='fu'>finalize_workflow</span><span class='op'>(</span><span class='va'>tree_wf</span>, <span class='va'>best_param_tree</span><span class='op'>)</span>
+<span class='va'>tree_fit</span> <span class='op'>&lt;-</span> <span class='fu'>fit</span><span class='op'>(</span><span class='va'>final_tree</span>, data <span class='op'>=</span> <span class='fu'>training</span><span class='op'>(</span><span class='va'>splits</span><span class='op'>)</span><span class='op'>)</span>
+</code></pre>
+</div>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>pred_lasso</span> <span class='op'>&lt;-</span> 
+    <span class='fu'><a href='https://rdrr.io/r/stats/predict.html'>predict</a></span><span class='op'>(</span><span class='va'>lasso_fit</span>, <span class='fu'>testing</span><span class='op'>(</span><span class='va'>splits</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span> 
+    <span class='fu'>mutate</span><span class='op'>(</span>modelo <span class='op'>=</span> <span class='st'>"LASSO"</span><span class='op'>)</span>
+
+<span class='va'>pred_ridge</span> <span class='op'>&lt;-</span> 
+    <span class='fu'><a href='https://rdrr.io/r/stats/predict.html'>predict</a></span><span class='op'>(</span><span class='va'>ridge_fit</span>, <span class='fu'>testing</span><span class='op'>(</span><span class='va'>splits</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span> 
+    <span class='fu'>mutate</span><span class='op'>(</span>modelo <span class='op'>=</span> <span class='st'>"RIDGE"</span><span class='op'>)</span>
+
+<span class='va'>pred_elastic</span> <span class='op'>&lt;-</span> 
+    <span class='fu'><a href='https://rdrr.io/r/stats/predict.html'>predict</a></span><span class='op'>(</span><span class='va'>elastic_fit</span>, <span class='fu'>testing</span><span class='op'>(</span><span class='va'>splits</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span> 
+    <span class='fu'>mutate</span><span class='op'>(</span>modelo <span class='op'>=</span> <span class='st'>"ELASTIC"</span><span class='op'>)</span>
+
+<span class='va'>pred_tree</span> <span class='op'>&lt;-</span> 
+    <span class='fu'><a href='https://rdrr.io/r/stats/predict.html'>predict</a></span><span class='op'>(</span><span class='va'>tree_fit</span>, <span class='fu'>testing</span><span class='op'>(</span><span class='va'>splits</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span> 
+    <span class='fu'>mutate</span><span class='op'>(</span>modelo <span class='op'>=</span> <span class='st'>"TREE"</span><span class='op'>)</span>
+</code></pre>
+</div>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://github.com/topepo/caret/'>caret</a></span><span class='op'>)</span>
+
+<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/pkg/caret/man/postResample.html'>RMSE</a></span><span class='op'>(</span><span class='va'>pred_lasso</span><span class='op'>$</span><span class='va'>.pred</span>, <span class='fu'>testing</span><span class='op'>(</span><span class='va'>splits</span><span class='op'>)</span><span class='op'>$</span><span class='va'>actual</span><span class='op'>)</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>[1] 5.76062</code></pre>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/pkg/caret/man/postResample.html'>RMSE</a></span><span class='op'>(</span><span class='va'>pred_ridge</span><span class='op'>$</span><span class='va'>.pred</span>, <span class='fu'>testing</span><span class='op'>(</span><span class='va'>splits</span><span class='op'>)</span><span class='op'>$</span><span class='va'>actual</span><span class='op'>)</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>[1] 5.570424</code></pre>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/pkg/caret/man/postResample.html'>RMSE</a></span><span class='op'>(</span><span class='va'>pred_elastic</span><span class='op'>$</span><span class='va'>.pred</span>, <span class='fu'>testing</span><span class='op'>(</span><span class='va'>splits</span><span class='op'>)</span><span class='op'>$</span><span class='va'>actual</span><span class='op'>)</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>[1] 5.76062</code></pre>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/pkg/caret/man/postResample.html'>RMSE</a></span><span class='op'>(</span><span class='va'>pred_tree</span><span class='op'>$</span><span class='va'>.pred</span>, <span class='fu'>testing</span><span class='op'>(</span><span class='va'>splits</span><span class='op'>)</span><span class='op'>$</span><span class='va'>actual</span><span class='op'>)</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>[1] 5.739863</code></pre>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://github.com/koalaverse/vip/'>vip</a></span><span class='op'>)</span>
+
+<span class='va'>tree_fit</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>pull_workflow_fit</span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span> 
+  <span class='fu'><a href='https://rdrr.io/pkg/vip/man/vip.html'>vip</a></span><span class='op'>(</span>geom <span class='op'>=</span> <span class='st'>'col'</span><span class='op'>)</span> <span class='co'># geom = 'point'</span>
+</code></pre>
+</div>
+<p><img src="stacking-with-tidymodels-and-caret_files/figure-html5/unnamed-chunk-22-1.png" width="624" /></p>
+</div>
+<h2 id="stacking-with-tidymodels">stacking with tidymodels</h2>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>stacking_model</span> <span class='op'>&lt;-</span> 
+  <span class='co'># initialize the stack</span>
+  <span class='fu'><a href='https://stacks.tidymodels.org/reference/stacks.html'>stacks</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='co'># add candidate members</span>
+  <span class='fu'><a href='https://stacks.tidymodels.org/reference/add_candidates.html'>add_candidates</a></span><span class='op'>(</span><span class='va'>lasso_res</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://stacks.tidymodels.org/reference/add_candidates.html'>add_candidates</a></span><span class='op'>(</span><span class='va'>ridge_res</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://stacks.tidymodels.org/reference/add_candidates.html'>add_candidates</a></span><span class='op'>(</span><span class='va'>elastic_res</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://stacks.tidymodels.org/reference/add_candidates.html'>add_candidates</a></span><span class='op'>(</span><span class='va'>tree_res</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+
+  <span class='co'># determine how to combine their predictions</span>
+  <span class='fu'><a href='https://stacks.tidymodels.org/reference/blend_predictions.html'>blend_predictions</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='co'># fit the candidates with nonzero stacking coefficients</span>
+  <span class='fu'><a href='https://stacks.tidymodels.org/reference/fit_members.html'>fit_members</a></span><span class='op'>(</span><span class='op'>)</span>
+
+
+<span class='va'>stacking_pred</span> <span class='op'>&lt;-</span>
+  <span class='va'>test2</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>bind_cols</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/stats/predict.html'>predict</a></span><span class='op'>(</span><span class='va'>stacking_model</span>, <span class='va'>.</span><span class='op'>)</span><span class='op'>)</span>
+
+
+<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/pkg/caret/man/postResample.html'>RMSE</a></span><span class='op'>(</span><span class='va'>stacking_pred</span><span class='op'>$</span><span class='va'>.pred</span>, <span class='fu'>testing</span><span class='op'>(</span><span class='va'>splits</span><span class='op'>)</span><span class='op'>$</span><span class='va'>actual</span><span class='op'>)</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>[1] 5.628024</code></pre>
+</div>
+<h2 id="support-vector-machine-svm">Support Vector Machine (SVM)</h2>
+<ol type="1">
+<li><p>장점</p>
+<ul>
+<li>범주나 수치 예측 문제에 대해 사용할 수 있음</li>
+<li>노이즈 데이터에 영향을 크게 받지 않고 잘 과적합화되지 않음</li>
+<li>특히 잘 지원되는 일부 SVM 알고리즘 때문에 신경망보다 사용하기 쉬움</li>
+<li>높은 정확도와 높은 프로필로 데이터 마이닝 경쟁에서 우승해 인기를 얻음</li>
+</ul></li>
+<li><p>단점</p>
+<ul>
+<li>최적의 모델을 찾기 위해 커널과 모델에서 매개변수의 여러 가지 조합 테스트가 필요함</li>
+<li>특히 입력 데이터셋이 예제 개수와 속성의 수가 많다면 훈련이 느릴 수 있음</li>
+<li>해석하기 불가능하지 않지만, 어렵고 복잡한 블랙박스를 만듦</li>
+</ul></li>
+</ol>
+<h2 id="random-forest-rf">Random Forest (RF)</h2>
+<ol type="1">
+<li><p>장점</p>
+<ul>
+<li>범주나 수치 예측 문제에 대해 사용할 수 있음</li>
+<li>결측치, 명목 속성, 수치를 처리할 수 있는 자동성 학습</li>
+<li>다른 모델에 비해 상대적으로 높은 성능으로 BASELINE 모델로 많이 사용</li>
+</ul></li>
+<li><p>단점</p>
+<ul>
+<li>모델이 과적합되기 쉬움</li>
+<li>하이퍼 파라미터가 많음</li>
+<li>모델 학습속도가 느림</li>
+</ul></li>
+</ol>
+<h2 id="두-모델-중에-어떤-모델이-좋은지-선택하고-설명하기">두 모델 중에 어떤 모델이 좋은지 선택하고 설명하기</h2>
+<ul>
+<li>Random Forest, SVM 모델의 평가지표를 비교해보면 RMSE, RSQ, MAE 기준으로 Random Forest 모델을 최적 모형으로 선택함</li>
+</ul>
+<h2 id="선택한-모델의-한계점을-설명하고-한계점을-해결할-방법-설명하기">선택한 모델의 한계점을 설명하고 한계점을 해결할 방법 설명하기</h2>
+<ul>
+<li><p>Random Forest 모델의 경우 하이퍼 파라미터가 너무 많고, 모델 특성상 계산 시간이 오래걸림</p></li>
+<li><p>모델 성능 개선이 힘듦</p></li>
+<li><p>모델 성능 개선을 위해 스태킹 앙상블 모형 고려</p></li>
+<li><p>xgboost, lightgbm 등 다른 tree 모형 고려</p></li>
+</ul>
+<h1 id="tidymodels-설치-안될-경우..-제발-설치되라..">tidymodels 설치 안될 경우.. (제발 설치되라..)</h1>
+<p>진흥원 제공 패키지 목록</p>
+<ul>
+<li>caret : 머신러닝 전반에 대한 패키지</li>
+<li>rsample : initial_split, vfold_cv</li>
+<li>recipes : 전처리 함수</li>
+<li>ranger : random forest 관련 패키지</li>
+<li>e1071 : svm 관련 패키지</li>
+</ul>
+<h2 id="변수-중요도-그림">변수 중요도 그림</h2>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>rf_model</span> <span class='op'>&lt;-</span> <span class='fu'>ranger</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/ranger/man/ranger.html'>ranger</a></span><span class='op'>(</span><span class='va'>actual</span><span class='op'>~</span><span class='va'>.</span>, data <span class='op'>=</span> <span class='fu'>training</span><span class='op'>(</span><span class='va'>splits</span><span class='op'>)</span>, importance <span class='op'>=</span> <span class='st'>'permutation'</span><span class='op'>)</span>
+<span class='fu'>ranger</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/ranger/man/importance.ranger.html'>importance</a></span><span class='op'>(</span><span class='va'>rf_model</span><span class='op'>)</span> <span class='op'>%&gt;%</span> 
+  <span class='fu'>enframe</span><span class='op'>(</span><span class='st'>'Variable'</span>, <span class='st'>'Importance'</span><span class='op'>)</span> <span class='op'>%&gt;%</span> 
+  <span class='fu'>mutate</span><span class='op'>(</span>Variable <span class='op'>=</span> <span class='fu'>fct_reorder</span><span class='op'>(</span><span class='va'>Variable</span>, <span class='va'>Importance</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span> 
+    <span class='fu'>arrange</span><span class='op'>(</span><span class='fu'>desc</span><span class='op'>(</span><span class='va'>Importance</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span> 
+    <span class='fu'>ggplot</span><span class='op'>(</span><span class='fu'>aes</span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>Variable</span>, y <span class='op'>=</span> <span class='va'>Importance</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
+    <span class='fu'>geom_col</span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span>
+    <span class='fu'>coord_flip</span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span>
+    <span class='fu'>scale_fill_viridis_d</span><span class='op'>(</span>end <span class='op'>=</span> <span class='fl'>.7</span><span class='op'>)</span> <span class='op'>+</span>
+    <span class='fu'>labs</span><span class='op'>(</span>title <span class='op'>=</span> <span class='st'>"Variable Importance"</span>, subtitle <span class='op'>=</span> <span class='st'>"Original Variables"</span><span class='op'>)</span>
+</code></pre>
+</div>
+<p><img src="stacking-with-tidymodels-and-caret_files/figure-html5/unnamed-chunk-24-1.png" width="624" /></p>
+</div>
+<h2 id="caret을-이용한-모형-적합">Caret을 이용한 모형 적합</h2>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://github.com/topepo/caret/'>caret</a></span><span class='op'>)</span>
+
+<span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span><span class='op'>(</span><span class='fl'>1234</span><span class='op'>)</span>
+
+<span class='va'>train_index</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/caret/man/createDataPartition.html'>createDataPartition</a></span><span class='op'>(</span><span class='va'>dat</span><span class='op'>$</span><span class='va'>actual</span>, p <span class='op'>=</span> <span class='fl'>0.7</span>, list <span class='op'>=</span> <span class='cn'>F</span><span class='op'>)</span>
+<span class='va'>train</span> <span class='op'>&lt;-</span> <span class='va'>dat</span><span class='op'>[</span><span class='va'>train_index</span>, <span class='op'>]</span>
+<span class='va'>test</span> <span class='op'>&lt;-</span> <span class='va'>dat</span><span class='op'>[</span><span class='op'>-</span><span class='va'>train_index</span>, <span class='op'>]</span>
+
+
+<span class='co'># Random Forest </span>
+<span class='va'>control</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/caret/man/trainControl.html'>trainControl</a></span><span class='op'>(</span>method<span class='op'>=</span><span class='st'>'repeatedcv'</span>, 
+                        number<span class='op'>=</span><span class='fl'>5</span>, 
+                        repeats<span class='op'>=</span><span class='fl'>3</span>, 
+                        search<span class='op'>=</span><span class='st'>'grid'</span><span class='op'>)</span>
+
+<span class='va'>tunegrid</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/expand.grid.html'>expand.grid</a></span><span class='op'>(</span>.mtry <span class='op'>=</span> <span class='op'>(</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>5</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>rf_gridsearch</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/caret/man/train.html'>train</a></span><span class='op'>(</span><span class='va'>actual</span> <span class='op'>~</span> <span class='va'>.</span>, 
+                       data <span class='op'>=</span> <span class='va'>train</span>,
+                       method <span class='op'>=</span> <span class='st'>'rf'</span>,
+                       metric <span class='op'>=</span> <span class='st'>'RMSE'</span>,
+                       tuneGrid <span class='op'>=</span> <span class='va'>tunegrid</span><span class='op'>)</span>
+
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/pkg/caret/man/varImp.html'>varImp</a></span><span class='op'>(</span><span class='va'>rf_gridsearch</span>, scale <span class='op'>=</span> <span class='cn'>F</span><span class='op'>)</span><span class='op'>)</span>
+</code></pre>
+</div>
+<img src="stacking-with-tidymodels-and-caret_files/figure-html5/unnamed-chunk-25-1.png" width="624" />
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/stats/predict.html'>predict</a></span><span class='op'>(</span><span class='va'>rf_gridsearch</span>, newdata <span class='op'>=</span> <span class='va'>test</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>       1        2        3        4        5        6        7 
+45.30000 43.80713 46.56147 47.06855 47.68543 47.71797 52.54238 
+       8        9       10       11       12       13       14 
+52.53858 52.17997 53.38430 52.22801 51.55385 51.94948 51.92727 
+      15       16       17       18       19       20       21 
+55.46753 54.58241 52.59790 55.11327 56.25800 56.11540 56.87725 
+      22       23       24       25       26       27       28 
+55.19078 54.88539 59.99372 55.91052 56.09743 73.90014 71.40781 
+      29       30       31       32       33       34       35 
+69.76887 68.62818 72.60403 61.36527 61.69367 61.64077 77.69552 
+      36       37       38       39       40       41       42 
+74.55933 73.07363 63.84497 60.36155 62.22931 70.63703 73.91058 
+      43       44       45       46       47       48       49 
+65.90631 63.16333 63.78018 64.09818 64.45174 70.93069 71.67913 
+      50       51       52       53       54       55       56 
+74.30466 68.06897 67.40478 68.96727 73.42600 71.00646 71.18357 
+      57       58       59       60       61       62       63 
+73.50324 73.72838 69.39938 73.95668 76.15037 81.53676 77.38580 
+      64       65       66       67       68       69       70 
+76.88397 74.23675 75.05740 79.08437 74.67893 74.99718 80.88472 
+      71       72       73       74       75       76       77 
+80.94122 77.00072 68.91818 69.73070 72.15450 73.80546 73.05103 
+      78       79       80       81       82       83       84 
+71.34491 67.69594 73.70254 65.98685 61.34923 61.71687 61.32097 
+      85       86       87       88       89       90       91 
+63.08331 61.11551 62.27135 59.02044 61.29805 60.81313 52.35683 
+      92       93       94       95       96       97       98 
+52.76461 53.09476 51.63340 50.82047 51.46780 52.26300 49.34898 
+      99      100      101      102      103 
+42.16597 47.26877 46.21580 46.43330 49.57668 </code></pre>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/pkg/caret/man/postResample.html'>RMSE</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/stats/predict.html'>predict</a></span><span class='op'>(</span><span class='va'>rf_gridsearch</span>, newdata <span class='op'>=</span> <span class='va'>test</span><span class='op'>)</span>, <span class='va'>test</span><span class='op'>$</span><span class='va'>actual</span><span class='op'>)</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>[1] 4.769534</code></pre>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='co'># svm </span>
+
+<span class='fu'><a href='https://rdrr.io/pkg/caret/man/modelLookup.html'>modelLookup</a></span><span class='op'>(</span><span class='st'>'svmPoly'</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>    model parameter             label forReg forClass probModel
+1 svmPoly    degree Polynomial Degree   TRUE     TRUE      TRUE
+2 svmPoly     scale             Scale   TRUE     TRUE      TRUE
+3 svmPoly         C              Cost   TRUE     TRUE      TRUE</code></pre>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/pkg/caret/man/modelLookup.html'>modelLookup</a></span><span class='op'>(</span><span class='st'>'svmRadial'</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>      model parameter label forReg forClass probModel
+1 svmRadial     sigma Sigma   TRUE     TRUE      TRUE
+2 svmRadial         C  Cost   TRUE     TRUE      TRUE</code></pre>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>control</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/caret/man/trainControl.html'>trainControl</a></span><span class='op'>(</span>method<span class='op'>=</span><span class='st'>'repeatedcv'</span>, 
+                        number<span class='op'>=</span><span class='fl'>5</span>, 
+                        repeats<span class='op'>=</span><span class='fl'>3</span>, 
+                        search<span class='op'>=</span><span class='st'>'grid'</span><span class='op'>)</span>
+
+<span class='va'>svm_gridsearch</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/caret/man/train.html'>train</a></span><span class='op'>(</span><span class='va'>actual</span> <span class='op'>~</span> <span class='va'>.</span>, 
+                       data <span class='op'>=</span> <span class='va'>train</span>,
+                       method <span class='op'>=</span> <span class='st'>'svmRadial'</span>,
+                       <span class='co'>#preProcess = c("center","scale"), </span>
+                       tuneLength <span class='op'>=</span> <span class='fl'>10</span>, 
+                       metric <span class='op'>=</span> <span class='st'>'RMSE'</span><span class='op'>)</span>
+
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/pkg/caret/man/varImp.html'>varImp</a></span><span class='op'>(</span><span class='va'>svm_gridsearch</span>, scale <span class='op'>=</span> <span class='cn'>F</span><span class='op'>)</span><span class='op'>)</span>
+</code></pre>
+</div>
+<img src="stacking-with-tidymodels-and-caret_files/figure-html5/unnamed-chunk-25-2.png" width="624" />
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='co'># lm</span>
+
+<span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span><span class='op'>(</span><span class='fl'>123</span><span class='op'>)</span>
+<span class='va'>lambda</span> <span class='op'>&lt;-</span> <span class='fl'>10</span><span class='op'>^</span><span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span><span class='op'>(</span><span class='op'>-</span><span class='fl'>3</span>, <span class='fl'>3</span>, length <span class='op'>=</span> <span class='fl'>100</span><span class='op'>)</span>
+
+<span class='va'>ridge_caret</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/caret/man/train.html'>train</a></span><span class='op'>(</span><span class='va'>actual</span> <span class='op'>~</span> <span class='va'>.</span>, 
+                     data <span class='op'>=</span> <span class='va'>train</span>, 
+                     method <span class='op'>=</span> <span class='st'>'glmnet'</span>, 
+                     trControl <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/pkg/caret/man/trainControl.html'>trainControl</a></span><span class='op'>(</span><span class='st'>'cv'</span>, number <span class='op'>=</span> <span class='fl'>5</span><span class='op'>)</span>, 
+                     tuneGrid <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/expand.grid.html'>expand.grid</a></span><span class='op'>(</span>alpha <span class='op'>=</span> <span class='fl'>0</span>, lambda <span class='op'>=</span> <span class='va'>lambda</span><span class='op'>)</span><span class='op'>)</span>
+
+<span class='fu'><a href='https://rdrr.io/r/stats/coef.html'>coef</a></span><span class='op'>(</span><span class='va'>ridge_caret</span><span class='op'>$</span><span class='va'>finalModel</span>, <span class='va'>ridge_caret</span><span class='op'>$</span><span class='va'>bestTune</span><span class='op'>$</span><span class='va'>lambda</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>12 x 1 sparse Matrix of class &quot;dgCMatrix&quot;
+                        1
+(Intercept)  6.0960276814
+month       -0.1839457116
+week목요일  -0.7959813128
+week수요일  -0.4850620237
+week월요일  -0.5010385252
+week일요일  -1.3354342687
+week토요일  -1.1243164273
+week화요일  -0.2025023606
+day         -0.0005293471
+temp_2       0.2041691800
+temp_1       0.3278888839
+average      0.4144274867</code></pre>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/pkg/caret/man/postResample.html'>RMSE</a></span><span class='op'>(</span><span class='va'>ridge_caret</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://rdrr.io/r/stats/predict.html'>predict</a></span><span class='op'>(</span><span class='va'>test</span><span class='op'>)</span>, <span class='va'>test</span><span class='op'>$</span><span class='va'>actual</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>[1] 5.307479</code></pre>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>lasso_caret</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/caret/man/train.html'>train</a></span><span class='op'>(</span><span class='va'>actual</span> <span class='op'>~</span> <span class='va'>.</span>, 
+                     data <span class='op'>=</span> <span class='va'>train</span>, 
+                     method <span class='op'>=</span> <span class='st'>'glmnet'</span>, 
+                     trControl <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/pkg/caret/man/trainControl.html'>trainControl</a></span><span class='op'>(</span><span class='st'>'cv'</span>, number <span class='op'>=</span> <span class='fl'>5</span><span class='op'>)</span>, 
+                     tuneGrid <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/expand.grid.html'>expand.grid</a></span><span class='op'>(</span>alpha <span class='op'>=</span> <span class='fl'>1</span>, lambda <span class='op'>=</span> <span class='va'>lambda</span><span class='op'>)</span><span class='op'>)</span>
+
+<span class='fu'><a href='https://rdrr.io/r/stats/coef.html'>coef</a></span><span class='op'>(</span><span class='va'>ridge_caret</span><span class='op'>$</span><span class='va'>finalModel</span>, <span class='va'>ridge_caret</span><span class='op'>$</span><span class='va'>bestTune</span><span class='op'>$</span><span class='va'>lambda</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>12 x 1 sparse Matrix of class &quot;dgCMatrix&quot;
+                        1
+(Intercept)  6.0960276814
+month       -0.1839457116
+week목요일  -0.7959813128
+week수요일  -0.4850620237
+week월요일  -0.5010385252
+week일요일  -1.3354342687
+week토요일  -1.1243164273
+week화요일  -0.2025023606
+day         -0.0005293471
+temp_2       0.2041691800
+temp_1       0.3278888839
+average      0.4144274867</code></pre>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/pkg/caret/man/postResample.html'>RMSE</a></span><span class='op'>(</span><span class='va'>ridge_caret</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://rdrr.io/r/stats/predict.html'>predict</a></span><span class='op'>(</span><span class='va'>test</span><span class='op'>)</span>, <span class='va'>test</span><span class='op'>$</span><span class='va'>actual</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>[1] 5.307479</code></pre>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>elastic_caret</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/caret/man/train.html'>train</a></span><span class='op'>(</span><span class='va'>actual</span> <span class='op'>~</span> <span class='va'>.</span>, 
+                     data <span class='op'>=</span> <span class='va'>train</span>, 
+                     method <span class='op'>=</span> <span class='st'>'glmnet'</span>, 
+                     trControl <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/pkg/caret/man/trainControl.html'>trainControl</a></span><span class='op'>(</span><span class='st'>'cv'</span>, number <span class='op'>=</span> <span class='fl'>5</span><span class='op'>)</span>,
+                     tuneLength <span class='op'>=</span> <span class='fl'>10</span><span class='op'>)</span>
+
+<span class='fu'><a href='https://rdrr.io/r/stats/coef.html'>coef</a></span><span class='op'>(</span><span class='va'>elastic_caret</span><span class='op'>$</span><span class='va'>finalModel</span>, <span class='va'>elastic_caret</span><span class='op'>$</span><span class='va'>bestTune</span><span class='op'>$</span><span class='va'>lambda</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>12 x 1 sparse Matrix of class &quot;dgCMatrix&quot;
+                     1
+(Intercept)  6.0877537
+month       -0.1459211
+week목요일   .        
+week수요일   .        
+week월요일   .        
+week일요일  -0.4916149
+week토요일  -0.2791148
+week화요일   .        
+day          .        
+temp_2       0.1956951
+temp_1       0.3279640
+average      0.4099242</code></pre>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/pkg/caret/man/postResample.html'>RMSE</a></span><span class='op'>(</span><span class='va'>elastic_caret</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://rdrr.io/r/stats/predict.html'>predict</a></span><span class='op'>(</span><span class='va'>test</span><span class='op'>)</span>, <span class='va'>test</span><span class='op'>$</span><span class='va'>actual</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>[1] 5.308235</code></pre>
+</div>
+<h2 id="stacking-ensemble">stacking ensemble</h2>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://github.com/zachmayer/caretEnsemble'>caretEnsemble</a></span><span class='op'>)</span>
+<span class='va'>stackControl</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/caret/man/trainControl.html'>trainControl</a></span><span class='op'>(</span>method<span class='op'>=</span><span class='st'>"repeatedcv"</span>, number<span class='op'>=</span><span class='fl'>5</span>, repeats<span class='op'>=</span><span class='fl'>2</span>, savePredictions<span class='op'>=</span><span class='cn'>TRUE</span><span class='op'>)</span> <span class='co'># sampling = "none", "down", "up", "smote", or "rose"</span>
+<span class='fu'><a href='https://rdrr.io/r/base/getwd.html'>getwd</a></span><span class='op'>(</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>[1] &quot;D:/distill_blog/_posts/2021-06-12-stacking-with-tidymodels-and-caret&quot;</code></pre>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span><span class='op'>(</span><span class='fl'>123</span><span class='op'>)</span>
+<span class='va'>stack_models</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/caretEnsemble/man/caretList.html'>caretList</a></span><span class='op'>(</span><span class='va'>actual</span><span class='op'>~</span><span class='va'>.</span>, 
+                          data <span class='op'>=</span> <span class='va'>train</span>, 
+                          trControl <span class='op'>=</span> <span class='va'>stackControl</span>, 
+                          methodList <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>'glmnet'</span>, <span class='st'>'rf'</span>, <span class='st'>'rpart'</span><span class='op'>)</span><span class='op'>)</span>
+
+<span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/pkg/caret/man/resamples.html'>resamples</a></span><span class='op'>(</span><span class='va'>stack_models</span><span class='op'>)</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>
+Call:
+summary.resamples(object = resamples(stack_models))
+
+Models: glmnet, rf, rpart 
+Number of resamples: 10 
+
+MAE 
+           Min.  1st Qu.   Median     Mean  3rd Qu.     Max. NA&#39;s
+glmnet 3.122689 3.668815 3.809541 3.949813 4.271879 4.863877    0
+rf     3.339801 3.599456 3.721440 3.766782 4.055149 4.177781    0
+rpart  3.821968 4.377178 5.231721 5.015999 5.530971 6.022282    0
+
+RMSE 
+           Min.  1st Qu.   Median     Mean  3rd Qu.     Max. NA&#39;s
+glmnet 4.040409 4.567383 5.022552 5.175686 5.815207 6.382394    0
+rf     4.152289 4.556918 4.964018 4.877375 5.282155 5.417894    0
+rpart  5.167159 5.599261 6.471477 6.356112 6.927093 7.495846    0
+
+Rsquared 
+            Min.   1st Qu.    Median      Mean   3rd Qu.      Max.
+glmnet 0.7310255 0.7868018 0.8353444 0.8186523 0.8577256 0.8774324
+rf     0.7724878 0.8171627 0.8397326 0.8361524 0.8664317 0.8858631
+rpart  0.6394261 0.6820981 0.7303919 0.7259454 0.7665300 0.8225479
+       NA&#39;s
+glmnet    0
+rf        0
+rpart     0</code></pre>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>stack.gbm</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/caretEnsemble/man/caretStack.html'>caretStack</a></span><span class='op'>(</span><span class='va'>stack_models</span>, method<span class='op'>=</span><span class='st'>"gbm"</span>, metric<span class='op'>=</span><span class='st'>'RMSE'</span>, trControl<span class='op'>=</span><span class='va'>stackControl</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>Iter   TrainDeviance   ValidDeviance   StepSize   Improve
+     1      123.0786             nan     0.1000   14.7244
+     2      109.2991             nan     0.1000   13.9964
+     3       98.4431             nan     0.1000   11.1125
+     4       87.9332             nan     0.1000    9.2428
+     5       79.6132             nan     0.1000    7.5494
+     6       73.3166             nan     0.1000    6.0139
+     7       68.1705             nan     0.1000    5.7697
+     8       62.7612             nan     0.1000    5.7262
+     9       57.6793             nan     0.1000    4.6731
+    10       53.5392             nan     0.1000    3.7976
+    20       30.9191             nan     0.1000    0.7869
+    40       21.2190             nan     0.1000   -0.0424
+    60       19.9957             nan     0.1000   -0.0222
+    80       19.6747             nan     0.1000   -0.0679
+   100       19.5095             nan     0.1000   -0.0353
+   120       19.3022             nan     0.1000   -0.0921
+   140       19.0965             nan     0.1000   -0.0054
+   150       18.9889             nan     0.1000   -0.0320
+
+Iter   TrainDeviance   ValidDeviance   StepSize   Improve
+     1      117.7844             nan     0.1000   19.7628
+     2      101.8396             nan     0.1000   16.1600
+     3       88.7555             nan     0.1000   12.6543
+     4       77.9022             nan     0.1000   10.8069
+     5       69.1155             nan     0.1000    8.6588
+     6       61.9489             nan     0.1000    6.9842
+     7       55.2234             nan     0.1000    7.0180
+     8       49.9685             nan     0.1000    5.2422
+     9       45.4226             nan     0.1000    4.4144
+    10       41.2539             nan     0.1000    4.1907
+    20       24.3537             nan     0.1000    0.4132
+    40       19.7932             nan     0.1000   -0.0556
+    60       19.0038             nan     0.1000   -0.0962
+    80       18.3017             nan     0.1000   -0.0803
+   100       17.9772             nan     0.1000   -0.1143
+   120       17.4939             nan     0.1000   -0.1005
+   140       17.0411             nan     0.1000   -0.0367
+   150       16.8426             nan     0.1000   -0.0549
+
+Iter   TrainDeviance   ValidDeviance   StepSize   Improve
+     1      116.1077             nan     0.1000   23.2110
+     2       99.9933             nan     0.1000   16.3469
+     3       86.3560             nan     0.1000   13.6951
+     4       74.2097             nan     0.1000   12.0234
+     5       64.8094             nan     0.1000    9.2642
+     6       56.9383             nan     0.1000    7.5881
+     7       50.2346             nan     0.1000    5.8597
+     8       44.7371             nan     0.1000    4.7900
+     9       40.6123             nan     0.1000    4.0752
+    10       37.4156             nan     0.1000    2.9460
+    20       22.4722             nan     0.1000    0.1837
+    40       18.8219             nan     0.1000   -0.1323
+    60       17.7439             nan     0.1000   -0.2015
+    80       16.9433             nan     0.1000   -0.0505
+   100       16.2481             nan     0.1000   -0.1612
+   120       15.6924             nan     0.1000   -0.1236
+   140       15.2797             nan     0.1000   -0.1076
+   150       15.1222             nan     0.1000   -0.0911
+
+Iter   TrainDeviance   ValidDeviance   StepSize   Improve
+     1      122.7846             nan     0.1000   15.5875
+     2      109.0814             nan     0.1000   13.3647
+     3       97.3394             nan     0.1000   10.6152
+     4       87.7044             nan     0.1000    9.0682
+     5       79.7568             nan     0.1000    7.9085
+     6       72.9865             nan     0.1000    6.4468
+     7       66.5714             nan     0.1000    5.4142
+     8       60.4991             nan     0.1000    6.1123
+     9       56.0085             nan     0.1000    4.4114
+    10       52.1361             nan     0.1000    3.4143
+    20       30.8524             nan     0.1000    1.0023
+    40       21.8373             nan     0.1000   -0.1373
+    60       20.7265             nan     0.1000   -0.0419
+    80       20.3729             nan     0.1000   -0.0737
+   100       20.0475             nan     0.1000   -0.0902
+   120       19.8267             nan     0.1000   -0.0089
+   140       19.5704             nan     0.1000   -0.1012
+   150       19.4846             nan     0.1000   -0.0764
+
+Iter   TrainDeviance   ValidDeviance   StepSize   Improve
+     1      121.5513             nan     0.1000   20.6873
+     2      105.2284             nan     0.1000   15.3609
+     3       91.2994             nan     0.1000   13.7408
+     4       79.9767             nan     0.1000   11.5431
+     5       70.3901             nan     0.1000    8.8454
+     6       61.8781             nan     0.1000    7.4324
+     7       55.1406             nan     0.1000    5.6830
+     8       49.5380             nan     0.1000    5.3422
+     9       45.3355             nan     0.1000    4.4053
+    10       41.1618             nan     0.1000    3.4503
+    20       24.5330             nan     0.1000    0.5628
+    40       20.5806             nan     0.1000    0.0322
+    60       19.6401             nan     0.1000   -0.0587
+    80       18.9368             nan     0.1000   -0.0531
+   100       18.1114             nan     0.1000   -0.0654
+   120       17.5610             nan     0.1000   -0.0985
+   140       17.1753             nan     0.1000   -0.1714
+   150       16.9747             nan     0.1000   -0.0967
+
+Iter   TrainDeviance   ValidDeviance   StepSize   Improve
+     1      119.1456             nan     0.1000   21.5809
+     2      101.7272             nan     0.1000   18.2219
+     3       88.2467             nan     0.1000   12.9071
+     4       77.0577             nan     0.1000   11.1732
+     5       67.2339             nan     0.1000    9.7053
+     6       59.2450             nan     0.1000    6.3771
+     7       52.9665             nan     0.1000    6.1738
+     8       47.7257             nan     0.1000    5.0930
+     9       42.9659             nan     0.1000    4.5349
+    10       38.7999             nan     0.1000    3.8740
+    20       23.3799             nan     0.1000    0.0862
+    40       19.7121             nan     0.1000    0.0098
+    60       18.7129             nan     0.1000   -0.0843
+    80       17.7907             nan     0.1000   -0.1638
+   100       16.8418             nan     0.1000   -0.0884
+   120       16.1133             nan     0.1000   -0.0599
+   140       15.4425             nan     0.1000   -0.0855
+   150       15.1576             nan     0.1000   -0.1317
+
+Iter   TrainDeviance   ValidDeviance   StepSize   Improve
+     1      128.4796             nan     0.1000   17.2269
+     2      114.4947             nan     0.1000   13.6686
+     3      103.4770             nan     0.1000   12.1504
+     4       93.0429             nan     0.1000   10.1201
+     5       83.5782             nan     0.1000    9.1525
+     6       75.9609             nan     0.1000    8.2043
+     7       69.3979             nan     0.1000    6.2448
+     8       63.6054             nan     0.1000    5.7980
+     9       58.9380             nan     0.1000    4.6666
+    10       54.6098             nan     0.1000    4.9408
+    20       31.1491             nan     0.1000    1.0837
+    40       21.1260             nan     0.1000    0.0257
+    60       19.7726             nan     0.1000   -0.0515
+    80       19.3404             nan     0.1000   -0.0609
+   100       19.0298             nan     0.1000   -0.0956
+   120       18.7677             nan     0.1000   -0.0670
+   140       18.4935             nan     0.1000   -0.1128
+   150       18.4090             nan     0.1000   -0.1132
+
+Iter   TrainDeviance   ValidDeviance   StepSize   Improve
+     1      124.6688             nan     0.1000   20.4551
+     2      106.9241             nan     0.1000   16.7533
+     3       92.7786             nan     0.1000   13.5389
+     4       80.5069             nan     0.1000   10.6851
+     5       71.4185             nan     0.1000    8.2736
+     6       62.9725             nan     0.1000    8.1147
+     7       56.1689             nan     0.1000    7.0784
+     8       50.5750             nan     0.1000    5.5839
+     9       45.9461             nan     0.1000    4.5176
+    10       42.2147             nan     0.1000    4.3480
+    20       24.3453             nan     0.1000    0.5004
+    40       19.3507             nan     0.1000    0.0218
+    60       18.5953             nan     0.1000   -0.1142
+    80       18.0130             nan     0.1000   -0.0554
+   100       17.4551             nan     0.1000   -0.1797
+   120       17.0500             nan     0.1000   -0.0763
+   140       16.6815             nan     0.1000   -0.1099
+   150       16.4385             nan     0.1000   -0.1360
+
+Iter   TrainDeviance   ValidDeviance   StepSize   Improve
+     1      122.6739             nan     0.1000   21.5391
+     2      104.3494             nan     0.1000   18.8195
+     3       89.1807             nan     0.1000   15.2488
+     4       76.7250             nan     0.1000   10.7195
+     5       66.8379             nan     0.1000    8.7571
+     6       59.2678             nan     0.1000    8.0324
+     7       52.3113             nan     0.1000    6.6721
+     8       46.7328             nan     0.1000    5.7223
+     9       42.0936             nan     0.1000    4.3581
+    10       37.8599             nan     0.1000    3.6947
+    20       21.7789             nan     0.1000    0.3221
+    40       18.5540             nan     0.1000   -0.1829
+    60       17.6046             nan     0.1000   -0.0375
+    80       16.8094             nan     0.1000   -0.1178
+   100       16.1556             nan     0.1000   -0.0985
+   120       15.6860             nan     0.1000   -0.1149
+   140       15.1893             nan     0.1000   -0.0797
+   150       14.9724             nan     0.1000   -0.0768
+
+Iter   TrainDeviance   ValidDeviance   StepSize   Improve
+     1      127.0680             nan     0.1000   16.3034
+     2      113.7894             nan     0.1000   12.7639
+     3      102.2829             nan     0.1000   11.3003
+     4       92.1612             nan     0.1000    9.3432
+     5       83.4454             nan     0.1000    9.0895
+     6       76.9821             nan     0.1000    6.3246
+     7       70.2786             nan     0.1000    7.2195
+     8       64.8285             nan     0.1000    4.7556
+     9       60.2058             nan     0.1000    5.1791
+    10       56.0465             nan     0.1000    4.1344
+    20       33.6370             nan     0.1000    1.1498
+    40       23.7500             nan     0.1000    0.1210
+    60       22.2769             nan     0.1000   -0.0699
+    80       21.6717             nan     0.1000   -0.1599
+   100       21.3368             nan     0.1000   -0.0200
+   120       21.2272             nan     0.1000   -0.1617
+   140       20.8770             nan     0.1000   -0.1532
+   150       20.7680             nan     0.1000   -0.1194
+
+Iter   TrainDeviance   ValidDeviance   StepSize   Improve
+     1      124.0821             nan     0.1000   17.6845
+     2      107.4218             nan     0.1000   17.3821
+     3       92.7895             nan     0.1000   14.7272
+     4       81.3461             nan     0.1000   11.8006
+     5       71.7622             nan     0.1000    8.7843
+     6       63.8430             nan     0.1000    7.6266
+     7       57.4676             nan     0.1000    5.0539
+     8       52.1246             nan     0.1000    4.5883
+     9       46.8549             nan     0.1000    4.3671
+    10       42.9960             nan     0.1000    3.8925
+    20       25.8535             nan     0.1000    0.4799
+    40       21.4305             nan     0.1000   -0.2044
+    60       20.6240             nan     0.1000   -0.1011
+    80       19.8503             nan     0.1000   -0.0320
+   100       19.2577             nan     0.1000   -0.0658
+   120       18.7629             nan     0.1000   -0.0074
+   140       18.3712             nan     0.1000   -0.0925
+   150       18.1679             nan     0.1000   -0.0757
+
+Iter   TrainDeviance   ValidDeviance   StepSize   Improve
+     1      123.6494             nan     0.1000   19.2839
+     2      105.8535             nan     0.1000   18.7998
+     3       90.8840             nan     0.1000   15.5464
+     4       79.2821             nan     0.1000   13.0372
+     5       69.1741             nan     0.1000    9.9898
+     6       60.6459             nan     0.1000    7.8221
+     7       54.4690             nan     0.1000    6.1507
+     8       48.7596             nan     0.1000    5.8794
+     9       43.8136             nan     0.1000    4.4595
+    10       39.8808             nan     0.1000    3.9312
+    20       24.1376             nan     0.1000   -0.0444
+    40       20.5522             nan     0.1000   -0.1099
+    60       19.5552             nan     0.1000   -0.1138
+    80       18.5585             nan     0.1000   -0.2474
+   100       17.6430             nan     0.1000   -0.1076
+   120       17.0207             nan     0.1000   -0.1839
+   140       16.4321             nan     0.1000   -0.0816
+   150       16.1078             nan     0.1000   -0.0165
+
+Iter   TrainDeviance   ValidDeviance   StepSize   Improve
+     1      126.9518             nan     0.1000   16.0385
+     2      112.6926             nan     0.1000   13.2787
+     3      101.3589             nan     0.1000   11.7136
+     4       91.2252             nan     0.1000    9.5356
+     5       82.5008             nan     0.1000    8.2433
+     6       75.2034             nan     0.1000    6.9060
+     7       69.3605             nan     0.1000    6.1899
+     8       63.5195             nan     0.1000    5.5288
+     9       59.2236             nan     0.1000    4.7350
+    10       54.8643             nan     0.1000    3.6505
+    20       32.3438             nan     0.1000    0.8875
+    40       22.1173             nan     0.1000    0.1015
+    60       20.8002             nan     0.1000   -0.1407
+    80       20.4092             nan     0.1000   -0.0124
+   100       20.1696             nan     0.1000   -0.0784
+   120       19.9605             nan     0.1000   -0.0648
+   140       19.8109             nan     0.1000   -0.0476
+   150       19.7038             nan     0.1000   -0.0752
+
+Iter   TrainDeviance   ValidDeviance   StepSize   Improve
+     1      124.8657             nan     0.1000   18.9240
+     2      107.6926             nan     0.1000   15.2337
+     3       94.6521             nan     0.1000   14.0918
+     4       83.1014             nan     0.1000   12.0810
+     5       73.2358             nan     0.1000   10.2220
+     6       65.3625             nan     0.1000    8.0627
+     7       58.6436             nan     0.1000    6.6056
+     8       52.6975             nan     0.1000    5.8376
+     9       48.1136             nan     0.1000    3.3516
+    10       43.8928             nan     0.1000    4.1024
+    20       25.5427             nan     0.1000    0.8925
+    40       20.4445             nan     0.1000   -0.0001
+    60       19.5111             nan     0.1000   -0.0617
+    80       19.0461             nan     0.1000   -0.0866
+   100       18.5872             nan     0.1000   -0.0366
+   120       18.0910             nan     0.1000   -0.1142
+   140       17.4642             nan     0.1000   -0.0874
+   150       17.2302             nan     0.1000   -0.0363
+
+Iter   TrainDeviance   ValidDeviance   StepSize   Improve
+     1      123.0427             nan     0.1000   21.1288
+     2      105.3487             nan     0.1000   19.2594
+     3       91.6676             nan     0.1000   14.4848
+     4       79.5296             nan     0.1000   12.2300
+     5       69.1572             nan     0.1000   10.0797
+     6       60.9880             nan     0.1000    7.4279
+     7       54.0409             nan     0.1000    6.8167
+     8       48.3798             nan     0.1000    5.1763
+     9       43.8147             nan     0.1000    4.9087
+    10       39.7484             nan     0.1000    3.7354
+    20       23.4412             nan     0.1000    0.5424
+    40       19.9305             nan     0.1000   -0.4261
+    60       18.9978             nan     0.1000   -0.1363
+    80       18.1546             nan     0.1000   -0.1394
+   100       17.2591             nan     0.1000   -0.1865
+   120       16.5421             nan     0.1000   -0.0844
+   140       16.0136             nan     0.1000   -0.0865
+   150       15.7207             nan     0.1000   -0.0979
+
+Iter   TrainDeviance   ValidDeviance   StepSize   Improve
+     1      123.2424             nan     0.1000   15.9684
+     2      109.6718             nan     0.1000   13.4276
+     3       98.6161             nan     0.1000   10.6970
+     4       88.9366             nan     0.1000    9.1206
+     5       81.0477             nan     0.1000    7.5903
+     6       73.8669             nan     0.1000    6.6700
+     7       67.8724             nan     0.1000    5.5422
+     8       61.9934             nan     0.1000    5.1143
+     9       57.3018             nan     0.1000    4.4161
+    10       53.1581             nan     0.1000    3.7042
+    20       31.6939             nan     0.1000    0.7414
+    40       21.9594             nan     0.1000    0.0450
+    60       20.6425             nan     0.1000   -0.0164
+    80       20.1220             nan     0.1000   -0.0696
+   100       19.8537             nan     0.1000   -0.0261
+   120       19.5912             nan     0.1000    0.0010
+   140       19.3723             nan     0.1000   -0.0946
+   150       19.2637             nan     0.1000   -0.1381
+
+Iter   TrainDeviance   ValidDeviance   StepSize   Improve
+     1      119.9022             nan     0.1000   18.6932
+     2      103.7244             nan     0.1000   15.4798
+     3       89.5237             nan     0.1000   14.3376
+     4       78.8798             nan     0.1000   10.5923
+     5       69.7656             nan     0.1000    8.1424
+     6       61.7820             nan     0.1000    7.5631
+     7       55.5780             nan     0.1000    5.8484
+     8       50.2321             nan     0.1000    5.1001
+     9       46.1738             nan     0.1000    4.0456
+    10       42.1410             nan     0.1000    4.0581
+    20       24.8007             nan     0.1000    0.2809
+    40       20.1490             nan     0.1000   -0.0806
+    60       19.3915             nan     0.1000   -0.0306
+    80       18.7013             nan     0.1000   -0.0702
+   100       17.9674             nan     0.1000   -0.1491
+   120       17.6161             nan     0.1000   -0.1135
+   140       17.1651             nan     0.1000   -0.1002
+   150       16.9767             nan     0.1000   -0.0767
+
+Iter   TrainDeviance   ValidDeviance   StepSize   Improve
+     1      117.3286             nan     0.1000   22.7481
+     2      100.7852             nan     0.1000   16.1103
+     3       86.9634             nan     0.1000   13.5788
+     4       74.6947             nan     0.1000   11.1127
+     5       64.5826             nan     0.1000   10.0566
+     6       56.6629             nan     0.1000    7.2485
+     7       50.1649             nan     0.1000    5.7443
+     8       44.8102             nan     0.1000    5.0723
+     9       40.0140             nan     0.1000    3.8968
+    10       36.4936             nan     0.1000    3.0181
+    20       22.4323             nan     0.1000    0.4242
+    40       19.3411             nan     0.1000   -0.1425
+    60       18.2185             nan     0.1000   -0.2168
+    80       17.4995             nan     0.1000   -0.1683
+   100       16.7780             nan     0.1000   -0.0903
+   120       16.2229             nan     0.1000   -0.1612
+   140       15.8318             nan     0.1000   -0.0407
+   150       15.6123             nan     0.1000   -0.0835
+
+Iter   TrainDeviance   ValidDeviance   StepSize   Improve
+     1      126.7950             nan     0.1000   16.7415
+     2      113.1265             nan     0.1000   13.3815
+     3      102.3816             nan     0.1000   10.5782
+     4       91.9297             nan     0.1000    9.8232
+     5       82.3842             nan     0.1000    8.3491
+     6       75.1038             nan     0.1000    6.8498
+     7       68.0588             nan     0.1000    6.4805
+     8       62.8333             nan     0.1000    5.3539
+     9       58.7247             nan     0.1000    3.9054
+    10       53.9969             nan     0.1000    4.1992
+    20       30.7469             nan     0.1000    1.0129
+    40       21.0114             nan     0.1000    0.1301
+    60       19.7089             nan     0.1000   -0.0078
+    80       19.2819             nan     0.1000   -0.0797
+   100       19.0264             nan     0.1000   -0.0349
+   120       18.8823             nan     0.1000   -0.1254
+   140       18.6516             nan     0.1000   -0.0412
+   150       18.5414             nan     0.1000   -0.1191
+
+Iter   TrainDeviance   ValidDeviance   StepSize   Improve
+     1      122.7557             nan     0.1000   19.7904
+     2      106.2242             nan     0.1000   16.1260
+     3       92.8416             nan     0.1000   12.7335
+     4       82.0170             nan     0.1000   11.0028
+     5       72.7623             nan     0.1000    8.2352
+     6       64.1952             nan     0.1000    8.5855
+     7       57.4886             nan     0.1000    6.5133
+     8       51.2257             nan     0.1000    4.7768
+     9       46.0117             nan     0.1000    4.7937
+    10       41.9173             nan     0.1000    3.6909
+    20       23.4581             nan     0.1000    0.7501
+    40       19.5831             nan     0.1000   -0.0783
+    60       18.8706             nan     0.1000   -0.1685
+    80       18.1518             nan     0.1000   -0.0909
+   100       17.7408             nan     0.1000   -0.0756
+   120       17.2596             nan     0.1000   -0.0953
+   140       16.8179             nan     0.1000   -0.1737
+   150       16.6165             nan     0.1000   -0.1404
+
+Iter   TrainDeviance   ValidDeviance   StepSize   Improve
+     1      121.5014             nan     0.1000   20.2892
+     2      102.9172             nan     0.1000   16.7144
+     3       88.2934             nan     0.1000   14.5377
+     4       76.5774             nan     0.1000   12.0382
+     5       66.5172             nan     0.1000    9.8390
+     6       57.9635             nan     0.1000    8.7342
+     7       51.2975             nan     0.1000    6.2879
+     8       45.7741             nan     0.1000    4.9730
+     9       41.4710             nan     0.1000    4.5473
+    10       37.6915             nan     0.1000    3.3709
+    20       21.6542             nan     0.1000    0.3928
+    40       18.3504             nan     0.1000   -0.1808
+    60       17.4567             nan     0.1000   -0.0845
+    80       16.5566             nan     0.1000   -0.0873
+   100       15.8562             nan     0.1000   -0.2441
+   120       15.3423             nan     0.1000   -0.0810
+   140       14.8514             nan     0.1000   -0.2018
+   150       14.6294             nan     0.1000   -0.0701
+
+Iter   TrainDeviance   ValidDeviance   StepSize   Improve
+     1      125.6999             nan     0.1000   16.3399
+     2      112.3713             nan     0.1000   13.3563
+     3      101.1314             nan     0.1000   11.4956
+     4       91.2000             nan     0.1000    9.9035
+     5       82.8425             nan     0.1000    8.9450
+     6       75.7827             nan     0.1000    6.4886
+     7       69.0875             nan     0.1000    6.4160
+     8       63.4774             nan     0.1000    5.2609
+     9       58.9489             nan     0.1000    4.1325
+    10       54.3137             nan     0.1000    4.1551
+    20       30.8801             nan     0.1000    1.0707
+    40       21.4564             nan     0.1000    0.1243
+    60       19.9686             nan     0.1000   -0.0086
+    80       19.5316             nan     0.1000   -0.0370
+   100       19.2536             nan     0.1000   -0.1864
+   120       19.0088             nan     0.1000   -0.1350
+   140       18.8028             nan     0.1000   -0.0569
+   150       18.6733             nan     0.1000   -0.1136
+
+Iter   TrainDeviance   ValidDeviance   StepSize   Improve
+     1      121.5188             nan     0.1000   18.4228
+     2      105.0641             nan     0.1000   16.5149
+     3       92.7233             nan     0.1000   13.5887
+     4       79.8901             nan     0.1000   12.3480
+     5       70.0520             nan     0.1000    9.1768
+     6       62.1910             nan     0.1000    7.0229
+     7       55.4414             nan     0.1000    6.6726
+     8       49.7967             nan     0.1000    5.4916
+     9       44.8493             nan     0.1000    4.7328
+    10       41.0261             nan     0.1000    4.1597
+    20       23.7481             nan     0.1000    0.6782
+    40       18.9478             nan     0.1000   -0.0863
+    60       18.1273             nan     0.1000   -0.3056
+    80       17.4558             nan     0.1000   -0.1077
+   100       16.9814             nan     0.1000   -0.0593
+   120       16.3571             nan     0.1000   -0.0555
+   140       15.9227             nan     0.1000   -0.0752
+   150       15.6771             nan     0.1000   -0.0626
+
+Iter   TrainDeviance   ValidDeviance   StepSize   Improve
+     1      121.4061             nan     0.1000   21.6082
+     2      103.2129             nan     0.1000   17.9646
+     3       87.8577             nan     0.1000   14.3963
+     4       75.6347             nan     0.1000   11.1673
+     5       65.7926             nan     0.1000   10.0130
+     6       57.1429             nan     0.1000    7.1796
+     7       50.4381             nan     0.1000    6.1916
+     8       45.7520             nan     0.1000    4.5231
+     9       41.1912             nan     0.1000    4.5168
+    10       37.7570             nan     0.1000    3.6713
+    20       22.1523             nan     0.1000    0.5590
+    40       18.1894             nan     0.1000   -0.0476
+    60       17.1015             nan     0.1000   -0.1330
+    80       16.2860             nan     0.1000   -0.1511
+   100       15.6297             nan     0.1000   -0.1956
+   120       15.0296             nan     0.1000   -0.0875
+   140       14.3194             nan     0.1000   -0.1581
+   150       14.1348             nan     0.1000   -0.0737
+
+Iter   TrainDeviance   ValidDeviance   StepSize   Improve
+     1      126.1517             nan     0.1000   15.8100
+     2      111.8710             nan     0.1000   13.4024
+     3       99.3164             nan     0.1000   11.6884
+     4       89.3288             nan     0.1000    9.2526
+     5       80.0203             nan     0.1000    7.2017
+     6       72.8847             nan     0.1000    6.2964
+     7       66.9092             nan     0.1000    6.1521
+     8       62.1589             nan     0.1000    4.6809
+     9       56.8597             nan     0.1000    4.2788
+    10       53.4325             nan     0.1000    3.5910
+    20       32.2810             nan     0.1000    0.9760
+    40       23.3181             nan     0.1000    0.1425
+    60       21.9477             nan     0.1000    0.0016
+    80       21.6706             nan     0.1000   -0.0368
+   100       21.3365             nan     0.1000   -0.0941
+   120       21.1318             nan     0.1000   -0.0557
+   140       20.9851             nan     0.1000   -0.1523
+   150       20.9053             nan     0.1000   -0.1067
+
+Iter   TrainDeviance   ValidDeviance   StepSize   Improve
+     1      124.0774             nan     0.1000   18.8134
+     2      108.1332             nan     0.1000   16.4866
+     3       93.4586             nan     0.1000   11.7136
+     4       82.3487             nan     0.1000   10.5868
+     5       73.0685             nan     0.1000    7.8019
+     6       64.7686             nan     0.1000    8.4717
+     7       58.3533             nan     0.1000    7.0444
+     8       52.5829             nan     0.1000    5.6906
+     9       47.8878             nan     0.1000    4.0353
+    10       43.6329             nan     0.1000    4.1678
+    20       25.6630             nan     0.1000    0.5982
+    40       21.5403             nan     0.1000   -0.0873
+    60       20.6176             nan     0.1000   -0.1422
+    80       20.1062             nan     0.1000   -0.0957
+   100       19.5417             nan     0.1000   -0.0507
+   120       19.0921             nan     0.1000   -0.0619
+   140       18.4736             nan     0.1000   -0.1276
+   150       18.2266             nan     0.1000   -0.0216
+
+Iter   TrainDeviance   ValidDeviance   StepSize   Improve
+     1      121.5975             nan     0.1000   21.6039
+     2      104.0205             nan     0.1000   16.8351
+     3       89.7488             nan     0.1000   13.3192
+     4       78.5076             nan     0.1000   10.9503
+     5       68.6543             nan     0.1000    9.1716
+     6       60.2496             nan     0.1000    7.8828
+     7       53.2888             nan     0.1000    6.6209
+     8       47.3684             nan     0.1000    5.4583
+     9       42.5943             nan     0.1000    4.1074
+    10       39.0768             nan     0.1000    3.0234
+    20       24.0743             nan     0.1000    0.3358
+    40       20.5825             nan     0.1000   -0.0189
+    60       19.6131             nan     0.1000   -0.0716
+    80       18.6531             nan     0.1000   -0.2488
+   100       17.8546             nan     0.1000   -0.1413
+   120       17.2060             nan     0.1000   -0.1729
+   140       16.5824             nan     0.1000   -0.2662
+   150       16.2743             nan     0.1000   -0.1398
+
+Iter   TrainDeviance   ValidDeviance   StepSize   Improve
+     1      127.5202             nan     0.1000   16.4273
+     2      114.1511             nan     0.1000   13.2386
+     3      102.3099             nan     0.1000   12.1352
+     4       92.8578             nan     0.1000    9.5656
+     5       84.5214             nan     0.1000    8.6311
+     6       76.7649             nan     0.1000    7.1543
+     7       70.2665             nan     0.1000    7.0482
+     8       65.0537             nan     0.1000    5.5003
+     9       60.3053             nan     0.1000    5.1713
+    10       56.0921             nan     0.1000    4.0072
+    20       32.6411             nan     0.1000    0.8298
+    40       22.6373             nan     0.1000    0.0142
+    60       21.1160             nan     0.1000   -0.0097
+    80       20.6009             nan     0.1000   -0.0942
+   100       20.2417             nan     0.1000   -0.0774
+   120       20.0163             nan     0.1000   -0.0910
+   140       19.8490             nan     0.1000   -0.0554
+   150       19.7786             nan     0.1000   -0.0454
+
+Iter   TrainDeviance   ValidDeviance   StepSize   Improve
+     1      126.7109             nan     0.1000   18.4528
+     2      110.0622             nan     0.1000   17.6660
+     3       95.5380             nan     0.1000   15.2171
+     4       83.3017             nan     0.1000   10.9996
+     5       73.7858             nan     0.1000    9.5001
+     6       65.7032             nan     0.1000    7.8279
+     7       58.2701             nan     0.1000    7.1424
+     8       52.8690             nan     0.1000    5.8292
+     9       48.1891             nan     0.1000    4.4899
+    10       44.0240             nan     0.1000    4.0365
+    20       25.6678             nan     0.1000    0.2152
+    40       21.1584             nan     0.1000   -0.0768
+    60       20.2001             nan     0.1000   -0.2311
+    80       19.4599             nan     0.1000   -0.0745
+   100       18.6030             nan     0.1000   -0.0050
+   120       18.1444             nan     0.1000   -0.1065
+   140       17.7051             nan     0.1000   -0.1807
+   150       17.5356             nan     0.1000   -0.1031
+
+Iter   TrainDeviance   ValidDeviance   StepSize   Improve
+     1      121.9870             nan     0.1000   22.4829
+     2      103.9765             nan     0.1000   17.7907
+     3       89.2553             nan     0.1000   15.6439
+     4       77.8671             nan     0.1000   10.7588
+     5       68.7606             nan     0.1000    8.8518
+     6       60.3827             nan     0.1000    6.9086
+     7       53.2890             nan     0.1000    6.3130
+     8       47.4879             nan     0.1000    4.8011
+     9       42.5445             nan     0.1000    4.1970
+    10       39.0692             nan     0.1000    3.7781
+    20       23.8371             nan     0.1000    0.4548
+    40       19.9090             nan     0.1000   -0.0584
+    60       18.5175             nan     0.1000   -0.3068
+    80       17.7570             nan     0.1000   -0.2474
+   100       17.0380             nan     0.1000   -0.2085
+   120       16.3332             nan     0.1000   -0.1198
+   140       15.6842             nan     0.1000   -0.1634
+   150       15.3829             nan     0.1000   -0.0494
+
+Iter   TrainDeviance   ValidDeviance   StepSize   Improve
+     1      122.9987             nan     0.1000   19.9163
+     2      105.9021             nan     0.1000   16.3435
+     3       92.2039             nan     0.1000   13.0638
+     4       80.3052             nan     0.1000   10.8827
+     5       71.1242             nan     0.1000    9.0450
+     6       62.7965             nan     0.1000    7.8543
+     7       55.8698             nan     0.1000    6.4227
+     8       50.5068             nan     0.1000    5.0114
+     9       46.2043             nan     0.1000    4.2735
+    10       42.3324             nan     0.1000    3.8538
+    20       24.8094             nan     0.1000    0.6139
+    40       20.4883             nan     0.1000   -0.0766
+    50       20.0331             nan     0.1000   -0.1248</code></pre>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>stack.glm</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/caretEnsemble/man/caretStack.html'>caretStack</a></span><span class='op'>(</span><span class='va'>stack_models</span>, method<span class='op'>=</span><span class='st'>"glm"</span>, metric<span class='op'>=</span><span class='st'>'RMSE'</span>, trControl<span class='op'>=</span><span class='va'>stackControl</span><span class='op'>)</span>
+
+<span class='va'>pred_stack_gbm</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/predict.html'>predict</a></span><span class='op'>(</span><span class='va'>stack.gbm</span>, newdata<span class='op'>=</span><span class='va'>test</span><span class='op'>)</span>
+<span class='va'>pred_stack_glm</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/predict.html'>predict</a></span><span class='op'>(</span><span class='va'>stack.glm</span>, newdata<span class='op'>=</span><span class='va'>test</span><span class='op'>)</span>
+
+<span class='fu'><a href='https://rdrr.io/pkg/caret/man/postResample.html'>RMSE</a></span><span class='op'>(</span><span class='va'>pred_stack_gbm</span>, <span class='va'>test</span><span class='op'>$</span><span class='va'>actual</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>[1] 4.867208</code></pre>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/pkg/caret/man/postResample.html'>RMSE</a></span><span class='op'>(</span><span class='va'>pred_stack_glm</span>, <span class='va'>test</span><span class='op'>$</span><span class='va'>actual</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>[1] 4.733712</code></pre>
+</div>
+<h3 id="참고자료">참고자료</h3>
+<p><a href="https://towardsdatascience.com/random-forest-in-python-24d0893d51c0" class="uri">https://towardsdatascience.com/random-forest-in-python-24d0893d51c0</a></p>
+<p><a href="https://cran.r-project.org/web/packages/stacks/vignettes/classification.html" class="uri">https://cran.r-project.org/web/packages/stacks/vignettes/classification.html</a></p>
+<p><a href="https://github.com/tidymodels/stacks" class="uri">https://github.com/tidymodels/stacks</a></p>
+<p><a href="https://juliasilge.com/blog/wind-turbine/" class="uri">https://juliasilge.com/blog/wind-turbine/</a></p>
+<p><a href="https://dzone.com/articles/build-custom-ensemble-models-using-caret-in-r" class="uri">https://dzone.com/articles/build-custom-ensemble-models-using-caret-in-r</a></p>
+<p><a href="https://cran.r-project.org/web/packages/caretEnsemble/vignettes/caretEnsemble-intro.html" class="uri">https://cran.r-project.org/web/packages/caretEnsemble/vignettes/caretEnsemble-intro.html</a></p>
+<p><a href="https://rpubs.com/uky994/593668" class="uri">https://rpubs.com/uky994/593668</a></p>
+<p><a href="https://topepo.github.io/caret/train-models-by-tag.html#linear-regression" class="uri">https://topepo.github.io/caret/train-models-by-tag.html#linear-regression</a></p>
+<p>브레트 란츠 저, R을 활용한 기계학습</p>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
+<!--radix_placeholder_article_footer-->
+<!--/radix_placeholder_article_footer-->
+</div>
+
+<div class="d-appendix">
+</div>
+
+
+<!--radix_placeholder_site_after_body-->
+<!--/radix_placeholder_site_after_body-->
+<!--radix_placeholder_appendices-->
+<div class="appendix-bottom"></div>
+<!--/radix_placeholder_appendices-->
+<!--radix_placeholder_navigation_after_body-->
+<!--/radix_placeholder_navigation_after_body-->
+
+</body>
+
+</html>

@@ -1,0 +1,16 @@
+{
+  "hash": "172c556a5eef5aa5657b8a68ca7f27df",
+  "result": {
+    "markdown": "---\ntitle: \"compete seperation\"\ndescription: |\n  A short description of the post.\nauthor:\n  - name: dondon\n    url: {}\ndate: 2022-06-17\noutput:\n  distill::distill_article:\n    self_contained: false\n---\n\n::: {.cell}\n\n```{.r .cell-code}\nlibrary(data.table)\nlibrary(tidyverse)\n```\n\n::: {.cell-output .cell-output-stderr}\n```\n── Attaching packages ─────────────────────────────────────── tidyverse 1.3.1 ──\n```\n:::\n\n::: {.cell-output .cell-output-stderr}\n```\n✔ ggplot2 3.3.6     ✔ purrr   0.3.4\n✔ tibble  3.1.7     ✔ dplyr   1.0.9\n✔ tidyr   1.2.0     ✔ stringr 1.4.0\n✔ readr   2.1.2     ✔ forcats 0.5.1\n```\n:::\n\n::: {.cell-output .cell-output-stderr}\n```\n── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──\n✖ dplyr::between()   masks data.table::between()\n✖ dplyr::filter()    masks stats::filter()\n✖ dplyr::first()     masks data.table::first()\n✖ dplyr::lag()       masks stats::lag()\n✖ dplyr::last()      masks data.table::last()\n✖ purrr::transpose() masks data.table::transpose()\n```\n:::\n:::\n\n\n\n# complete seperation \n\n\n::: {.cell}\n\n:::\n\n\n\n\n# complete seperation일 경우 logistic regression error \n\n# solution \n",
+    "supporting": [
+      "compete-seperation_files"
+    ],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": null
+  }
+}

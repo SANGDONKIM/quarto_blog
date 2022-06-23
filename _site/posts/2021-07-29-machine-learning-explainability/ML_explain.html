@@ -1,0 +1,1055 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-0.9.426">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Don Don">
+<meta name="dcterms.date" content="2021-07-29">
+<meta name="description" content="feature importance, partial dependence plot, shap value 소개">
+
+<title>Don Don - machine learning explainability</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link id="quarto-text-highlighting-styles" href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+</head>
+
+<body class="nav-fixed fullcontent">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Don Don</span>
+  </a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html">about</a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/SANGDONKIM"><i class="bi bi-github" role="img">
+</i> 
+ </a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://www.linkedin.com/in/%EC%83%81%EB%8F%88-%EA%B9%80-b89985199/"><i class="bi bi-linkedin" role="img">
+</i> 
+ </a>
+  </li>  
+</ul>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">machine learning explainability</h1>
+                          <div class="quarto-categories">
+                <div class="quarto-category">python</div>
+              </div>
+                  </div>
+  </div>
+    
+  <div>
+    <div class="description">
+      <p>feature importance, partial dependence plot, shap value 소개</p>
+    </div>
+  </div>
+
+
+
+
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Don Don </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">July 29, 2021</p>
+      </div>
+    </div>
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+<p>머신러닝 모델을 해석하는 방법은 크게 두 가지 범주로 나뉜다. 특정 모델에 한정된 방법 (Model-specific method)과 모델에 상관없이 사용할 수 있는 방법(Model-agnostic method)이다. 각 방법론별로 대표적인 방법을 kaggle study 발표 자료를 준비하면서 정리해본다.</p>
+<section id="libraries" class="level1">
+<h1>Libraries</h1>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidymodels)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lubridate)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(skimr)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(magrittr)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(data.table)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gridExtra)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(vip)</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(DALEXtra)</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="fu">theme_set</span>(<span class="fu">theme_bw</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="model-specific-method" class="level1">
+<h1>Model-specific method</h1>
+<p>Model-specific method는 random forest 모델만 다룬다.</p>
+<section id="random-forest" class="level2">
+<h2 class="anchored" data-anchor-id="random-forest">Random forest</h2>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://miro.medium.com/max/599/1*V1gaYbSzecaGE7s6WVIcsQ.png" class="img-fluid figure-img"></p>
+<p></p><figcaption aria-hidden="true" class="figure-caption"><a href="https://towardsdatascience.com/random-forest-learning-essential-understanding-1ca856a963cb" class="uri">https://towardsdatascience.com/random-forest-learning-essential-understanding-1ca856a963cb</a></figcaption><p></p>
+</figure>
+</div>
+<p>그림을 통해 random forest의 아이디어를 간단하게 설명하면 각 boostrap set(복원추출된 데이터) 별로 개별 tree를 하나씩 생성해서 나온 예측 결과를 aggregate해서 최종 예측 모델을 만드는 방법이다. 보통 random forest로 예측을 한 후에 <strong>feature importance plot</strong>을 통해 변수 중요도를 파악하게 된다. 변수 중요도가 어떻게 계산되는지 몰랐는데 이번 기회에 정리해본다.</p>
+<p>변수 중요도를 계산하는 방법은 크게 gini impurity를 이용한 방법과 permutation을 이용한 방법 2가지가 있다. 먼저 gini impurity를 이용한 방법부터 살펴보자.</p>
+</section>
+<section id="gini-importance-in-random-forest" class="level2">
+<h2 class="anchored" data-anchor-id="gini-importance-in-random-forest">Gini importance in random forest</h2>
+<p>먼저 single tree에 대해 gini importance가 어떻게 계산되는지 보자.</p>
+<p><strong>Single tree 일 때</strong> $$ <span class="math display">\[\begin{align*}
+&amp;VI_i = \sum_{n \in t, i_n = i} p(n) \boldsymbol{\Delta}_{gini}(n), \\
+&amp;i_n : \text{Sum over all nodes of the tree that use feature i} \\
+&amp;p(n) : \text{Probability of using that node for a sample data point} \\
+&amp;\boldsymbol{\Delta}_{gini}(n) : \text{Change in gini impurity at that node}
+\end{align*}\]</span></p>
+<p>$$</p>
+<p>각 feature별 gini importance 값은 해당 feature 노드의 gini impurity 값의 변화율을 이용해서 계산된다.</p>
+<p>밑에 예시를 통해 <span class="math inline">\(X_1\)</span>, <span class="math inline">\(X_2\)</span> 변수의 gini importance가 어떻게 계산되는지 알아보자.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="image11.png" class="img-fluid figure-img"></p>
+<p></p><figcaption aria-hidden="true" class="figure-caption"><a href="https://www.youtube.com/watch?v=qC3PRqHqnfE" class="uri">https://www.youtube.com/watch?v=qC3PRqHqnfE</a></figcaption><p></p>
+</figure>
+</div>
+<p>각 노드별로 gini impurity 값이 산출되었다고 했을 때, feature importance를 구하기 위해서는 <span class="math inline">\(\boldsymbol{\Delta_{gini}}\)</span>의 값을 구해야한다.</p>
+<p><span class="math inline">\(\boldsymbol{\Delta_{gini}}\)</span>를 어떻게 구하는지를 <span class="math inline">\(X_1\)</span> 변수를 기준으로 보면 기준노드의 gini impurity값과 split된 노드의 gini impurity값의 차이를 통해 계산된다. 정확히는 split된 노드에 해당하는 데이터의 비율을 gini impurity에 곱한 가중합과 기준 노드의 gini impurity 값의 차이를 통해 계산된다. <span class="math inline">\(X_1\)</span>의 <span class="math inline">\(\boldsymbol{\Delta_{gini}}\)</span>는 0.26으로 계산됨을 아래 이미지에서 확인할 수 있다.</p>
+<p>이렇게 기준 변수에 해당하는 노드의 <span class="math inline">\(\boldsymbol{\Delta_{gini}}\)</span>를 구했으면 마지막으로 <span class="math inline">\(p(n)\)</span> 즉, 해당 노드의 데이터의 비율을 가중합하면 개별 변수의 변수 중요도가 산출된다.</p>
+<p>정리하면 tree에서 가지를 뻗어나갈 때 해당 변수의 gini impurity가 얼마나 개선되었는지를 이용해서 변수 중요도를 산출한다고 볼 수 있다.</p>
+<p>이제 Random forest일 때로 돌아가보자.</p>
+<p><strong>Random forest일 때</strong></p>
+<p>Random forest일 때는 모델 특성상 각 부스트랩 샘플당 tree가 하나씩 나오게 되는데 각 tree에서 구한 <span class="math inline">\(VI_i\)</span> 값을 평균내주면 된다.</p>
+<p>$$</p>
+<p><span class="math display">\[\begin{align*}
+VI_i=\frac{1}{|B|} \sum_{t \in B} VI_i(t)
+\end{align*}\]</span></p>
+<p>$$</p>
+</section>
+<section id="purmutation-importance-in-random-forest" class="level2">
+<h2 class="anchored" data-anchor-id="purmutation-importance-in-random-forest">Purmutation importance in random forest</h2>
+<p>위에서 설명한 gini importance는 gini impurity의 변화율을 활용해서 feature importance를 산출하는 방법이다. purmutation importance도 위의 gini importance와 방식은 동일하지만 gini 값이 아닌 다른 지표를 활용한다는 것에서만 차이가 있다.</p>
+<p>먼저 알고리즘에 대해 살펴보자(분류 문제일 때)</p>
+<p>$$</p>
+<p><span class="math display">\[\begin{align*}
+\text{within each tree } t \\
+&amp;VI^{(t)}(x_j) = \frac{\sum_{i=\bar B^{(t)}} I(y_i = \hat{y}_i^{(t)})}{|\bar B^{(t)}|} - \frac{\sum_{i=\bar B^{(t)}} I(y_i = \hat{y}_{i, \pi_j}^{(t)})}{|\bar B^{(t)}|}  \\
+&amp;\hat{y}_i^{(t)} = f^{(t)}(x_i) : \text{predicted class before permuting} \\
+&amp;\hat{y}_{i, \pi_j}^{(t)} = f^{(t)}(x_{i, \pi_j}) : \text{predicted class after permuting }X_j \\
+&amp;X_{i, \pi_j} = (x_{i,1}, \cdots, x_{i, j-1}, x_{\pi_j(i), j}, x_{i, j+1}, \cdots , x_{i, p}) \\
+&amp; \bar B^{(t)} = \text{out of bag sample} \\
+\text{over all trees:} \\
+&amp;\text{1. row importance : } VI(x_j) = \frac{\sum_{t = 1}^{ntree}VI^{(t)}(x_j)}{ntree} \\
+&amp;\text{2. scale importance : } sVI(x_j) = \frac{VI(x_j)}{\frac{\hat{\sigma}}{\sqrt ntree}} \\
+\end{align*}\]</span></p>
+<p>$$ 수식을 보면 개별 tree에 대해서 <span class="math inline">\(t=1\)</span>일 때 <span class="math inline">\(\sum_{i = B} I(y_i = \hat{y_i})\)</span>와 <span class="math inline">\(\sum_{i = B} I(y_i = \hat{y_i, \pi_j})\)</span> 의 차이를 통해 feature importance 값이 계산되고, 각 부스트랩 샘플에 해당하는 tree당 계산된 feature importance 값을 평균내주면 random forest에서의 feature importance 값이 계산된다. 여기서 purmutation 개념이 나오는데 아이디어는 간단하다. feature importance를 구하고자 하는 target variable만 다른 변수의 값은 고정한 채로 행 단위로 shuffling을 진행한다. 이렇게 무작위로 shuffling 했을 때의 예측값과 shuffling하지 않았을 때의 예측값의 차이를 이용해서 변수 중요도를 산출한다(permutation의 아이디어는 밑에 더 설명한다).</p>
+<p><strong>참고</strong></p>
+<p><a href="https://www.zeileis.org/papers/Lifestat-2008.pdf" class="uri">https://www.zeileis.org/papers/Lifestat-2008.pdf</a></p>
+<p><strong>R code</strong></p>
+<p>set_engine에 옵션으로 permutation or impurity을 지정해주면 된다.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">"ames"</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>ames_train <span class="ot">&lt;-</span> ames <span class="sc">%&gt;%</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">transmute</span>(<span class="at">Sale_Price =</span> <span class="fu">log10</span>(Sale_Price),</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>              <span class="at">Gr_Liv_Area =</span> <span class="fu">as.numeric</span>(Gr_Liv_Area),</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>              Year_Built, Bldg_Type)</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>rf_model <span class="ot">&lt;-</span> </span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">rand_forest</span>(<span class="at">trees =</span> <span class="dv">1000</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">set_engine</span>(<span class="st">"ranger"</span>, <span class="at">importance =</span> <span class="st">'impurity'</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">set_mode</span>(<span class="st">"regression"</span>)</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>rf_wflow <span class="ot">&lt;-</span> </span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>    <span class="fu">workflow</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>    <span class="fu">add_formula</span>(</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>        Sale_Price <span class="sc">~</span> Gr_Liv_Area <span class="sc">+</span> Year_Built <span class="sc">+</span> Bldg_Type) <span class="sc">%&gt;%</span> </span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>    <span class="fu">add_model</span>(rf_model) </span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>rf_fit <span class="ot">&lt;-</span> rf_wflow <span class="sc">%&gt;%</span> <span class="fu">fit</span>(<span class="at">data =</span> ames_train)</span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>rf_fit <span class="sc">%&gt;%</span> </span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">extract_fit_parsnip</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>parsnip model object
+
+Ranger result
+
+Call:
+ ranger::ranger(x = maybe_data_frame(x), y = y, num.trees = ~1000,      importance = ~"impurity", num.threads = 1, verbose = FALSE,      seed = sample.int(10^5, 1)) 
+
+Type:                             Regression 
+Number of trees:                  1000 
+Sample size:                      2930 
+Number of independent variables:  3 
+Mtry:                             1 
+Target node size:                 5 
+Variable importance mode:         impurity 
+Splitrule:                        variance 
+OOB prediction error (MSE):       0.008674044 
+R squared (OOB):                  0.7231704 </code></pre>
+</div>
+</div>
+<p><strong>Gini importance plot</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>rf_fit <span class="sc">%&gt;%</span> </span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">extract_fit_parsnip</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">vip</span>(<span class="at">geom =</span> <span class="st">'point'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="ML_explain_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+</section>
+<section id="model-agnostic-method" class="level1">
+<h1>Model-agnostic method</h1>
+<section id="permutation-importance" class="level2">
+<h2 class="anchored" data-anchor-id="permutation-importance">Permutation importance</h2>
+<p>permutation importance는 <strong>모델을 학습시킨 이후(post-hoc)</strong> 특정 변수의 관측치를 shuffle했을 때의 예측력을 비교해서 feature importance를 계산하는 방법이다(random forest의 permutation importance도 aggregation이 추가된 것 외에 동일하다).</p>
+<p>알고리즘 특성상 특정 모델에 국한된 방법이 아니라 어떤 모델이든 적용할 수 있는 방법이다. permutation importance의 기본 아이디어에 대해 살펴보자.</p>
+<p><strong>Example</strong></p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="image19.png" class="img-fluid figure-img"></p>
+<p></p><figcaption aria-hidden="true" class="figure-caption"><a href="https://www.kaggle.com/dansbecker/permutation-importance" class="uri">https://www.kaggle.com/dansbecker/permutation-importance</a></figcaption><p></p>
+</figure>
+</div>
+<p>사람의 10살 때의 정보를 이용해서 10년 후 20살 때의 키를 예측하려고 한다.</p>
+<p>직관적으로 변수 중 10살 때의 키에 관한 변수는 20살 때의 키를 예측하는데 중요한 변수이고, 10살 때 갖고 있는 양말의 수는 20살 때의 키를 예측하는데 중요한 변수가 아니다.</p>
+<p>이러한 직관에서 출발하면 다음과 같은 질문을 해볼 수 있다.</p>
+<p>validation set에서 특정 변수의 관측치를 shuffle하고, 나머지 변수를 고정시키면 예측 정확도에 어떤 영향을 미칠까?</p>
+<p>특정 한 변수의 관측치만 행방향으로 무작위로 섞기 때문에 당연히 모델의 예측력은 감소하게 될 것이다. 다만 변수별로 정도의 차이가 있을 수 있다. 즉, 위의 예시로 보면 10살 때의 키에 관한 변수를 shuffle 했을 때 모델의 예측력은 많이 떨어지지만, 10살 때 갖고 있는 양말의 수에 관한 변수를 shuffle 했을 때는 모델의 예측력에 큰 차이가 없을 수 있다. 이러한 직관이 purmutaion importance의 아이디어이다.</p>
+<p><strong>Process</strong></p>
+<ol type="1">
+<li>학습이 끝난 모델 세팅</li>
+<li>한 변수의 관측치를 shuffling한 데이터를 이용해서 동일하게 예측을 진행</li>
+<li>예측치와 실제값의 차이인 손실함수를 이용해서 shuffling 후에 얼마나 loss가 커졌는지 계산</li>
+<li>loss의 증감을 이용해서 feature importance를 계산</li>
+<li>모든 변수에 대해 반복</li>
+</ol>
+<p><strong>장점</strong></p>
+<ul>
+<li><p>계산 속도가 빠름</p>
+<ul>
+<li>특정 변수를 제거하고 재학습을 시키는 것이 아니라 특정 변수 하나를 permutation하는 것이므로 상대적으로 계산량 감소</li>
+</ul></li>
+<li><p>사용 범위가 넓고, 직관적임</p></li>
+<li><p>상대적으로 일관된 feature importance를 측정할 수 있음</p></li>
+</ul>
+<p><strong>단점</strong></p>
+<ul>
+<li><p>무작위로 shuffling 하다보면 비현실적인 값이 나올 수도 있음</p></li>
+<li><p>weight의 구간을 이용한 해석 필요</p></li>
+</ul>
+<p><strong>R code</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>svm_spec <span class="ot">&lt;-</span> <span class="fu">svm_poly</span>(<span class="at">degree =</span> <span class="dv">1</span>, <span class="at">cost =</span> <span class="dv">1</span><span class="sc">/</span><span class="dv">4</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_engine</span>(<span class="st">"kernlab"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_mode</span>(<span class="st">"regression"</span>)</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>svm_wflow <span class="ot">&lt;-</span> </span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">workflow</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">add_formula</span>(</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>        Sale_Price <span class="sc">~</span> Gr_Liv_Area <span class="sc">+</span> Year_Built <span class="sc">+</span> Bldg_Type) <span class="sc">%&gt;%</span> </span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">add_model</span>(svm_spec)</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>svm_fit <span class="ot">&lt;-</span> svm_wflow <span class="sc">%&gt;%</span> <span class="fu">fit</span>(<span class="at">data =</span> ames_train)</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>svm_fit <span class="sc">%&gt;%</span> </span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">extract_fit_parsnip</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>parsnip model object
+
+Support Vector Machine object of class "ksvm" 
+
+SV type: eps-svr  (regression) 
+ parameter : epsilon = 0.1  cost C = 0.25 
+
+Polynomial kernel function. 
+ Hyperparameters : degree =  1  scale =  1  offset =  1 
+
+Number of Support Vectors : 2344 
+
+Objective Function Value : -204.8838 
+Training error : 0.278962 </code></pre>
+</div>
+</div>
+<p><strong>permutation importance plot</strong></p>
+<p>tidymodels는 vip 패키지와 연동해서 feature importance plot을 그릴 수 있다. method = “permute”를 지정해주는 것이 중요하다.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>svm_fit <span class="sc">%&gt;%</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">extract_fit_parsnip</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">vip</span>(<span class="at">method =</span> <span class="st">"permute"</span>, </span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>      <span class="at">target =</span> <span class="st">"Sale_Price"</span>, <span class="at">metric =</span> <span class="st">"rsquared"</span>,</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>      <span class="at">pred_wrapper =</span> kernlab<span class="sc">::</span>predict, <span class="at">train =</span> ames_train)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="ML_explain_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>permutation을 여러번 반복해서 평균을 낼 수도 있다.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>svm_fit <span class="sc">%&gt;%</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">extract_fit_parsnip</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">vip</span>(<span class="at">method =</span> <span class="st">"permute"</span>, </span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>      <span class="at">target =</span> <span class="st">"Sale_Price"</span>, <span class="at">metric =</span> <span class="st">"rsquared"</span>, <span class="at">nsim =</span> <span class="dv">20</span>, <span class="at">all_permutations =</span> <span class="cn">TRUE</span>, </span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>      <span class="at">geom =</span> <span class="st">"boxplot"</span>,</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>      <span class="at">mapping =</span> <span class="fu">aes_string</span>(<span class="at">fill =</span> <span class="st">"Variable"</span>),</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>      <span class="at">pred_wrapper =</span> kernlab<span class="sc">::</span>predict, <span class="at">train =</span> ames_train)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="ML_explain_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p><strong>참고</strong> <a href="https://koalaverse.github.io/vip/articles/vip.html" class="uri">https://koalaverse.github.io/vip/articles/vip.html</a></p>
+</section>
+<section id="partial-dependence-plot" class="level2">
+<h2 class="anchored" data-anchor-id="partial-dependence-plot">Partial dependence plot</h2>
+<p>feature importance는 어떤 변수가 예측에 큰 영향을 미쳤는지를 보여준다. 반면에 partial dependence plot은 변수가 target variable에 어떤 영향을 미쳤는지를 보여준다.</p>
+<p>partial dependence plot은 pumutation importance와 마찬가지로 <strong>모델을 학습한 후(post-hoc)</strong> 계산된다.</p>
+<p>먼저 예제를 살펴보자.</p>
+<p><strong>Example</strong></p>
+<ul>
+<li><p>모든 주택에 관한 변수를 통제할 때, 위·경도는 주택가격에 어떤 영향을 미치는가?</p></li>
+<li><p>두 그룹의 건강에 대한 예측 결과의 차이는 식단 때문인가? 아니면 다른 요인 때문인가?</p></li>
+</ul>
+<p>이런 질문에 간접적인 답을 할 수 있는 방법이 partial dependence plot이다. 즉 개별 변수별로 그래프를 그려서 target variable에 어떤 영향을 미쳤는지 설명할 수 있다.</p>
+<p><strong>Process</strong></p>
+<p>$$</p>
+<p><span class="math display">\[\begin{align*}
+\hat{f}_{x_s}(x_s) = E_{x_c}[\hat{f}(x_s, x_c)] &amp;= \int \hat{f}(x_s, x_c)dP(x_c) \\
+&amp;\approx \frac{1}{n} \sum_{i=1}^n \hat{f}(x_s, x_c^{(i)})\quad  \text{using Monte Carlo}\\
+&amp;\hat{f} : \text{학습이 완료된 임의의 모델} \\
+&amp; x_s : \text{plot하고자 하는 변수} \\
+&amp; x_c : x_s\text{ 외 나머지 변수}
+\end{align*}\]</span></p>
+<p>$$</p>
+<p><span class="math inline">\(\hat{f}\)</span>를 안다고 할 때, <span class="math inline">\(x_{c}^{(i)}\)</span> 는 데이터셋으로 부터 주어진 값이므로 <span class="math inline">\(x_s\)</span>에 값을 넣어서 값을 얻을 수 있다. <span class="math inline">\(\hat{f}\)</span>는 학습이 완료된 모델이지만 적분이 불가능하므로 monte carlo integration을 이용해서 근사적으로 계산한다.</p>
+<p><strong>즉, 관심변수 외에 다른 변수들의 값이 고정되어 있을 때 관심 변수 값에 따라 모델의 예측값이 어떻게 변화하는지를 보는 것이다.</strong></p>
+<p>partial dependence plot은 회귀분석에서 회귀계수를 해석하는 방식과 동일하며, 관심 변수와 관심변수 외의 변수들 간의 <strong>독립</strong>을 가정하는 것 또한 동일하다.</p>
+<p><strong>장점</strong></p>
+<ul>
+<li><p>해석이 직관적임</p></li>
+<li><p>상대적으로 구현하기 쉬움</p></li>
+</ul>
+<p><strong>단점</strong></p>
+<ul>
+<li><p>2차원으로 표현되기 때문에 변수 2개에 대해서만 해석 가능</p></li>
+<li><p>계산량이 많음</p></li>
+<li><p>독립성 가정</p></li>
+</ul>
+<p><strong>R code</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(ames)</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>ames_train <span class="ot">&lt;-</span> ames <span class="sc">%&gt;%</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">transmute</span>(<span class="at">Sale_Price =</span> <span class="fu">log10</span>(Sale_Price),</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>              <span class="at">Gr_Liv_Area =</span> <span class="fu">as.numeric</span>(Gr_Liv_Area), </span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>              Year_Built, Bldg_Type)</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>rf_model <span class="ot">&lt;-</span> </span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">rand_forest</span>(<span class="at">trees =</span> <span class="dv">1000</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">set_engine</span>(<span class="st">"ranger"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">set_mode</span>(<span class="st">"regression"</span>)</span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>rf_wflow <span class="ot">&lt;-</span> </span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>    <span class="fu">workflow</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>    <span class="fu">add_formula</span>(</span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>        Sale_Price <span class="sc">~</span> Gr_Liv_Area <span class="sc">+</span> Year_Built <span class="sc">+</span> Bldg_Type) <span class="sc">%&gt;%</span> </span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>    <span class="fu">add_model</span>(rf_model) </span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a>rf_fit <span class="ot">&lt;-</span> rf_wflow <span class="sc">%&gt;%</span> <span class="fu">fit</span>(<span class="at">data =</span> ames_train)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><strong>Partial Dependence Plot</strong> DALEXtra 패키지를 이용해서 partial dependence plot을 그릴 수 있다. model_profile 함수 안에 variable = ““에 그리고 싶은 변수를 지정하면 된다. group별 plot을 보고 싶으면 group 옵션을 선택할 수 있다.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(DALEXtra)</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>explainer_rf <span class="ot">&lt;-</span> <span class="fu">explain_tidymodels</span>(</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>    rf_fit, </span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">data =</span> dplyr<span class="sc">::</span><span class="fu">select</span>(ames_train, <span class="sc">-</span>Sale_Price), </span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> ames_train<span class="sc">$</span>Sale_Price,</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">label =</span> <span class="st">"random forest"</span></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Preparation of a new explainer is initiated
+  -&gt; model label       :  random forest 
+  -&gt; data              :  2930  rows  3  cols 
+  -&gt; data              :  tibble converted into a data.frame 
+  -&gt; target variable   :  2930  values 
+  -&gt; predict function  :  yhat.workflow  will be used (  default  )
+  -&gt; predicted values  :  No value for predict function target column. (  default  )
+  -&gt; model_info        :  package tidymodels , ver. 0.2.0.9000 , task regression (  default  ) 
+  -&gt; predicted values  :  numerical, min =  4.906283 , mean =  5.220625 , max =  5.509735  
+  -&gt; residual function :  difference between y and yhat (  default  )
+  -&gt; residuals         :  numerical, min =  -0.8029249 , mean =  1.511754e-05 , max =  0.3728236  
+  A new explainer has been created!  </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>pdp_rf <span class="ot">&lt;-</span> <span class="fu">model_profile</span>(explainer_rf, <span class="at">N =</span> <span class="cn">NULL</span>, </span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>                        <span class="at">variables =</span> <span class="st">"Gr_Liv_Area"</span>, <span class="at">groups =</span> <span class="st">"Bldg_Type"</span>)</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(pdp_rf)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="ML_explain_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+<section id="shapley-value" class="level2">
+<h2 class="anchored" data-anchor-id="shapley-value">Shapley value</h2>
+<p>Shapley value는 Lloyd Shapley가 정의한 협동적 게임이론을 근거로 한 방법론이다. 협동적 게임이론은 몰라도 되는 것 같다…</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="image18.png" class="img-fluid figure-img"></p>
+<p></p><figcaption aria-hidden="true" class="figure-caption"><a href="https://www.youtube.com/watch?v=9haIOplEIGM&amp;t=152s" class="uri">https://www.youtube.com/watch?v=9haIOplEIGM&amp;t=152s</a></figcaption><p></p>
+</figure>
+</div>
+<p>그림을 통해 보면 4명이 팀을 이뤄서 kaggle competition에 우승을 했다고 해보자. 우승 상금을 분배해야하는데 어떻게 하면 공정하게 분배할 수 있을까?</p>
+<p>가장 공평한 방법은 개별 팀원의 기여도를 통해서 우승에 크게 기여한 사람에게 큰 금액을, 우승에 작게 기여한 사람에게 적은 금액을 부여하는 것이다. 여기서 한 가지 문제는 기여도를 어떻게 측정할 것인지에 대한 측도가 필요하다. 가장 쉬운 방법은 한명이 빠졌을 때의 상금과 4명이 우승했을 때의 상금을 비교하는 것이다.</p>
+<p>그림으로 예를 들면 파란색 팀원은 도메인 전문가로 팀에 상당한 기여를 했다고 가정해보자. 파란색 팀원이 빠졌을 경우 팀은 3등으로 순위가 떨어져 상금을 3000 달러 밖에 수령하지 못한다고 가정해보면 파란색 팀원은 대략 7000달러의 기여도를 갖고 있다고 볼 수 있다.</p>
+<p>이렇게 개별 팀원이 빠졌을 때와 빠지지 않았을 때를 비교해서 쉽게 기여도를 계산할 수 있지만, 문제점은 개별 팀원 사이에 관계를 고려하지 못하는 것이다.</p>
+<p>shapley value는 이러한 문제를 극복하기 위해서 개별 팀원이 빠졌을 때와 빠지지 않았을 때의 모든 경우의 수를 고려해서 개별 팀원의 기여도를 계산하는 방식을 채택한다.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="image12.png" class="img-fluid figure-img"></p>
+<p></p><figcaption aria-hidden="true" class="figure-caption"><a href="https://www.youtube.com/watch?v=9haIOplEIGM&amp;t=152s" class="uri">https://www.youtube.com/watch?v=9haIOplEIGM&amp;t=152s</a></figcaption><p></p>
+</figure>
+</div>
+<p>머신러닝 모델로 일반화를 하면 팀 내의 개별 팀원은 feature로 볼 수 있고, Game은 Black box 모델, Payout은 prediction 값으로 볼 수 있다. 정리하면 shapley value는 각 feature가 예측에 얼마나 기여를 했는지 측정하는 측도로 볼 수 있고, 이 측도를 구하기 위해서 모든 하위 부분집합의 값을 계산하는 방법을 채택한다. 이를 <strong>marginal contribution</strong> 이라고 하며, 각 feature 별로 계산된 <strong>marginal contribution</strong>을 평균내서 최종 shapley value 값을 산출한다.</p>
+<p><strong>process</strong></p>
+<p>$$</p>
+<p><span class="math display">\[\begin{align*}
+\phi_j(val) &amp;= \sum_{S \subseteq\{x_1, \cdots, x_p\}\setminus \{x_j\}} \frac{|S|!(P-|S|-1)!}{p!}(val(S \cup\{x_j\})-val(S)) \\
+&amp;S : \text{subset of the features} \\
+&amp;p : \text{the number of features} \\
+&amp;x : \text{the vector of feature values of instance to be explained} \\
+&amp;val : \text{prediction for feature values}
+\end{align*}\]</span></p>
+<p>$$</p>
+<p>shapley value를 구하는 순서는 간략하게 다음과 같다.</p>
+<ol type="1">
+<li>기준변수를 제외했을 때와 제외하지 않았을 때 예측값의 차이를 계산</li>
+<li>가중치 계산</li>
+<li>가중합 계산</li>
+</ol>
+<p><strong>Example</strong></p>
+<p>위의 kaggle competition 예제로 다시 돌아가서 kaggle competition에 참여한 3명의 player가 있다고 가정해보자. 여기서 각 player에 대한 상금의 기여분에 대한 경우의 수는 다음과 같다.</p>
+<p>$$</p>
+<p><span class="math display">\[\begin{align*}
+&amp;val(1) = 100, \, val(2) = 125, \, val(3) = 50, \\
+&amp;val(1, 2) = 270, \, val(1, 3) = 375, \, val(2, 3) = 350, \\
+&amp;\, val(1, 2, 3) = 500
+\end{align*}\]</span></p>
+<p>$$</p>
+<p>즉, 3명의 player가 모두 참여했을 때는 500$를 수령할 수 있지만, 1번 player만 참여했을 때는 100$, 2번 player만 참여했을 때는 125$, 1번과 2번 player가 동시에 참여했을 때는 270$ .. etc 으로 해석할 수 있다(실제 ML model에서 val은 prediction value이므로 주어진 값이다).</p>
+<p>이제 각 player별 <strong>marginal contribution</strong>을 계산할 수 있는데 아래 table과 같이 계산된다.</p>
+<table class="table">
+<caption><a href="http://faculty.econ.ucdavis.edu/faculty/bonanno/teaching/122/Shapley.pdf" class="uri">http://faculty.econ.ucdavis.edu/faculty/bonanno/teaching/122/Shapley.pdf</a></caption>
+<thead>
+<tr class="header">
+<th>Probability</th>
+<th>combination</th>
+<th>1’s marginal contribution</th>
+<th>2’s marginal contribution</th>
+<th>3’s marginal contribution</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><span class="math display">\[
+\frac{1}{6}
+\]</span></td>
+<td><p>first 1, then2, then3:</p>
+<p><span class="math display">\[
+               123
+               \]</span></p></td>
+<td><span class="math display">\[
+                             val(1) = 100
+                             \]</span></td>
+<td><span class="math display">\[
+                                                         val(1,2)-val(1) = 170
+                                                         \]</span></td>
+<td><span class="math display">\[
+                                                                                     val(1,2,3)-val(1,2) = 230
+                                                                                     \]</span></td>
+</tr>
+<tr class="even">
+<td><span class="math display">\[
+\frac{1}{6}
+\]</span></td>
+<td><span class="math display">\[
+               132
+               \]</span></td>
+<td><span class="math display">\[
+                             val(1)=100
+                             \]</span></td>
+<td><span class="math display">\[
+                                                         val(1,2,3)=val(1,3)=125
+                                                         \]</span></td>
+<td><span class="math display">\[
+                                                                                     val(1,3)-val(1)=275
+                                                                                     \]</span></td>
+</tr>
+<tr class="odd">
+<td><span class="math display">\[
+\frac{1}{6}
+\]</span></td>
+<td><span class="math display">\[
+               213
+               \]</span></td>
+<td><span class="math display">\[
+val(1,2)-val(2)=145
+\]</span></td>
+<td><span class="math display">\[
+val(2)=125
+\]</span></td>
+<td><span class="math display">\[
+val(1,2,3)-val(1,2)=230
+\]</span></td>
+</tr>
+<tr class="even">
+<td><span class="math display">\[
+\frac{1}{6}
+\]</span></td>
+<td><span class="math display">\[
+               231
+               \]</span></td>
+<td><span class="math display">\[
+val(1,2,3)-val(2,3)=150
+\]</span></td>
+<td><span class="math display">\[
+val(2)=125
+\]</span></td>
+<td><span class="math display">\[
+val(2,3)-val(2)=225
+\]</span></td>
+</tr>
+<tr class="odd">
+<td><span class="math display">\[
+\frac{1}{6}
+\]</span></td>
+<td><span class="math display">\[
+               312
+               \]</span></td>
+<td><span class="math display">\[
+val(1,3)-val(3)=375
+\]</span></td>
+<td><span class="math display">\[
+val(1,2,3)-val(1,3)=125
+\]</span></td>
+<td><span class="math display">\[
+val(3)=50
+\]</span></td>
+</tr>
+<tr class="even">
+<td><span class="math display">\[
+\frac{1}{6}
+\]</span></td>
+<td><span class="math display">\[
+               321
+               \]</span></td>
+<td><span class="math display">\[
+val(1,2,3)-val(2,3)=150
+\]</span></td>
+<td><span class="math display">\[
+val(2,3)-val(3)=300
+\]</span></td>
+<td><span class="math display">\[
+val(3)=50
+\]</span></td>
+</tr>
+</tbody>
+</table>
+<p>각 변수별 expected marginal contribution, 즉 shapley value를 구해보면 다음과 같다.</p>
+<p><span class="math inline">\(\phi_1(val)\)</span>(1’s expected marginal contribution) : <span class="math inline">\(\frac{1}{6}(100+100+145+150+325+150)=\frac{970}{6}\)</span></p>
+<p><span class="math inline">\(\phi_2(val)\)</span>(2’s expected marginal contribution) : <span class="math inline">\(\frac{1}{6}(170+125+125+125+125+300)=\frac{970}{6}\)</span></p>
+<p><span class="math inline">\(\phi_3(val)\)</span>(3’s expected marginal contribution) : <span class="math inline">\(\frac{1}{6}(230+275+230+225+50+50)=\frac{1060}{6}\)</span></p>
+<p>1’s, 2’s, 3’s expected marginal contribution을 모두 합하면 500이 되고, 이 값은 <span class="math inline">\(val(1,2,3)\)</span> 값과 같다.</p>
+<p><span class="math inline">\(\frac{970+970+1060}{6}=\frac{3000}{6} = 500=val(1,2,3)\)</span></p>
+<p><strong>R code</strong></p>
+<p><strong>package: fastshap, DALEX, iml, shapper등이 있음</strong></p>
+</section>
+<section id="dalex-패키지를-이용해서-shap을-그리는-방법" class="level2">
+<h2 class="anchored" data-anchor-id="dalex-패키지를-이용해서-shap을-그리는-방법">DALEX 패키지를 이용해서 SHAP을 그리는 방법</h2>
+<ul>
+<li><p>tidymodels workflow를 동일하게 수행</p></li>
+<li><p>fit함수의 결과를 변수에 저장</p></li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(DALEX)</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>titanic <span class="sc">%&gt;%</span> <span class="fu">is.na</span>() <span class="sc">%&gt;%</span> <span class="fu">colSums</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  gender      age    class embarked  country     fare    sibsp    parch 
+       0        2        0        0       81       26       10       10 
+survived 
+       0 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>titanic_rec <span class="ot">&lt;-</span> titanic <span class="sc">%&gt;%</span> </span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">recipe</span>(survived <span class="sc">~</span> class <span class="sc">+</span> gender <span class="sc">+</span> age <span class="sc">+</span> </span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>                sibsp <span class="sc">+</span> parch <span class="sc">+</span> fare <span class="sc">+</span> embarked) <span class="sc">%&gt;%</span> </span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_bagimpute</span>(age, fare, sibsp, parch)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: `step_bagimpute()` was deprecated in recipes 0.1.16.
+Please use `step_impute_bag()` instead.
+This warning is displayed once every 8 hours.
+Call `lifecycle::last_lifecycle_warnings()` to see where this warning was generated.</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>rf_model <span class="ot">&lt;-</span> </span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">rand_forest</span>(<span class="at">trees =</span> <span class="dv">1000</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">set_engine</span>(<span class="st">"ranger"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">set_mode</span>(<span class="st">"classification"</span>)</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>rf_wflow <span class="ot">&lt;-</span> </span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">workflow</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_model</span>(rf_model) <span class="sc">%&gt;%</span> </span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_recipe</span>(titanic_rec)</span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a>rf_fit <span class="ot">&lt;-</span> rf_wflow <span class="sc">%&gt;%</span> <span class="fu">fit</span>(<span class="at">data =</span> titanic <span class="sc">%&gt;%</span> <span class="fu">select</span>(<span class="sc">-</span>country))</span>
+<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a>rf_ex_fit <span class="ot">&lt;-</span> rf_fit <span class="sc">%&gt;%</span> <span class="fu">extract_fit_parsnip</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ul>
+<li><p>explain()</p>
+<ul>
+<li><p>model : fitting 완료된 모델</p></li>
+<li><p>data : target 변수 제외한 데이터프레임</p></li>
+<li><p>y : target 변수</p></li>
+</ul></li>
+<li><p>다른 라이브러리를 이용해서 모델을 fitting 했을 때 구조가 서로 다를 수 있으므로 explain 함수를 이용해서 균일한 인터페이스를 갖는 객체로 만들어줌</p></li>
+<li><p>shapley value가 계산되는 것은 아님</p></li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(DALEX)</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>titanic_rf_exp <span class="ot">&lt;-</span>DALEX<span class="sc">::</span><span class="fu">explain</span>(<span class="at">model =</span> rf_fit, </span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>                       <span class="at">data =</span> titanic <span class="sc">%&gt;%</span> <span class="fu">select</span>(<span class="sc">-</span>country),</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>                       <span class="at">y =</span> titanic_imputed<span class="sc">$</span>survived <span class="sc">==</span> <span class="st">"yes"</span>, </span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>                       <span class="at">label =</span> <span class="st">"Random Forest"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Preparation of a new explainer is initiated
+  -&gt; model label       :  Random Forest 
+  -&gt; data              :  2207  rows  8  cols 
+  -&gt; target variable   :  2207  values 
+  -&gt; predict function  :  yhat.workflow  will be used (  default  )
+  -&gt; predicted values  :  No value for predict function target column. (  default  )
+  -&gt; model_info        :  package tidymodels , ver. 0.2.0.9000 , task classification (  default  ) 
+  -&gt; model_info        :  Model info detected classification task but 'y' is a logical . Converted to numeric.  (  NOTE  )
+  -&gt; predicted values  :  numerical, min =  0.01073995 , mean =  0.3223294 , max =  0.9896557  
+  -&gt; residual function :  difference between y and yhat (  default  )
+  -&gt; residuals         :  numerical, min =  -0.9896557 , mean =  -0.3223294 , max =  -0.01073995  
+  A new explainer has been created!  </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>henry <span class="ot">&lt;-</span> archivist<span class="sc">::</span><span class="fu">aread</span>(<span class="st">"pbiecek/models/a6538"</span>) </span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>henry</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  class gender age sibsp parch fare  embarked
+1   1st   male  47     0     0   25 Cherbourg</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">predict</span>(titanic_rf_exp, henry)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>      yes 
+0.3040662 </code></pre>
+</div>
+</div>
+<p><strong>shapley value 계산</strong></p>
+<ul>
+<li><p>predict_parts()</p>
+<ul>
+<li><p>explainer : explain 함수를 적용한 모델</p></li>
+<li><p>new_observation : obs</p></li>
+<li><p>type : shap, oscillations, oscillations_uni, oscillations_emp, break_down or break_down_interactions 등의 다양한 옵션이 있음</p></li>
+<li><p>B : 25(default), shapley value 계산할 때 설명변수의 무작위 순서의 조합 개수</p></li>
+</ul></li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>shap_henry <span class="ot">&lt;-</span> <span class="fu">predict_parts</span>(<span class="at">explainer =</span> titanic_rf_exp,</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>                      <span class="at">new_observation =</span> henry, </span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>                                 <span class="at">type =</span> <span class="st">"shap"</span>,</span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>                                    <span class="at">B =</span> <span class="dv">25</span>)</span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>shap_henry</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                                            min           q1       median
+Random Forest: age = 47             -0.10958216 -0.077048136 -0.039585336
+Random Forest: class = 1st           0.11977074  0.129703786  0.137299673
+Random Forest: embarked = Cherbourg  0.01057468  0.020564934  0.025149406
+Random Forest: fare = 25            -0.03420884 -0.030963125 -0.019752132
+Random Forest: gender = male        -0.13117611 -0.120853322 -0.106168829
+Random Forest: parch = 0            -0.01785730 -0.005364222 -0.002426969
+Random Forest: sibsp = 0            -0.02368693 -0.012924590 -0.003400316
+                                            mean            q3          max
+Random Forest: age = 47             -0.054847808 -0.0348250723 -0.027415817
+Random Forest: class = 1st           0.137306090  0.1441837270  0.156656946
+Random Forest: embarked = Cherbourg  0.033246438  0.0326961559  0.077812025
+Random Forest: fare = 25            -0.015709707 -0.0035259814  0.023666520
+Random Forest: gender = male        -0.109109816 -0.1026874512 -0.090353479
+Random Forest: parch = 0            -0.003782869 -0.0007665738  0.001970215
+Random Forest: sibsp = 0            -0.005365563  0.0008844455  0.009131888</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(shap_henry)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="ML_explain_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<ul>
+<li><p>henry의 나이는 47세로 shapley value 값이 음수로 표시되고, age는 생존에 부정적인 기여를 했다고 해석할 수 있음</p></li>
+<li><p>henry의 class는 1등석으로 shapley value 값이 양수로 표시되고, class는 생존에 매우 긍정적인 기여를 했다고 해석할 수 있음</p></li>
+</ul>
+</section>
+<section id="fastshap-패키지를-이용한-방법" class="level2">
+<h2 class="anchored" data-anchor-id="fastshap-패키지를-이용한-방법">fastshap 패키지를 이용한 방법</h2>
+<ul>
+<li><p>fastshap::explain()</p>
+<ul>
+<li><p>model : extract_fit_parsnip() 적용한 모델</p></li>
+<li><p>X : data</p></li>
+<li><p>pred_wrapper : 예측값, classification의 경우 기준 범주의 확률</p>
+<ul>
+<li><p>xgb, lm은 적용안하고 exact = T만 해줘도 됨</p></li>
+<li><p>나머지 모델은 pred_wrapper을 넣어줘야함</p></li>
+</ul></li>
+<li><p>exact = T : 근사값이 아닌 정확한 shapley value 계산</p></li>
+</ul></li>
+</ul>
+<p><strong>Shapley feature importance</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">"titanic_imputed"</span>)  </span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>titanic_rec <span class="ot">&lt;-</span> titanic_imputed <span class="sc">%&gt;%</span> </span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">recipe</span>(survived <span class="sc">~</span> .) <span class="sc">%&gt;%</span> </span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_mutate</span>(<span class="at">survived =</span> <span class="fu">as.factor</span>(survived))</span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a>rf_model <span class="ot">&lt;-</span> </span>
+<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">rand_forest</span>(<span class="at">trees =</span> <span class="dv">1000</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">set_engine</span>(<span class="st">"ranger"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">set_mode</span>(<span class="st">"classification"</span>)</span>
+<span id="cb27-11"><a href="#cb27-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-12"><a href="#cb27-12" aria-hidden="true" tabindex="-1"></a>rf_wflow <span class="ot">&lt;-</span> </span>
+<span id="cb27-13"><a href="#cb27-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">workflow</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb27-14"><a href="#cb27-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_model</span>(rf_model) <span class="sc">%&gt;%</span> </span>
+<span id="cb27-15"><a href="#cb27-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_recipe</span>(titanic_rec)</span>
+<span id="cb27-16"><a href="#cb27-16" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb27-17"><a href="#cb27-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-18"><a href="#cb27-18" aria-hidden="true" tabindex="-1"></a>rf_fit <span class="ot">&lt;-</span> rf_wflow <span class="sc">%&gt;%</span> <span class="fu">fit</span>(<span class="at">data =</span> titanic_imputed)</span>
+<span id="cb27-19"><a href="#cb27-19" aria-hidden="true" tabindex="-1"></a>rf_ex_fit <span class="ot">&lt;-</span> rf_fit <span class="sc">%&gt;%</span> <span class="fu">extract_fit_parsnip</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ul>
+<li>shap &lt;- explain(xgb_ex_fit$fit, X = X, exact = T)</li>
+<li>xgboost, lm만 exact = T 가능, 나머지 불가능(공식 문서 참고)</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(fastshap)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+다음의 패키지를 부착합니다: 'fastshap'</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following object is masked from 'package:DALEX':
+
+    explain</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following object is masked from 'package:vip':
+
+    gen_friedman</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following object is masked from 'package:dplyr':
+
+    explain</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">predict</span>(rf_ex_fit<span class="sc">$</span>fit, titanic_imputed)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Ranger prediction
+
+Type:                             Probability estimation 
+Sample size:                      2207 
+Number of independent variables:  7 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">predict</span>(rf_ex_fit<span class="sc">$</span>fit, titanic_imputed)<span class="sc">$</span>predictions <span class="sc">%&gt;%</span> <span class="fu">head</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>             0          1
+[1,] 0.9000799 0.09992012
+[2,] 0.7345494 0.26545058
+[3,] 0.8750383 0.12496173
+[4,] 0.4106171 0.58938287
+[5,] 0.2833394 0.71666057
+[6,] 0.7828397 0.21716025</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>pred_fun <span class="ot">&lt;-</span> <span class="cf">function</span>(X.model, newdata) {</span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">predict</span>(X.model, newdata)<span class="sc">$</span>predictions[,<span class="dv">2</span>]</span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a>shap <span class="ot">&lt;-</span> <span class="fu">explain</span>(rf_ex_fit<span class="sc">$</span>fit, <span class="at">X =</span> titanic_imputed, <span class="at">pred_wrapper =</span> pred_fun, <span class="at">nsim =</span> <span class="dv">20</span>)</span>
+<span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-7"><a href="#cb37-7" aria-hidden="true" tabindex="-1"></a><span class="fu">autoplot</span>(shap)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="ML_explain_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p><strong>Shapley dependence plot</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>pred_fun <span class="ot">&lt;-</span> <span class="cf">function</span>(X.model, newdata) {</span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">predict</span>(X.model, newdata)<span class="sc">$</span>predictions[,<span class="dv">2</span>]</span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a><span class="fu">autoplot</span>(shap, <span class="at">type =</span> <span class="st">"dependence"</span>, <span class="at">feature =</span> <span class="st">"fare"</span>, <span class="at">X =</span> titanic_imputed, <span class="at">smooth =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`geom_smooth()` using method = 'gam' and formula 'y ~ s(x, bs = "cs")'</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="ML_explain_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p><strong>contribution plot</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="fu">autoplot</span>(shap, <span class="at">type =</span> <span class="st">"contribution"</span>, <span class="at">row_num =</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="ML_explain_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="fu">force_plot</span>(shap[<span class="dv">1</span>,], <span class="at">baseline =</span> <span class="fu">mean</span>(<span class="fu">pred_fun</span>(rf_ex_fit, titanic_imputed)), <span class="at">feature_values =</span> titanic_imputed[<span class="dv">1</span>,], <span class="at">display =</span> <span class="st">"html"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-error">
+<pre><code>Error: The Python package "shap" is needed for this function to work. Please install it; visit https://github.com/slundberg/shap for details.</code></pre>
+</div>
+</div>
+<p><a href="http://xai-tools.drwhy.ai/fastshap.html" class="uri">http://xai-tools.drwhy.ai/fastshap.html</a></p>
+<p><strong>참고자료</strong></p>
+<p><a href="https://www.kaggle.com/dansbecker/use-cases-for-model-insights" class="uri">https://www.kaggle.com/dansbecker/use-cases-for-model-insights</a></p>
+<p><a href="https://www.kaggle.com/dansbecker/permutation-importance" class="uri">https://www.kaggle.com/dansbecker/permutation-importance</a></p>
+<p><a href="https://www.kaggle.com/dansbecker/partial-plots?scriptVersionId=64768853&amp;cellId=1" class="uri">https://www.kaggle.com/dansbecker/partial-plots?scriptVersionId=64768853&amp;cellId=1</a></p>
+<p><a href="https://christophm.github.io/interpretable-ml-book/pdp.html" class="uri">https://christophm.github.io/interpretable-ml-book/pdp.html</a></p>
+<p><a href="https://juliasilge.com/blog/mario-kart/" class="uri">https://juliasilge.com/blog/mario-kart/</a></p>
+<p><a href="https://www.hfshr.xyz/posts/2020-06-07-variable-importance-with-fastshap/#ref-R-vip" class="uri">https://www.hfshr.xyz/posts/2020-06-07-variable-importance-with-fastshap/#ref-R-vip</a></p>
+<p><a href="https://stackoverflow.com/questions/67634344/r-partial-dependence-plots-from-workflow" class="uri">https://stackoverflow.com/questions/67634344/r-partial-dependence-plots-from-workflow</a></p>
+<p><a href="https://cran.r-project.org/web/packages/fastshap/fastshap.pdf" class="uri">https://cran.r-project.org/web/packages/fastshap/fastshap.pdf</a></p>
+<p><a href="https://www.youtube.com/watch?v=lIT5-piVtRw" class="uri">https://www.youtube.com/watch?v=lIT5-piVtRw</a></p>
+<p><a href="https://www.hfshr.xyz/posts/2020-06-07-variable-importance-with-fastshap/" class="uri">https://www.hfshr.xyz/posts/2020-06-07-variable-importance-with-fastshap/</a></p>
+<p><a href="https://bradleyboehmke.github.io/HOML/iml.html" class="uri">https://bradleyboehmke.github.io/HOML/iml.html</a></p>
+<p><a href="https://ema.drwhy.ai/shapley.html#SHAPRcode" class="uri">https://ema.drwhy.ai/shapley.html#SHAPRcode</a></p>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    setTimeout(function() {
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      let href = ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
+      });
+      return popup.innerHTML;
+    });
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

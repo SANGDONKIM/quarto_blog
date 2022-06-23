@@ -1,0 +1,2471 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1"/>
+  <meta name="generator" content="distill" />
+
+  <style type="text/css">
+  /* Hide doc at startup (prevent jankiness while JS renders/transforms) */
+  body {
+    visibility: hidden;
+  }
+  </style>
+
+ <!--radix_placeholder_import_source-->
+ <!--/radix_placeholder_import_source-->
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css" data-origin="pandoc">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ad0000; } /* Alert */
+code span.an { color: #5e5e5e; } /* Annotation */
+code span.at { } /* Attribute */
+code span.bn { color: #ad0000; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007ba5; } /* ControlFlow */
+code span.ch { color: #20794d; } /* Char */
+code span.cn { color: #8f5902; } /* Constant */
+code span.co { color: #5e5e5e; } /* Comment */
+code span.cv { color: #5e5e5e; font-style: italic; } /* CommentVar */
+code span.do { color: #5e5e5e; font-style: italic; } /* Documentation */
+code span.dt { color: #ad0000; } /* DataType */
+code span.dv { color: #ad0000; } /* DecVal */
+code span.er { color: #ad0000; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #ad0000; } /* Float */
+code span.fu { color: #4758ab; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #5e5e5e; } /* Information */
+code span.kw { color: #007ba5; } /* Keyword */
+code span.op { color: #5e5e5e; } /* Operator */
+code span.ot { color: #007ba5; } /* Other */
+code span.pp { color: #ad0000; } /* Preprocessor */
+code span.sc { color: #5e5e5e; } /* SpecialChar */
+code span.ss { color: #20794d; } /* SpecialString */
+code span.st { color: #20794d; } /* String */
+code span.va { color: #111111; } /* Variable */
+code span.vs { color: #20794d; } /* VerbatimString */
+code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
+</style>
+
+  <!--radix_placeholder_meta_tags-->
+  <title>Arima with R</title>
+
+  <meta property="description" itemprop="description" content="Arima, time series regression tutorial"/>
+
+
+  <!--  https://schema.org/Article -->
+  <meta property="article:published" itemprop="datePublished" content="2021-06-04"/>
+  <meta property="article:created" itemprop="dateCreated" content="2021-06-04"/>
+  <meta name="article:author" content="dondon"/>
+
+  <!--  https://developers.facebook.com/docs/sharing/webmasters#markup -->
+  <meta property="og:title" content="Arima with R"/>
+  <meta property="og:type" content="article"/>
+  <meta property="og:description" content="Arima, time series regression tutorial"/>
+  <meta property="og:locale" content="en_US"/>
+
+  <!--  https://dev.twitter.com/cards/types/summary -->
+  <meta property="twitter:card" content="summary"/>
+  <meta property="twitter:title" content="Arima with R"/>
+  <meta property="twitter:description" content="Arima, time series regression tutorial"/>
+
+  <!--/radix_placeholder_meta_tags-->
+  <!--radix_placeholder_rmarkdown_metadata-->
+
+  <script type="text/json" id="radix-rmarkdown-metadata">
+  {"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","description","author","date","output","categories"]}},"value":[{"type":"character","attributes":{},"value":["Arima with R"]},{"type":"character","attributes":{},"value":["Arima, time series regression tutorial \n"]},{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","url"]}},"value":[{"type":"character","attributes":{},"value":["dondon"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":[]}},"value":[]}]}]},{"type":"character","attributes":{},"value":["2021-06-04"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["distill::distill_article"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["toc","toc_depth","self_contained","highlight","highlight_downlit","code_folding"]}},"value":[{"type":"logical","attributes":{},"value":[true]},{"type":"integer","attributes":{},"value":[3]},{"type":"logical","attributes":{},"value":[false]},{"type":"character","attributes":{},"value":["default"]},{"type":"logical","attributes":{},"value":[true]},{"type":"logical","attributes":{},"value":[false]}]}]},{"type":"character","attributes":{},"value":["Statistics","time series","R"]}]}
+  </script>
+  <!--/radix_placeholder_rmarkdown_metadata-->
+  
+  <script type="text/json" id="radix-resource-manifest">
+  {"type":"character","attributes":{},"value":["arima-with-r_files/anchor-4.2.2/anchor.min.js","arima-with-r_files/bowser-1.9.3/bowser.min.js","arima-with-r_files/distill-2.2.21/template.v2.js","arima-with-r_files/figure-html5/unnamed-chunk-10-1.png","arima-with-r_files/figure-html5/unnamed-chunk-10-2.png","arima-with-r_files/figure-html5/unnamed-chunk-11-1.png","arima-with-r_files/figure-html5/unnamed-chunk-12-1.png","arima-with-r_files/figure-html5/unnamed-chunk-13-1.png","arima-with-r_files/figure-html5/unnamed-chunk-14-1.png","arima-with-r_files/figure-html5/unnamed-chunk-15-1.png","arima-with-r_files/figure-html5/unnamed-chunk-15-2.png","arima-with-r_files/figure-html5/unnamed-chunk-16-1.png","arima-with-r_files/figure-html5/unnamed-chunk-17-1.png","arima-with-r_files/figure-html5/unnamed-chunk-17-2.png","arima-with-r_files/figure-html5/unnamed-chunk-18-1.png","arima-with-r_files/figure-html5/unnamed-chunk-19-1.png","arima-with-r_files/figure-html5/unnamed-chunk-19-2.png","arima-with-r_files/figure-html5/unnamed-chunk-2-1.png","arima-with-r_files/figure-html5/unnamed-chunk-21-1.png","arima-with-r_files/figure-html5/unnamed-chunk-23-1.png","arima-with-r_files/figure-html5/unnamed-chunk-26-1.png","arima-with-r_files/figure-html5/unnamed-chunk-27-1.png","arima-with-r_files/figure-html5/unnamed-chunk-28-1.png","arima-with-r_files/figure-html5/unnamed-chunk-3-1.png","arima-with-r_files/figure-html5/unnamed-chunk-30-1.png","arima-with-r_files/figure-html5/unnamed-chunk-31-1.png","arima-with-r_files/figure-html5/unnamed-chunk-32-1.png","arima-with-r_files/figure-html5/unnamed-chunk-33-1.png","arima-with-r_files/figure-html5/unnamed-chunk-35-1.png","arima-with-r_files/figure-html5/unnamed-chunk-36-1.png","arima-with-r_files/figure-html5/unnamed-chunk-38-1.png","arima-with-r_files/figure-html5/unnamed-chunk-4-1.png","arima-with-r_files/figure-html5/unnamed-chunk-7-1.png","arima-with-r_files/figure-html5/unnamed-chunk-9-1.png","arima-with-r_files/header-attrs-2.8/header-attrs.js","arima-with-r_files/jquery-1.11.3/jquery.min.js","arima-with-r_files/popper-2.6.0/popper.min.js","arima-with-r_files/tippy-6.2.7/tippy-bundle.umd.min.js","arima-with-r_files/tippy-6.2.7/tippy-light-border.css","arima-with-r_files/tippy-6.2.7/tippy.css","arima-with-r_files/tippy-6.2.7/tippy.umd.min.js","arima-with-r_files/webcomponents-2.0.0/webcomponents.js","female.txt","tour92.txt","tourist.txt"]}
+  </script>
+  <!--radix_placeholder_navigation_in_header-->
+  <!--/radix_placeholder_navigation_in_header-->
+  <!--radix_placeholder_distill-->
+
+  <style type="text/css">
+
+  body {
+    background-color: white;
+  }
+
+  .pandoc-table {
+    width: 100%;
+  }
+
+  .pandoc-table>caption {
+    margin-bottom: 10px;
+  }
+
+  .pandoc-table th:not([align]) {
+    text-align: left;
+  }
+
+  .pagedtable-footer {
+    font-size: 15px;
+  }
+
+  d-byline .byline {
+    grid-template-columns: 2fr 2fr;
+  }
+
+  d-byline .byline h3 {
+    margin-block-start: 1.5em;
+  }
+
+  d-byline .byline .authors-affiliations h3 {
+    margin-block-start: 0.5em;
+  }
+
+  .authors-affiliations .orcid-id {
+    width: 16px;
+    height:16px;
+    margin-left: 4px;
+    margin-right: 4px;
+    vertical-align: middle;
+    padding-bottom: 2px;
+  }
+
+  d-title .dt-tags {
+    margin-top: 1em;
+    grid-column: text;
+  }
+
+  .dt-tags .dt-tag {
+    text-decoration: none;
+    display: inline-block;
+    color: rgba(0,0,0,0.6);
+    padding: 0em 0.4em;
+    margin-right: 0.5em;
+    margin-bottom: 0.4em;
+    font-size: 70%;
+    border: 1px solid rgba(0,0,0,0.2);
+    border-radius: 3px;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+
+  d-article table.gt_table td,
+  d-article table.gt_table th {
+    border-bottom: none;
+  }
+
+  .html-widget {
+    margin-bottom: 2.0em;
+  }
+
+  .l-screen-inset {
+    padding-right: 16px;
+  }
+
+  .l-screen .caption {
+    margin-left: 10px;
+  }
+
+  .shaded {
+    background: rgb(247, 247, 247);
+    padding-top: 20px;
+    padding-bottom: 20px;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  }
+
+  .shaded .html-widget {
+    margin-bottom: 0;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+  }
+
+  .shaded .shaded-content {
+    background: white;
+  }
+
+  .text-output {
+    margin-top: 0;
+    line-height: 1.5em;
+  }
+
+  .hidden {
+    display: none !important;
+  }
+
+  d-article {
+    padding-top: 2.5rem;
+    padding-bottom: 30px;
+  }
+
+  d-appendix {
+    padding-top: 30px;
+  }
+
+  d-article>p>img {
+    width: 100%;
+  }
+
+  d-article h2 {
+    margin: 1rem 0 1.5rem 0;
+  }
+
+  d-article h3 {
+    margin-top: 1.5rem;
+  }
+
+  d-article iframe {
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    margin-bottom: 2.0em;
+    width: 100%;
+  }
+
+  /* Tweak code blocks */
+
+  d-article div.sourceCode code,
+  d-article pre code {
+    font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+  }
+
+  d-article pre,
+  d-article div.sourceCode,
+  d-article div.sourceCode pre {
+    overflow: auto;
+  }
+
+  d-article div.sourceCode {
+    background-color: white;
+  }
+
+  d-article div.sourceCode pre {
+    padding-left: 10px;
+    font-size: 12px;
+    border-left: 2px solid rgba(0,0,0,0.1);
+  }
+
+  d-article pre {
+    font-size: 12px;
+    color: black;
+    background: none;
+    margin-top: 0;
+    text-align: left;
+    white-space: pre;
+    word-spacing: normal;
+    word-break: normal;
+    word-wrap: normal;
+    line-height: 1.5;
+
+    -moz-tab-size: 4;
+    -o-tab-size: 4;
+    tab-size: 4;
+
+    -webkit-hyphens: none;
+    -moz-hyphens: none;
+    -ms-hyphens: none;
+    hyphens: none;
+  }
+
+  d-article pre a {
+    border-bottom: none;
+  }
+
+  d-article pre a:hover {
+    border-bottom: none;
+    text-decoration: underline;
+  }
+
+  d-article details {
+    grid-column: text;
+    margin-bottom: 0.8em;
+  }
+
+  @media(min-width: 768px) {
+
+  d-article pre,
+  d-article div.sourceCode,
+  d-article div.sourceCode pre {
+    overflow: visible !important;
+  }
+
+  d-article div.sourceCode pre {
+    padding-left: 18px;
+    font-size: 14px;
+  }
+
+  d-article pre {
+    font-size: 14px;
+  }
+
+  }
+
+  figure img.external {
+    background: white;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    box-shadow: 0 1px 8px rgba(0, 0, 0, 0.1);
+    padding: 18px;
+    box-sizing: border-box;
+  }
+
+  /* CSS for d-contents */
+
+  .d-contents {
+    grid-column: text;
+    color: rgba(0,0,0,0.8);
+    font-size: 0.9em;
+    padding-bottom: 1em;
+    margin-bottom: 1em;
+    padding-bottom: 0.5em;
+    margin-bottom: 1em;
+    padding-left: 0.25em;
+    justify-self: start;
+  }
+
+  @media(min-width: 1000px) {
+    .d-contents.d-contents-float {
+      height: 0;
+      grid-column-start: 1;
+      grid-column-end: 4;
+      justify-self: center;
+      padding-right: 3em;
+      padding-left: 2em;
+    }
+  }
+
+  .d-contents nav h3 {
+    font-size: 18px;
+    margin-top: 0;
+    margin-bottom: 1em;
+  }
+
+  .d-contents li {
+    list-style-type: none
+  }
+
+  .d-contents nav > ul {
+    padding-left: 0;
+  }
+
+  .d-contents ul {
+    padding-left: 1em
+  }
+
+  .d-contents nav ul li {
+    margin-top: 0.6em;
+    margin-bottom: 0.2em;
+  }
+
+  .d-contents nav a {
+    font-size: 13px;
+    border-bottom: none;
+    text-decoration: none
+    color: rgba(0, 0, 0, 0.8);
+  }
+
+  .d-contents nav a:hover {
+    text-decoration: underline solid rgba(0, 0, 0, 0.6)
+  }
+
+  .d-contents nav > ul > li > a {
+    font-weight: 600;
+  }
+
+  .d-contents nav > ul > li > ul {
+    font-weight: inherit;
+  }
+
+  .d-contents nav > ul > li > ul > li {
+    margin-top: 0.2em;
+  }
+
+
+  .d-contents nav ul {
+    margin-top: 0;
+    margin-bottom: 0.25em;
+  }
+
+  .d-article-with-toc h2:nth-child(2) {
+    margin-top: 0;
+  }
+
+
+  /* Figure */
+
+  .figure {
+    position: relative;
+    margin-bottom: 2.5em;
+    margin-top: 1.5em;
+  }
+
+  .figure img {
+    width: 100%;
+  }
+
+  .figure .caption {
+    color: rgba(0, 0, 0, 0.6);
+    font-size: 12px;
+    line-height: 1.5em;
+  }
+
+  .figure img.external {
+    background: white;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    box-shadow: 0 1px 8px rgba(0, 0, 0, 0.1);
+    padding: 18px;
+    box-sizing: border-box;
+  }
+
+  .figure .caption a {
+    color: rgba(0, 0, 0, 0.6);
+  }
+
+  .figure .caption b,
+  .figure .caption strong, {
+    font-weight: 600;
+    color: rgba(0, 0, 0, 1.0);
+  }
+
+  /* Citations */
+
+  d-article .citation {
+    color: inherit;
+    cursor: inherit;
+  }
+
+  div.hanging-indent{
+    margin-left: 1em; text-indent: -1em;
+  }
+
+  /* Citation hover box */
+
+  .tippy-box[data-theme~=light-border] {
+    background-color: rgba(250, 250, 250, 0.95);
+  }
+
+  .tippy-content > p {
+    margin-bottom: 0;
+    padding: 2px;
+  }
+
+
+  /* Tweak 1000px media break to show more text */
+
+  @media(min-width: 1000px) {
+    .base-grid,
+    distill-header,
+    d-title,
+    d-abstract,
+    d-article,
+    d-appendix,
+    distill-appendix,
+    d-byline,
+    d-footnote-list,
+    d-citation-list,
+    distill-footer {
+      grid-template-columns: [screen-start] 1fr [page-start kicker-start] 80px [middle-start] 50px [text-start kicker-end] 65px 65px 65px 65px 65px 65px 65px 65px [text-end gutter-start] 65px [middle-end] 65px [page-end gutter-end] 1fr [screen-end];
+      grid-column-gap: 16px;
+    }
+
+    .grid {
+      grid-column-gap: 16px;
+    }
+
+    d-article {
+      font-size: 1.06rem;
+      line-height: 1.7em;
+    }
+    figure .caption, .figure .caption, figure figcaption {
+      font-size: 13px;
+    }
+  }
+
+  @media(min-width: 1180px) {
+    .base-grid,
+    distill-header,
+    d-title,
+    d-abstract,
+    d-article,
+    d-appendix,
+    distill-appendix,
+    d-byline,
+    d-footnote-list,
+    d-citation-list,
+    distill-footer {
+      grid-template-columns: [screen-start] 1fr [page-start kicker-start] 60px [middle-start] 60px [text-start kicker-end] 60px 60px 60px 60px 60px 60px 60px 60px [text-end gutter-start] 60px [middle-end] 60px [page-end gutter-end] 1fr [screen-end];
+      grid-column-gap: 32px;
+    }
+
+    .grid {
+      grid-column-gap: 32px;
+    }
+  }
+
+
+  /* Get the citation styles for the appendix (not auto-injected on render since
+     we do our own rendering of the citation appendix) */
+
+  d-appendix .citation-appendix,
+  .d-appendix .citation-appendix {
+    font-size: 11px;
+    line-height: 15px;
+    border-left: 1px solid rgba(0, 0, 0, 0.1);
+    padding-left: 18px;
+    border: 1px solid rgba(0,0,0,0.1);
+    background: rgba(0, 0, 0, 0.02);
+    padding: 10px 18px;
+    border-radius: 3px;
+    color: rgba(150, 150, 150, 1);
+    overflow: hidden;
+    margin-top: -12px;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+  }
+
+  /* Include appendix styles here so they can be overridden */
+
+  d-appendix {
+    contain: layout style;
+    font-size: 0.8em;
+    line-height: 1.7em;
+    margin-top: 60px;
+    margin-bottom: 0;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    color: rgba(0,0,0,0.5);
+    padding-top: 60px;
+    padding-bottom: 48px;
+  }
+
+  d-appendix h3 {
+    grid-column: page-start / text-start;
+    font-size: 15px;
+    font-weight: 500;
+    margin-top: 1em;
+    margin-bottom: 0;
+    color: rgba(0,0,0,0.65);
+  }
+
+  d-appendix h3 + * {
+    margin-top: 1em;
+  }
+
+  d-appendix ol {
+    padding: 0 0 0 15px;
+  }
+
+  @media (min-width: 768px) {
+    d-appendix ol {
+      padding: 0 0 0 30px;
+      margin-left: -30px;
+    }
+  }
+
+  d-appendix li {
+    margin-bottom: 1em;
+  }
+
+  d-appendix a {
+    color: rgba(0, 0, 0, 0.6);
+  }
+
+  d-appendix > * {
+    grid-column: text;
+  }
+
+  d-appendix > d-footnote-list,
+  d-appendix > d-citation-list,
+  d-appendix > distill-appendix {
+    grid-column: screen;
+  }
+
+  /* Include footnote styles here so they can be overridden */
+
+  d-footnote-list {
+    contain: layout style;
+  }
+
+  d-footnote-list > * {
+    grid-column: text;
+  }
+
+  d-footnote-list a.footnote-backlink {
+    color: rgba(0,0,0,0.3);
+    padding-left: 0.5em;
+  }
+
+
+
+  /* Anchor.js */
+
+  .anchorjs-link {
+    /*transition: all .25s linear; */
+    text-decoration: none;
+    border-bottom: none;
+  }
+  *:hover > .anchorjs-link {
+    margin-left: -1.125em !important;
+    text-decoration: none;
+    border-bottom: none;
+  }
+
+  /* Social footer */
+
+  .social_footer {
+    margin-top: 30px;
+    margin-bottom: 0;
+    color: rgba(0,0,0,0.67);
+  }
+
+  .disqus-comments {
+    margin-right: 30px;
+  }
+
+  .disqus-comment-count {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.4);
+    cursor: pointer;
+  }
+
+  #disqus_thread {
+    margin-top: 30px;
+  }
+
+  .article-sharing a {
+    border-bottom: none;
+    margin-right: 8px;
+  }
+
+  .article-sharing a:hover {
+    border-bottom: none;
+  }
+
+  .sidebar-section.subscribe {
+    font-size: 12px;
+    line-height: 1.6em;
+  }
+
+  .subscribe p {
+    margin-bottom: 0.5em;
+  }
+
+
+  .article-footer .subscribe {
+    font-size: 15px;
+    margin-top: 45px;
+  }
+
+
+  .sidebar-section.custom {
+    font-size: 12px;
+    line-height: 1.6em;
+  }
+
+  .custom p {
+    margin-bottom: 0.5em;
+  }
+
+  /* Styles for listing layout (hide title) */
+  .layout-listing d-title, .layout-listing .d-title {
+    display: none;
+  }
+
+  /* Styles for posts lists (not auto-injected) */
+
+
+  .posts-with-sidebar {
+    padding-left: 45px;
+    padding-right: 45px;
+  }
+
+  .posts-list .description h2,
+  .posts-list .description p {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", Arial, sans-serif;
+  }
+
+  .posts-list .description h2 {
+    font-weight: 700;
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+
+  .posts-list h2.post-tag {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+    padding-bottom: 12px;
+  }
+  .posts-list {
+    margin-top: 60px;
+    margin-bottom: 24px;
+  }
+
+  .posts-list .post-preview {
+    text-decoration: none;
+    overflow: hidden;
+    display: block;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    padding: 24px 0;
+  }
+
+  .post-preview-last {
+    border-bottom: none !important;
+  }
+
+  .posts-list .posts-list-caption {
+    grid-column: screen;
+    font-weight: 400;
+  }
+
+  .posts-list .post-preview h2 {
+    margin: 0 0 6px 0;
+    line-height: 1.2em;
+    font-style: normal;
+    font-size: 24px;
+  }
+
+  .posts-list .post-preview p {
+    margin: 0 0 12px 0;
+    line-height: 1.4em;
+    font-size: 16px;
+  }
+
+  .posts-list .post-preview .thumbnail {
+    box-sizing: border-box;
+    margin-bottom: 24px;
+    position: relative;
+    max-width: 500px;
+  }
+  .posts-list .post-preview img {
+    width: 100%;
+    display: block;
+  }
+
+  .posts-list .metadata {
+    font-size: 12px;
+    line-height: 1.4em;
+    margin-bottom: 18px;
+  }
+
+  .posts-list .metadata > * {
+    display: inline-block;
+  }
+
+  .posts-list .metadata .publishedDate {
+    margin-right: 2em;
+  }
+
+  .posts-list .metadata .dt-authors {
+    display: block;
+    margin-top: 0.3em;
+    margin-right: 2em;
+  }
+
+  .posts-list .dt-tags {
+    display: block;
+    line-height: 1em;
+  }
+
+  .posts-list .dt-tags .dt-tag {
+    display: inline-block;
+    color: rgba(0,0,0,0.6);
+    padding: 0.3em 0.4em;
+    margin-right: 0.2em;
+    margin-bottom: 0.4em;
+    font-size: 60%;
+    border: 1px solid rgba(0,0,0,0.2);
+    border-radius: 3px;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+
+  .posts-list img {
+    opacity: 1;
+  }
+
+  .posts-list img[data-src] {
+    opacity: 0;
+  }
+
+  .posts-more {
+    clear: both;
+  }
+
+
+  .posts-sidebar {
+    font-size: 16px;
+  }
+
+  .posts-sidebar h3 {
+    font-size: 16px;
+    margin-top: 0;
+    margin-bottom: 0.5em;
+    font-weight: 400;
+    text-transform: uppercase;
+  }
+
+  .sidebar-section {
+    margin-bottom: 30px;
+  }
+
+  .categories ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .categories li {
+    color: rgba(0, 0, 0, 0.8);
+    margin-bottom: 0;
+  }
+
+  .categories li>a {
+    border-bottom: none;
+  }
+
+  .categories li>a:hover {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.4);
+  }
+
+  .categories .active {
+    font-weight: 600;
+  }
+
+  .categories .category-count {
+    color: rgba(0, 0, 0, 0.4);
+  }
+
+
+  @media(min-width: 768px) {
+    .posts-list .post-preview h2 {
+      font-size: 26px;
+    }
+    .posts-list .post-preview .thumbnail {
+      float: right;
+      width: 30%;
+      margin-bottom: 0;
+    }
+    .posts-list .post-preview .description {
+      float: left;
+      width: 45%;
+    }
+    .posts-list .post-preview .metadata {
+      float: left;
+      width: 20%;
+      margin-top: 8px;
+    }
+    .posts-list .post-preview p {
+      margin: 0 0 12px 0;
+      line-height: 1.5em;
+      font-size: 16px;
+    }
+    .posts-with-sidebar .posts-list {
+      float: left;
+      width: 75%;
+    }
+    .posts-with-sidebar .posts-sidebar {
+      float: right;
+      width: 20%;
+      margin-top: 60px;
+      padding-top: 24px;
+      padding-bottom: 24px;
+    }
+  }
+
+
+  /* Improve display for browsers without grid (IE/Edge <= 15) */
+
+  .downlevel {
+    line-height: 1.6em;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", Arial, sans-serif;
+    margin: 0;
+  }
+
+  .downlevel .d-title {
+    padding-top: 6rem;
+    padding-bottom: 1.5rem;
+  }
+
+  .downlevel .d-title h1 {
+    font-size: 50px;
+    font-weight: 700;
+    line-height: 1.1em;
+    margin: 0 0 0.5rem;
+  }
+
+  .downlevel .d-title p {
+    font-weight: 300;
+    font-size: 1.2rem;
+    line-height: 1.55em;
+    margin-top: 0;
+  }
+
+  .downlevel .d-byline {
+    padding-top: 0.8em;
+    padding-bottom: 0.8em;
+    font-size: 0.8rem;
+    line-height: 1.8em;
+  }
+
+  .downlevel .section-separator {
+    border: none;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+  }
+
+  .downlevel .d-article {
+    font-size: 1.06rem;
+    line-height: 1.7em;
+    padding-top: 1rem;
+    padding-bottom: 2rem;
+  }
+
+
+  .downlevel .d-appendix {
+    padding-left: 0;
+    padding-right: 0;
+    max-width: none;
+    font-size: 0.8em;
+    line-height: 1.7em;
+    margin-bottom: 0;
+    color: rgba(0,0,0,0.5);
+    padding-top: 40px;
+    padding-bottom: 48px;
+  }
+
+  .downlevel .footnotes ol {
+    padding-left: 13px;
+  }
+
+  .downlevel .base-grid,
+  .downlevel .distill-header,
+  .downlevel .d-title,
+  .downlevel .d-abstract,
+  .downlevel .d-article,
+  .downlevel .d-appendix,
+  .downlevel .distill-appendix,
+  .downlevel .d-byline,
+  .downlevel .d-footnote-list,
+  .downlevel .d-citation-list,
+  .downlevel .distill-footer,
+  .downlevel .appendix-bottom,
+  .downlevel .posts-container {
+    padding-left: 40px;
+    padding-right: 40px;
+  }
+
+  @media(min-width: 768px) {
+    .downlevel .base-grid,
+    .downlevel .distill-header,
+    .downlevel .d-title,
+    .downlevel .d-abstract,
+    .downlevel .d-article,
+    .downlevel .d-appendix,
+    .downlevel .distill-appendix,
+    .downlevel .d-byline,
+    .downlevel .d-footnote-list,
+    .downlevel .d-citation-list,
+    .downlevel .distill-footer,
+    .downlevel .appendix-bottom,
+    .downlevel .posts-container {
+    padding-left: 150px;
+    padding-right: 150px;
+    max-width: 900px;
+  }
+  }
+
+  .downlevel pre code {
+    display: block;
+    border-left: 2px solid rgba(0, 0, 0, .1);
+    padding: 0 0 0 20px;
+    font-size: 14px;
+  }
+
+  .downlevel code, .downlevel pre {
+    color: black;
+    background: none;
+    font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+    text-align: left;
+    white-space: pre;
+    word-spacing: normal;
+    word-break: normal;
+    word-wrap: normal;
+    line-height: 1.5;
+
+    -moz-tab-size: 4;
+    -o-tab-size: 4;
+    tab-size: 4;
+
+    -webkit-hyphens: none;
+    -moz-hyphens: none;
+    -ms-hyphens: none;
+    hyphens: none;
+  }
+
+  .downlevel .posts-list .post-preview {
+    color: inherit;
+  }
+
+
+
+  </style>
+
+  <script type="application/javascript">
+
+  function is_downlevel_browser() {
+    if (bowser.isUnsupportedBrowser({ msie: "12", msedge: "16"},
+                                   window.navigator.userAgent)) {
+      return true;
+    } else {
+      return window.load_distill_framework === undefined;
+    }
+  }
+
+  // show body when load is complete
+  function on_load_complete() {
+
+    // add anchors
+    if (window.anchors) {
+      window.anchors.options.placement = 'left';
+      window.anchors.add('d-article > h2, d-article > h3, d-article > h4, d-article > h5');
+    }
+
+
+    // set body to visible
+    document.body.style.visibility = 'visible';
+
+    // force redraw for leaflet widgets
+    if (window.HTMLWidgets) {
+      var maps = window.HTMLWidgets.findAll(".leaflet");
+      $.each(maps, function(i, el) {
+        var map = this.getMap();
+        map.invalidateSize();
+        map.eachLayer(function(layer) {
+          if (layer instanceof L.TileLayer)
+            layer.redraw();
+        });
+      });
+    }
+
+    // trigger 'shown' so htmlwidgets resize
+    $('d-article').trigger('shown');
+  }
+
+  function init_distill() {
+
+    init_common();
+
+    // create front matter
+    var front_matter = $('<d-front-matter></d-front-matter>');
+    $('#distill-front-matter').wrap(front_matter);
+
+    // create d-title
+    $('.d-title').changeElementType('d-title');
+
+    // create d-byline
+    var byline = $('<d-byline></d-byline>');
+    $('.d-byline').replaceWith(byline);
+
+    // create d-article
+    var article = $('<d-article></d-article>');
+    $('.d-article').wrap(article).children().unwrap();
+
+    // move posts container into article
+    $('.posts-container').appendTo($('d-article'));
+
+    // create d-appendix
+    $('.d-appendix').changeElementType('d-appendix');
+
+    // flag indicating that we have appendix items
+    var appendix = $('.appendix-bottom').children('h3').length > 0;
+
+    // replace footnotes with <d-footnote>
+    $('.footnote-ref').each(function(i, val) {
+      appendix = true;
+      var href = $(this).attr('href');
+      var id = href.replace('#', '');
+      var fn = $('#' + id);
+      var fn_p = $('#' + id + '>p');
+      fn_p.find('.footnote-back').remove();
+      var text = fn_p.html();
+      var dtfn = $('<d-footnote></d-footnote>');
+      dtfn.html(text);
+      $(this).replaceWith(dtfn);
+    });
+    // remove footnotes
+    $('.footnotes').remove();
+
+    // move refs into #references-listing
+    $('#references-listing').replaceWith($('#refs'));
+
+    $('h1.appendix, h2.appendix').each(function(i, val) {
+      $(this).changeElementType('h3');
+    });
+    $('h3.appendix').each(function(i, val) {
+      var id = $(this).attr('id');
+      $('.d-contents a[href="#' + id + '"]').parent().remove();
+      appendix = true;
+      $(this).nextUntil($('h1, h2, h3')).addBack().appendTo($('d-appendix'));
+    });
+
+    // show d-appendix if we have appendix content
+    $("d-appendix").css('display', appendix ? 'grid' : 'none');
+
+    // localize layout chunks to just output
+    $('.layout-chunk').each(function(i, val) {
+
+      // capture layout
+      var layout = $(this).attr('data-layout');
+
+      // apply layout to markdown level block elements
+      var elements = $(this).children().not('details, div.sourceCode, pre, script');
+      elements.each(function(i, el) {
+        var layout_div = $('<div class="' + layout + '"></div>');
+        if (layout_div.hasClass('shaded')) {
+          var shaded_content = $('<div class="shaded-content"></div>');
+          $(this).wrap(shaded_content);
+          $(this).parent().wrap(layout_div);
+        } else {
+          $(this).wrap(layout_div);
+        }
+      });
+
+
+      // unwrap the layout-chunk div
+      $(this).children().unwrap();
+    });
+
+    // remove code block used to force  highlighting css
+    $('.distill-force-highlighting-css').parent().remove();
+
+    // remove empty line numbers inserted by pandoc when using a
+    // custom syntax highlighting theme
+    $('code.sourceCode a:empty').remove();
+
+    // load distill framework
+    load_distill_framework();
+
+    // wait for window.distillRunlevel == 4 to do post processing
+    function distill_post_process() {
+
+      if (!window.distillRunlevel || window.distillRunlevel < 4)
+        return;
+
+      // hide author/affiliations entirely if we have no authors
+      var front_matter = JSON.parse($("#distill-front-matter").html());
+      var have_authors = front_matter.authors && front_matter.authors.length > 0;
+      if (!have_authors)
+        $('d-byline').addClass('hidden');
+
+      // article with toc class
+      $('.d-contents').parent().addClass('d-article-with-toc');
+
+      // strip links that point to #
+      $('.authors-affiliations').find('a[href="#"]').removeAttr('href');
+
+      // add orcid ids
+      $('.authors-affiliations').find('.author').each(function(i, el) {
+        var orcid_id = front_matter.authors[i].orcidID;
+        if (orcid_id) {
+          var a = $('<a></a>');
+          a.attr('href', 'https://orcid.org/' + orcid_id);
+          var img = $('<img></img>');
+          img.addClass('orcid-id');
+          img.attr('alt', 'ORCID ID');
+          img.attr('src','data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA2ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo1N0NEMjA4MDI1MjA2ODExOTk0QzkzNTEzRjZEQTg1NyIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDozM0NDOEJGNEZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDozM0NDOEJGM0ZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M1IE1hY2ludG9zaCI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkZDN0YxMTc0MDcyMDY4MTE5NUZFRDc5MUM2MUUwNEREIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjU3Q0QyMDgwMjUyMDY4MTE5OTRDOTM1MTNGNkRBODU3Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+84NovQAAAR1JREFUeNpiZEADy85ZJgCpeCB2QJM6AMQLo4yOL0AWZETSqACk1gOxAQN+cAGIA4EGPQBxmJA0nwdpjjQ8xqArmczw5tMHXAaALDgP1QMxAGqzAAPxQACqh4ER6uf5MBlkm0X4EGayMfMw/Pr7Bd2gRBZogMFBrv01hisv5jLsv9nLAPIOMnjy8RDDyYctyAbFM2EJbRQw+aAWw/LzVgx7b+cwCHKqMhjJFCBLOzAR6+lXX84xnHjYyqAo5IUizkRCwIENQQckGSDGY4TVgAPEaraQr2a4/24bSuoExcJCfAEJihXkWDj3ZAKy9EJGaEo8T0QSxkjSwORsCAuDQCD+QILmD1A9kECEZgxDaEZhICIzGcIyEyOl2RkgwAAhkmC+eAm0TAAAAABJRU5ErkJggg==');
+          a.append(img);
+          $(this).append(a);
+        }
+      });
+
+      // hide elements of author/affiliations grid that have no value
+      function hide_byline_column(caption) {
+        $('d-byline').find('h3:contains("' + caption + '")').parent().css('visibility', 'hidden');
+      }
+
+      // affiliations
+      var have_affiliations = false;
+      for (var i = 0; i<front_matter.authors.length; ++i) {
+        var author = front_matter.authors[i];
+        if (author.affiliation !== "&nbsp;") {
+          have_affiliations = true;
+          break;
+        }
+      }
+      if (!have_affiliations)
+        $('d-byline').find('h3:contains("Affiliations")').css('visibility', 'hidden');
+
+      // published date
+      if (!front_matter.publishedDate)
+        hide_byline_column("Published");
+
+      // document object identifier
+      var doi = $('d-byline').find('h3:contains("DOI")');
+      var doi_p = doi.next().empty();
+      if (!front_matter.doi) {
+        // if we have a citation and valid citationText then link to that
+        if ($('#citation').length > 0 && front_matter.citationText) {
+          doi.html('Citation');
+          $('<a href="#citation"></a>')
+            .text(front_matter.citationText)
+            .appendTo(doi_p);
+        } else {
+          hide_byline_column("DOI");
+        }
+      } else {
+        $('<a></a>')
+           .attr('href', "https://doi.org/" + front_matter.doi)
+           .html(front_matter.doi)
+           .appendTo(doi_p);
+      }
+
+       // change plural form of authors/affiliations
+      if (front_matter.authors.length === 1) {
+        var grid = $('.authors-affiliations');
+        grid.children('h3:contains("Authors")').text('Author');
+        grid.children('h3:contains("Affiliations")').text('Affiliation');
+      }
+
+      // remove d-appendix and d-footnote-list local styles
+      $('d-appendix > style:first-child').remove();
+      $('d-footnote-list > style:first-child').remove();
+
+      // move appendix-bottom entries to the bottom
+      $('.appendix-bottom').appendTo('d-appendix').children().unwrap();
+      $('.appendix-bottom').remove();
+
+      // hoverable references
+      $('span.citation[data-cites]').each(function() {
+        var refs = $(this).attr('data-cites').split(" ");
+        var refHtml = refs.map(function(ref) {
+          return "<p>" + $('#ref-' + ref).html() + "</p>";
+        }).join("\n");
+        window.tippy(this, {
+          allowHTML: true,
+          content: refHtml,
+          maxWidth: 500,
+          interactive: true,
+          interactiveBorder: 10,
+          theme: 'light-border',
+          placement: 'bottom-start'
+        });
+      });
+
+      // clear polling timer
+      clearInterval(tid);
+
+      // show body now that everything is ready
+      on_load_complete();
+    }
+
+    var tid = setInterval(distill_post_process, 50);
+    distill_post_process();
+
+  }
+
+  function init_downlevel() {
+
+    init_common();
+
+     // insert hr after d-title
+    $('.d-title').after($('<hr class="section-separator"/>'));
+
+    // check if we have authors
+    var front_matter = JSON.parse($("#distill-front-matter").html());
+    var have_authors = front_matter.authors && front_matter.authors.length > 0;
+
+    // manage byline/border
+    if (!have_authors)
+      $('.d-byline').remove();
+    $('.d-byline').after($('<hr class="section-separator"/>'));
+    $('.d-byline a').remove();
+
+    // remove toc
+    $('.d-contents').remove();
+
+    // move appendix elements
+    $('h1.appendix, h2.appendix').each(function(i, val) {
+      $(this).changeElementType('h3');
+    });
+    $('h3.appendix').each(function(i, val) {
+      $(this).nextUntil($('h1, h2, h3')).addBack().appendTo($('.d-appendix'));
+    });
+
+
+    // inject headers into references and footnotes
+    var refs_header = $('<h3></h3>');
+    refs_header.text('References');
+    $('#refs').prepend(refs_header);
+
+    var footnotes_header = $('<h3></h3');
+    footnotes_header.text('Footnotes');
+    $('.footnotes').children('hr').first().replaceWith(footnotes_header);
+
+    // move appendix-bottom entries to the bottom
+    $('.appendix-bottom').appendTo('.d-appendix').children().unwrap();
+    $('.appendix-bottom').remove();
+
+    // remove appendix if it's empty
+    if ($('.d-appendix').children().length === 0)
+      $('.d-appendix').remove();
+
+    // prepend separator above appendix
+    $('.d-appendix').before($('<hr class="section-separator" style="clear: both"/>'));
+
+    // trim code
+    $('pre>code').each(function(i, val) {
+      $(this).html($.trim($(this).html()));
+    });
+
+    // move posts-container right before article
+    $('.posts-container').insertBefore($('.d-article'));
+
+    $('body').addClass('downlevel');
+
+    on_load_complete();
+  }
+
+
+  function init_common() {
+
+    // jquery plugin to change element types
+    (function($) {
+      $.fn.changeElementType = function(newType) {
+        var attrs = {};
+
+        $.each(this[0].attributes, function(idx, attr) {
+          attrs[attr.nodeName] = attr.nodeValue;
+        });
+
+        this.replaceWith(function() {
+          return $("<" + newType + "/>", attrs).append($(this).contents());
+        });
+      };
+    })(jQuery);
+
+    // prevent underline for linked images
+    $('a > img').parent().css({'border-bottom' : 'none'});
+
+    // mark non-body figures created by knitr chunks as 100% width
+    $('.layout-chunk').each(function(i, val) {
+      var figures = $(this).find('img, .html-widget');
+      if ($(this).attr('data-layout') !== "l-body") {
+        figures.css('width', '100%');
+      } else {
+        figures.css('max-width', '100%');
+        figures.filter("[width]").each(function(i, val) {
+          var fig = $(this);
+          fig.css('width', fig.attr('width') + 'px');
+        });
+
+      }
+    });
+
+    // auto-append index.html to post-preview links in file: protocol
+    // and in rstudio ide preview
+    $('.post-preview').each(function(i, val) {
+      if (window.location.protocol === "file:")
+        $(this).attr('href', $(this).attr('href') + "index.html");
+    });
+
+    // get rid of index.html references in header
+    if (window.location.protocol !== "file:") {
+      $('.distill-site-header a[href]').each(function(i,val) {
+        $(this).attr('href', $(this).attr('href').replace("index.html", "./"));
+      });
+    }
+
+    // add class to pandoc style tables
+    $('tr.header').parent('thead').parent('table').addClass('pandoc-table');
+    $('.kable-table').children('table').addClass('pandoc-table');
+
+    // add figcaption style to table captions
+    $('caption').parent('table').addClass("figcaption");
+
+    // initialize posts list
+    if (window.init_posts_list)
+      window.init_posts_list();
+
+    // implmement disqus comment link
+    $('.disqus-comment-count').click(function() {
+      window.headroom_prevent_pin = true;
+      $('#disqus_thread').toggleClass('hidden');
+      if (!$('#disqus_thread').hasClass('hidden')) {
+        var offset = $(this).offset();
+        $(window).resize();
+        $('html, body').animate({
+          scrollTop: offset.top - 35
+        });
+      }
+    });
+  }
+
+  document.addEventListener('DOMContentLoaded', function() {
+    if (is_downlevel_browser())
+      init_downlevel();
+    else
+      window.addEventListener('WebComponentsReady', init_distill);
+  });
+
+  </script>
+
+  <!--/radix_placeholder_distill-->
+  <script src="arima-with-r_files/header-attrs-2.8/header-attrs.js"></script>
+  <script src="arima-with-r_files/jquery-1.11.3/jquery.min.js"></script>
+  <script src="arima-with-r_files/popper-2.6.0/popper.min.js"></script>
+  <link href="arima-with-r_files/tippy-6.2.7/tippy.css" rel="stylesheet" />
+  <link href="arima-with-r_files/tippy-6.2.7/tippy-light-border.css" rel="stylesheet" />
+  <script src="arima-with-r_files/tippy-6.2.7/tippy.umd.min.js"></script>
+  <script src="arima-with-r_files/anchor-4.2.2/anchor.min.js"></script>
+  <script src="arima-with-r_files/bowser-1.9.3/bowser.min.js"></script>
+  <script src="arima-with-r_files/webcomponents-2.0.0/webcomponents.js"></script>
+  <script src="arima-with-r_files/distill-2.2.21/template.v2.js"></script>
+  <!--radix_placeholder_site_in_header-->
+  <!--/radix_placeholder_site_in_header-->
+
+
+</head>
+
+<body>
+
+<!--radix_placeholder_front_matter-->
+
+<script id="distill-front-matter" type="text/json">
+{"title":"Arima with R","description":"Arima, time series regression tutorial","authors":[{"author":"dondon","authorURL":{},"affiliation":"&nbsp;","affiliationURL":"#","orcidID":""}],"publishedDate":"2021-06-04T00:00:00.000+09:00","citationText":"dondon, 2021"}
+</script>
+
+<!--/radix_placeholder_front_matter-->
+<!--radix_placeholder_navigation_before_body-->
+<!--/radix_placeholder_navigation_before_body-->
+<!--radix_placeholder_site_before_body-->
+<!--/radix_placeholder_site_before_body-->
+
+<div class="d-title">
+<h1>Arima with R</h1>
+<!--radix_placeholder_categories-->
+<div class="dt-tags">
+<div class="dt=tag">Statistics</div>
+<div class="dt=tag">time series</div>
+<div class="dt=tag">R</div>
+</div>
+<!--/radix_placeholder_categories-->
+<p><p>Arima, time series regression tutorial</p></p>
+</div>
+
+<div class="d-byline">
+  dondon true 
+  
+<br/>2021-06-04
+</div>
+
+<div class="d-article">
+<div class="d-contents d-contents-float">
+<nav class="l-text toc figcaption" id="TOC">
+<h3>Contents</h3>
+<ul>
+<li><a href="#arima">ARIMA</a>
+<ul>
+<li><a href="#일반-차분">일반 차분</a></li>
+<li><a href="#model-fitting">Model fitting</a>
+<ul>
+<li><a href="#과대적합">과대적합</a></li>
+</ul></li>
+<li><a href="#auto.arima">Auto.arima</a></li>
+<li><a href="#예측">예측</a>
+<ul>
+<li><a href="#원자료에-대한-예측">원자료에 대한 예측</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#seasonal-arima-model">Seasonal ARIMA Model</a></li>
+<li><a href="#load-data">Load data</a>
+<ul>
+<li><a href="#time-series-plot">time series plot</a>
+<ul>
+<li><a href="#동일-분산-확인">동일 분산 확인</a></li>
+<li><a href="#분산-안정화-변환">분산 안정화 변환</a></li>
+<li><a href="#추세-확인">추세 확인</a></li>
+<li><a href="#d-1일-때-일반-차분">d = 1일 때 (일반 차분)</a></li>
+<li><a href="#d-1일-때">D = 1일 때</a></li>
+<li><a href="#d-1-d-1일-때">d = 1, D = 1일 때</a></li>
+</ul></li>
+<li><a href="#model-fitting-1">Model fitting</a>
+<ul>
+<li><a href="#과대-적합-확인">과대 적합 확인</a></li>
+<li><a href="#과대적합-1">과대적합</a></li>
+<li><a href="#추가-과대적합">추가 과대적합</a></li>
+<li><a href="#과대적합-2">과대적합</a></li>
+<li><a href="#과대-적합">과대 적합</a></li>
+</ul></li>
+<li><a href="#잠정-후보-모형-aic-bic-비교">잠정 후보 모형 AIC, BIC 비교</a></li>
+<li><a href="#예측-1">예측</a>
+<ul>
+<li><a href="#로그-변환된-자료에-대한-예측">로그 변환된 자료에 대한 예측</a></li>
+<li><a href="#원자료에-대한-예측-1">원자료에 대한 예측</a></li>
+</ul></li>
+<li><a href="#실제값과-예측값-비교">실제값과 예측값 비교</a></li>
+</ul></li>
+<li><a href="#회귀모형을-이용한-시계열분석">회귀모형을 이용한 시계열분석</a>
+<ul>
+<li><a href="#차-추세계절-회귀모형">1차 추세계절 회귀모형</a></li>
+<li><a href="#차-추세모형">2차 추세모형</a>
+<ul>
+<li><a href="#오차모형">오차모형</a></li>
+<li><a href="#오차-모형-적합">오차 모형 적합</a></li>
+</ul></li>
+<li><a href="#차-추세계절-ar3-오차-회귀모형">2차 추세계절 + AR(3) 오차 회귀모형</a></li>
+<li><a href="#차-추세-계절-모형의-오차-모형">1차 추세 계절 모형의 오차 모형</a>
+<ul>
+<li><a href="#오차-모형-적합-1">오차 모형 적합</a></li>
+</ul></li>
+<li><a href="#차-추세계절-ar3-오차-회귀모형-1">1차 추세계절 + AR(3) 오차 회귀모형</a></li>
+<li><a href="#예측-2">예측</a></li>
+</ul></li>
+<li><a href="#예측-성능-비교">예측 성능 비교</a></li>
+</ul>
+</nav>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://tidyverse.tidyverse.org'>tidyverse</a></span><span class='op'>)</span>
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://r-datatable.com'>data.table</a></span><span class='op'>)</span>
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://pkg.robjhyndman.com/forecast/'>forecast</a></span><span class='op'>)</span>
+</code></pre>
+</div>
+</div>
+<h1 id="arima">ARIMA</h1>
+<p>비정상 시계열, 차분 필요</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>female</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/scan.html'>scan</a></span><span class='op'>(</span><span class='st'>'female.txt'</span><span class='op'>)</span>
+<span class='va'>female.ts</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/ts.html'>ts</a></span><span class='op'>(</span><span class='va'>female</span><span class='op'>)</span>
+
+<span class='fu'><a href='https://pkg.robjhyndman.com/forecast/reference/tsdisplay.html'>ggtsdisplay</a></span><span class='op'>(</span><span class='va'>female.ts</span><span class='op'>)</span>
+</code></pre>
+</div>
+<p><img src="arima-with-r_files/figure-html5/unnamed-chunk-2-1.png" width="624" /></p>
+</div>
+<h2 id="일반-차분">일반 차분</h2>
+<ul>
+<li>white noise 만족</li>
+<li>p = 0, q = 0</li>
+</ul>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://pkg.robjhyndman.com/forecast/reference/ndiffs.html'>ndiffs</a></span><span class='op'>(</span><span class='va'>female</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>[1] 1</code></pre>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>female_d</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/diff.html'>diff</a></span><span class='op'>(</span><span class='va'>female.ts</span><span class='op'>)</span>
+<span class='fu'><a href='https://pkg.robjhyndman.com/forecast/reference/tsdisplay.html'>ggtsdisplay</a></span><span class='op'>(</span><span class='va'>female_d</span><span class='op'>)</span>
+</code></pre>
+</div>
+<p><img src="arima-with-r_files/figure-html5/unnamed-chunk-3-1.png" width="624" /></p>
+</div>
+<h2 id="model-fitting">Model fitting</h2>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>fit</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://pkg.robjhyndman.com/forecast/reference/Arima.html'>Arima</a></span><span class='op'>(</span><span class='va'>female</span>, order <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>1</span>, <span class='fl'>0</span><span class='op'>)</span>, include.drift <span class='op'>=</span> <span class='cn'>T</span><span class='op'>)</span>
+<span class='fu'><a href='https://pkg.robjhyndman.com/forecast/reference/checkresiduals.html'>checkresiduals</a></span><span class='op'>(</span><span class='va'>fit</span><span class='op'>)</span>
+</code></pre>
+</div>
+<p><img src="arima-with-r_files/figure-html5/unnamed-chunk-4-1.png" width="624" /></p>
+<pre><code>
+    Ljung-Box test
+
+data:  Residuals from ARIMA(0,1,0) with drift
+Q* = 7.1676, df = 9, p-value = 0.6197
+
+Model df: 1.   Total lags used: 10</code></pre>
+</div>
+<h3 id="과대적합">과대적합</h3>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/stats/confint.html'>confint</a></span><span class='op'>(</span><span class='fu'><a href='https://pkg.robjhyndman.com/forecast/reference/Arima.html'>Arima</a></span><span class='op'>(</span><span class='va'>female</span>, order <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>1</span>, <span class='fl'>0</span><span class='op'>)</span>, include.drift <span class='op'>=</span> <span class='cn'>T</span><span class='op'>)</span><span class='op'>)</span> <span class='co'># 추가된 모수 비유의 </span>NA</code></pre>
+</div>
+<pre><code>            2.5 %    97.5 %
+ar1   -0.09026514 0.2851598
+drift  1.85683163 6.5762383</code></pre>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/stats/confint.html'>confint</a></span><span class='op'>(</span><span class='fu'><a href='https://pkg.robjhyndman.com/forecast/reference/Arima.html'>Arima</a></span><span class='op'>(</span><span class='va'>female</span>, order <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>1</span>, <span class='fl'>1</span><span class='op'>)</span>, include.drift <span class='op'>=</span> <span class='cn'>T</span><span class='op'>)</span><span class='op'>)</span> <span class='co'># 추가된 모수 비유의 </span>NA</code></pre>
+</div>
+<pre><code>            2.5 %    97.5 %
+ma1   -0.08681113 0.3124909
+drift  1.84910777 6.5857555</code></pre>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='co'># ARIMA(0, 1, 0) 확정 </span>NA</code></pre>
+</div>
+</div>
+<h2 id="auto.arima">Auto.arima</h2>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://pkg.robjhyndman.com/forecast/reference/auto.arima.html'>auto.arima</a></span><span class='op'>(</span><span class='va'>female</span>, stepwise <span class='op'>=</span> <span class='cn'>F</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>Series: female 
+ARIMA(0,1,0) with drift 
+
+Coefficients:
+      drift
+      4.215
+s.e.  1.093
+
+sigma^2 estimated as 129:  log likelihood=-411.34
+AIC=826.68   AICc=826.8   BIC=832.03</code></pre>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://pkg.robjhyndman.com/forecast/reference/auto.arima.html'>auto.arima</a></span><span class='op'>(</span><span class='va'>female</span>, ic <span class='op'>=</span> <span class='st'>'bic'</span>, stepwise <span class='op'>=</span> <span class='cn'>F</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>Series: female 
+ARIMA(0,1,0) with drift 
+
+Coefficients:
+      drift
+      4.215
+s.e.  1.093
+
+sigma^2 estimated as 129:  log likelihood=-411.34
+AIC=826.68   AICc=826.8   BIC=832.03</code></pre>
+</div>
+<h2 id="예측">예측</h2>
+<h3 id="원자료에-대한-예측">원자료에 대한 예측</h3>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>fit</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://pkg.robjhyndman.com/forecast/reference/Arima.html'>Arima</a></span><span class='op'>(</span><span class='va'>female</span>, order <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>1</span>, <span class='fl'>0</span><span class='op'>)</span>, include.drift <span class='op'>=</span> <span class='cn'>T</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='fu'><a href='https://pkg.robjhyndman.com/forecast/reference/forecast.html'>forecast</a></span><span class='op'>(</span><span class='va'>fit</span><span class='op'>)</span><span class='op'>)</span>
+</code></pre>
+</div>
+<img src="arima-with-r_files/figure-html5/unnamed-chunk-7-1.png" width="624" />
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='fu'><a href='https://pkg.robjhyndman.com/forecast/reference/forecast.html'>forecast</a></span><span class='op'>(</span><span class='va'>fit</span><span class='op'>)</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>
+Forecast method: ARIMA(0,1,0) with drift
+
+Model Information:
+Series: female 
+ARIMA(0,1,0) with drift 
+
+Coefficients:
+      drift
+      4.215
+s.e.  1.093
+
+sigma^2 estimated as 129:  log likelihood=-411.34
+AIC=826.68   AICc=826.8   BIC=832.03
+
+Error measures:
+                      ME     RMSE      MAE        MPE     MAPE
+Training set 0.001960972 11.25385 8.279046 -0.1344574 2.231458
+                  MASE       ACF1
+Training set 0.9030153 0.09833436
+
+Forecasts:
+    Point Forecast    Lo 80    Hi 80    Lo 95    Hi 95
+109       671.2150 656.6571 685.7728 648.9507 693.4792
+110       675.4299 654.8421 696.0178 643.9435 706.9163
+111       679.6449 654.4300 704.8597 641.0820 718.2077
+112       683.8598 654.7442 712.9754 639.3313 728.3883
+113       688.0748 655.5225 720.6270 638.2904 737.8591
+114       692.2897 656.6305 727.9489 637.7537 746.8258
+115       696.5047 657.9883 735.0210 637.5990 755.4103
+116       700.7196 659.5439 741.8953 637.7468 763.6924
+117       704.9346 661.2611 748.6080 638.1418 771.7273
+118       709.1495 663.1137 755.1854 638.7438 779.5553</code></pre>
+</div>
+<h1 id="seasonal-arima-model">Seasonal ARIMA Model</h1>
+<h1 id="load-data">Load data</h1>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>tour</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/scan.html'>scan</a></span><span class='op'>(</span><span class='st'>'tourist.txt'</span><span class='op'>)</span>
+<span class='va'>tour.ts</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/ts.html'>ts</a></span><span class='op'>(</span><span class='va'>tour</span>, start <span class='op'>=</span> <span class='fl'>1981</span>, frequency <span class='op'>=</span> <span class='fl'>12</span><span class='op'>)</span>
+</code></pre>
+</div>
+</div>
+<h2 id="time-series-plot">time series plot</h2>
+<p>정상성 확인 2가지</p>
+<ul>
+<li>동일분산 확인</li>
+<li>추세 확인</li>
+</ul>
+<h3 id="동일-분산-확인">동일 분산 확인</h3>
+<p>분산 증가, 로그 변환 필요</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>tour.ts</span><span class='op'>)</span>
+</code></pre>
+</div>
+<p><img src="arima-with-r_files/figure-html5/unnamed-chunk-9-1.png" width="624" /></p>
+</div>
+<h3 id="분산-안정화-변환">분산 안정화 변환</h3>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>lntour</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/Log.html'>log</a></span><span class='op'>(</span><span class='va'>tour.ts</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>lntour</span><span class='op'>)</span>
+</code></pre>
+</div>
+<img src="arima-with-r_files/figure-html5/unnamed-chunk-10-1.png" width="624" />
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://pkg.robjhyndman.com/forecast/reference/seasonplot.html'>ggseasonplot</a></span><span class='op'>(</span><span class='va'>lntour</span><span class='op'>)</span>
+</code></pre>
+</div>
+<p><img src="arima-with-r_files/figure-html5/unnamed-chunk-10-2.png" width="624" /></p>
+</div>
+<h3 id="추세-확인">추세 확인</h3>
+<p>일반 차분, 계절 차분 필요</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://pkg.robjhyndman.com/forecast/reference/Acf.html'>Acf</a></span><span class='op'>(</span><span class='va'>lntour</span>, lag.max <span class='op'>=</span> <span class='fl'>48</span><span class='op'>)</span>
+</code></pre>
+</div>
+<img src="arima-with-r_files/figure-html5/unnamed-chunk-11-1.png" width="624" />
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://pkg.robjhyndman.com/forecast/reference/ndiffs.html'>ndiffs</a></span><span class='op'>(</span><span class='va'>lntour</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>[1] 1</code></pre>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://pkg.robjhyndman.com/forecast/reference/nsdiffs.html'>nsdiffs</a></span><span class='op'>(</span><span class='va'>lntour</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>[1] 1</code></pre>
+</div>
+<h3 id="d-1일-때-일반-차분">d = 1일 때 (일반 차분)</h3>
+<p>추가적으로 계절 차분 필요</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>tour_1</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/diff.html'>diff</a></span><span class='op'>(</span><span class='va'>lntour</span><span class='op'>)</span>
+<span class='fu'><a href='https://pkg.robjhyndman.com/forecast/reference/tsdisplay.html'>ggtsdisplay</a></span><span class='op'>(</span><span class='va'>tour_1</span>, lag.max <span class='op'>=</span> <span class='fl'>48</span><span class='op'>)</span>
+</code></pre>
+</div>
+<p><img src="arima-with-r_files/figure-html5/unnamed-chunk-12-1.png" width="624" /></p>
+</div>
+<h3 id="d-1일-때">D = 1일 때</h3>
+<p>추가적인 일반 차분이 필요해보임</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>tour_12</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/diff.html'>diff</a></span><span class='op'>(</span><span class='va'>lntour</span>, lag <span class='op'>=</span> <span class='fl'>12</span><span class='op'>)</span>
+<span class='fu'><a href='https://pkg.robjhyndman.com/forecast/reference/tsdisplay.html'>ggtsdisplay</a></span><span class='op'>(</span><span class='va'>tour_12</span>, lag.max <span class='op'>=</span> <span class='fl'>48</span><span class='op'>)</span>
+</code></pre>
+</div>
+<img src="arima-with-r_files/figure-html5/unnamed-chunk-13-1.png" width="624" />
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://pkg.robjhyndman.com/forecast/reference/ndiffs.html'>ndiffs</a></span><span class='op'>(</span><span class='va'>tour_12</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>[1] 1</code></pre>
+</div>
+<h3 id="d-1-d-1일-때">d = 1, D = 1일 때</h3>
+<p>d = 1, D = 1로 결정</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>tour_1_12</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/diff.html'>diff</a></span><span class='op'>(</span><span class='va'>tour_1</span>, lag <span class='op'>=</span> <span class='fl'>12</span><span class='op'>)</span>
+<span class='fu'><a href='https://pkg.robjhyndman.com/forecast/reference/tsdisplay.html'>ggtsdisplay</a></span><span class='op'>(</span><span class='va'>tour_1_12</span>, lag.max <span class='op'>=</span> <span class='fl'>48</span><span class='op'>)</span>
+</code></pre>
+</div>
+<p><img src="arima-with-r_files/figure-html5/unnamed-chunk-14-1.png" width="624" /></p>
+</div>
+<h2 id="model-fitting-1">Model fitting</h2>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://pkg.robjhyndman.com/forecast/reference/Acf.html'>Acf</a></span><span class='op'>(</span><span class='va'>tour_1_12</span>, lag.max <span class='op'>=</span> <span class='fl'>48</span><span class='op'>)</span>
+</code></pre>
+</div>
+<img src="arima-with-r_files/figure-html5/unnamed-chunk-15-1.png" width="624" />
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://pkg.robjhyndman.com/forecast/reference/Acf.html'>Pacf</a></span><span class='op'>(</span><span class='va'>tour_1_12</span>, lag.max <span class='op'>=</span> <span class='fl'>48</span><span class='op'>)</span>
+</code></pre>
+</div>
+<p><img src="arima-with-r_files/figure-html5/unnamed-chunk-15-2.png" width="624" /></p>
+</div>
+<p>비계절형 요소</p>
+<ul>
+<li>ACF 절단, PACF 감소 : p = 0, q = 1</li>
+<li>ACF 감소, PACF 절단 : p = 2, q = 0</li>
+</ul>
+<p>계절형 확인 방법</p>
+<p><span class="math inline">\(AR(1)_{12}\)</span></p>
+<ul>
+<li>ACF : 계절주기 12의 배수에 해당하는 시차에 따라 지수적으로 감소</li>
+<li>PACF : 시차 12에서만 값을 갖고 그 이외의 사차에서는 0</li>
+</ul>
+<p><span class="math inline">\(MA(1)_{12}\)</span></p>
+<ul>
+<li>ACF : 시차 12에서만 값을 갖고 그 이외의 사차에서는 0</li>
+<li>PACF : 계절주기 12의 배수에 해당하는 시차에 따라 지수적으로 감소</li>
+</ul>
+<p><span class="math inline">\(ARMA(1, 1)_{12}\)</span></p>
+<ul>
+<li>ACF : 12시차 이후부터 계절주기 12의 배수의 해당되는 시차에 따라 지수적으로 감소</li>
+<li>PACF : 12시차 이후부터 계절주기 12의 배수의 해당되는 시차에 따라 지수적으로 감소</li>
+</ul>
+<p>계절형 확인</p>
+<ul>
+<li>ACF 12차 근처에서만 유의적 : P = 0, Q = 1</li>
+<li>PACF 12차 근처에서만 유의적 : P = 1, Q = 0</li>
+</ul>
+<p>비계절형 확인</p>
+<ul>
+<li><p>ACF 절단, PACF 감소 : p = 0, q = 1</p></li>
+<li><p>ACF 감소, PACF 절단 : p = 2, q = 0</p></li>
+</ul>
+<p>최종 후보 모형</p>
+<ul>
+<li><p><span class="math inline">\(ARIMA(0, 1, 1)(0, 1, 1)_{12}\)</span></p></li>
+<li><p><span class="math inline">\(ARIMA(0, 1, 1)(1, 1, 0)_{12}\)</span></p></li>
+<li><p><span class="math inline">\(ARIMA(2, 1, 0)(0, 1, 1)_{12}\)</span></p></li>
+<li><p><span class="math inline">\(ARIMA(2, 1, 0)(1, 1, 0)_{12}\)</span></p></li>
+</ul>
+<p><span class="math inline">\(ARIMA(0, 1, 1)(0, 1, 1)_{12}\)</span></p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>fit1</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://pkg.robjhyndman.com/forecast/reference/Arima.html'>Arima</a></span><span class='op'>(</span><span class='va'>lntour</span>, order <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>1</span>, <span class='fl'>1</span><span class='op'>)</span>, 
+              seasonal <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>order <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>1</span>, <span class='fl'>1</span><span class='op'>)</span>, period <span class='op'>=</span> <span class='fl'>12</span><span class='op'>)</span><span class='op'>)</span>
+
+<span class='fu'><a href='https://pkg.robjhyndman.com/forecast/reference/checkresiduals.html'>checkresiduals</a></span><span class='op'>(</span><span class='va'>fit1</span><span class='op'>)</span>
+</code></pre>
+</div>
+<p><img src="arima-with-r_files/figure-html5/unnamed-chunk-16-1.png" width="624" /></p>
+<pre><code>
+    Ljung-Box test
+
+data:  Residuals from ARIMA(0,1,1)(0,1,1)[12]
+Q* = 26.06, df = 22, p-value = 0.2491
+
+Model df: 2.   Total lags used: 24</code></pre>
+</div>
+<h3 id="과대-적합-확인">과대 적합 확인</h3>
+<p><span class="math inline">\(ARIMA(0, 1, 1)(0, 1, 1)_{12}\)</span></p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>fit1_1</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://pkg.robjhyndman.com/forecast/reference/Arima.html'>Arima</a></span><span class='op'>(</span><span class='va'>lntour</span>, order <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>1</span>, <span class='fl'>1</span><span class='op'>)</span>, 
+              seasonal <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>order <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>1</span>, <span class='fl'>1</span><span class='op'>)</span>, period <span class='op'>=</span> <span class='fl'>12</span><span class='op'>)</span><span class='op'>)</span>
+
+<span class='va'>fit1_2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://pkg.robjhyndman.com/forecast/reference/Arima.html'>Arima</a></span><span class='op'>(</span><span class='va'>lntour</span>, order <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>1</span>, <span class='fl'>2</span><span class='op'>)</span>, 
+              seasonal <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>order <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>1</span>, <span class='fl'>1</span><span class='op'>)</span>, period <span class='op'>=</span> <span class='fl'>12</span><span class='op'>)</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/stats/confint.html'>confint</a></span><span class='op'>(</span><span class='va'>fit1</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>          2.5 %     97.5 %
+ma1  -0.7168817 -0.4432093
+sma1 -0.7075792 -0.3973742</code></pre>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/stats/confint.html'>confint</a></span><span class='op'>(</span><span class='va'>fit1_1</span><span class='op'>)</span> <span class='co'># 추가된 모수 유의적 </span>NA</code></pre>
+</div>
+<pre><code>          2.5 %      97.5 %
+ar1  -0.6141189 -0.07646367
+ma1  -0.6019970 -0.07213300
+sma1 -0.6757900 -0.36348852</code></pre>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/stats/confint.html'>confint</a></span><span class='op'>(</span><span class='va'>fit1_2</span><span class='op'>)</span> <span class='co'># 추가된 모수 유의적</span>NA</code></pre>
+</div>
+<pre><code>           2.5 %     97.5 %
+ma1  -0.84863210 -0.5006825
+ma2   0.04584469  0.4197128
+sma1 -0.67412800 -0.3580535</code></pre>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://pkg.robjhyndman.com/forecast/reference/checkresiduals.html'>checkresiduals</a></span><span class='op'>(</span><span class='va'>fit1_1</span><span class='op'>)</span>
+</code></pre>
+</div>
+<p><img src="arima-with-r_files/figure-html5/unnamed-chunk-17-1.png" width="624" /></p>
+<pre><code>
+    Ljung-Box test
+
+data:  Residuals from ARIMA(1,1,1)(0,1,1)[12]
+Q* = 19.807, df = 21, p-value = 0.5335
+
+Model df: 3.   Total lags used: 24</code></pre>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://pkg.robjhyndman.com/forecast/reference/checkresiduals.html'>checkresiduals</a></span><span class='op'>(</span><span class='va'>fit1_2</span><span class='op'>)</span>
+</code></pre>
+</div>
+<p><img src="arima-with-r_files/figure-html5/unnamed-chunk-17-2.png" width="624" /></p>
+<pre><code>
+    Ljung-Box test
+
+data:  Residuals from ARIMA(0,1,2)(0,1,1)[12]
+Q* = 17.468, df = 21, p-value = 0.6824
+
+Model df: 3.   Total lags used: 24</code></pre>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/stats/confint.html'>confint</a></span><span class='op'>(</span><span class='fu'><a href='https://pkg.robjhyndman.com/forecast/reference/Arima.html'>Arima</a></span><span class='op'>(</span><span class='va'>lntour</span>, order <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>1</span>, <span class='fl'>2</span><span class='op'>)</span>, 
+              seasonal <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>order <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>1</span>, <span class='fl'>1</span><span class='op'>)</span>, period <span class='op'>=</span> <span class='fl'>12</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span> <span class='co'># 추가된 모수 비유의 </span>NA</code></pre>
+</div>
+<pre><code>          2.5 %      97.5 %
+ar1  -0.7576853  0.48124313
+ma1  -1.1513542  0.05538992
+ma2  -0.2314544  0.55715140
+sma1 -0.6724509 -0.35743032</code></pre>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/stats/confint.html'>confint</a></span><span class='op'>(</span><span class='fu'><a href='https://pkg.robjhyndman.com/forecast/reference/Arima.html'>Arima</a></span><span class='op'>(</span><span class='va'>lntour</span>, order <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>2</span>, <span class='fl'>1</span>, <span class='fl'>1</span><span class='op'>)</span>, 
+              seasonal <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>order <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>1</span>, <span class='fl'>1</span><span class='op'>)</span>, period <span class='op'>=</span> <span class='fl'>12</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span> <span class='co'># 추가된 모수 비유의 </span>NA</code></pre>
+</div>
+<pre><code>          2.5 %      97.5 %
+ar1  -1.4005757  0.05563757
+ar2  -0.6505574  0.21547715
+ma1  -0.7633223  0.73372547
+sma1 -0.6770033 -0.36266535</code></pre>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/stats/confint.html'>confint</a></span><span class='op'>(</span><span class='fu'><a href='https://pkg.robjhyndman.com/forecast/reference/Arima.html'>Arima</a></span><span class='op'>(</span><span class='va'>lntour</span>, order <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>1</span>, <span class='fl'>3</span><span class='op'>)</span>, 
+              seasonal <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>order <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>1</span>, <span class='fl'>1</span><span class='op'>)</span>, period <span class='op'>=</span> <span class='fl'>12</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span> <span class='co'># 추가된 모수 비유의 </span>NA</code></pre>
+</div>
+<pre><code>           2.5 %     97.5 %
+ma1  -0.88113628 -0.5041239
+ma2   0.03417003  0.5055626
+ma3  -0.24727265  0.1398392
+sma1 -0.67243530 -0.3582209</code></pre>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='co'># fit1_1, fit1_2 예측에 사용 가능 </span>NA</code></pre>
+</div>
+</div>
+<p><span class="math inline">\(ARIMA(0, 1, 1)(1, 1, 0)_{12}\)</span></p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>fit2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://pkg.robjhyndman.com/forecast/reference/Arima.html'>Arima</a></span><span class='op'>(</span><span class='va'>lntour</span>, order <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>1</span>, <span class='fl'>1</span><span class='op'>)</span>, 
+              seasonal <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>order <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>1</span>, <span class='fl'>0</span><span class='op'>)</span>, period <span class='op'>=</span> <span class='fl'>12</span><span class='op'>)</span><span class='op'>)</span>
+
+<span class='fu'><a href='https://pkg.robjhyndman.com/forecast/reference/checkresiduals.html'>checkresiduals</a></span><span class='op'>(</span><span class='va'>fit2</span><span class='op'>)</span> <span class='co'># 백색잡음 오차 가정 위반 </span>NA</code></pre>
+</div>
+<p><img src="arima-with-r_files/figure-html5/unnamed-chunk-18-1.png" width="624" /></p>
+<pre><code>
+    Ljung-Box test
+
+data:  Residuals from ARIMA(0,1,1)(1,1,0)[12]
+Q* = 38.217, df = 22, p-value = 0.01732
+
+Model df: 2.   Total lags used: 24</code></pre>
+</div>
+<h3 id="과대적합-1">과대적합</h3>
+<p><span class="math inline">\(ARIMA(0, 1, 1)(1, 1, 0)_{12}\)</span></p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>fit2_1</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://pkg.robjhyndman.com/forecast/reference/Arima.html'>Arima</a></span><span class='op'>(</span><span class='va'>lntour</span>, order <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>1</span>, <span class='fl'>1</span><span class='op'>)</span>, 
+              seasonal <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>order <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>1</span>, <span class='fl'>0</span><span class='op'>)</span>, period <span class='op'>=</span> <span class='fl'>12</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>fit2_2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://pkg.robjhyndman.com/forecast/reference/Arima.html'>Arima</a></span><span class='op'>(</span><span class='va'>lntour</span>, order <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>1</span>, <span class='fl'>2</span><span class='op'>)</span>, 
+              seasonal <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>order <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>1</span>, <span class='fl'>0</span><span class='op'>)</span>, period <span class='op'>=</span> <span class='fl'>12</span><span class='op'>)</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/stats/confint.html'>confint</a></span><span class='op'>(</span><span class='va'>fit2_1</span><span class='op'>)</span> <span class='co'># 추가된 모수 유의 </span>NA</code></pre>
+</div>
+<pre><code>          2.5 %     97.5 %
+ar1  -0.6244618 -0.1257088
+ma1  -0.6016499 -0.1026214
+sar1 -0.6862031 -0.3682476</code></pre>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/stats/confint.html'>confint</a></span><span class='op'>(</span><span class='va'>fit2_2</span><span class='op'>)</span> <span class='co'># 추가된 모수 유의</span>NA</code></pre>
+</div>
+<pre><code>           2.5 %     97.5 %
+ma1  -0.88940432 -0.5453766
+ma2   0.08103535  0.4425904
+sar1 -0.68381121 -0.3633908</code></pre>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://pkg.robjhyndman.com/forecast/reference/checkresiduals.html'>checkresiduals</a></span><span class='op'>(</span><span class='va'>fit2_1</span><span class='op'>)</span>
+</code></pre>
+</div>
+<p><img src="arima-with-r_files/figure-html5/unnamed-chunk-19-1.png" width="624" /></p>
+<pre><code>
+    Ljung-Box test
+
+data:  Residuals from ARIMA(1,1,1)(1,1,0)[12]
+Q* = 24.433, df = 21, p-value = 0.2726
+
+Model df: 3.   Total lags used: 24</code></pre>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://pkg.robjhyndman.com/forecast/reference/checkresiduals.html'>checkresiduals</a></span><span class='op'>(</span><span class='va'>fit2_2</span><span class='op'>)</span>
+</code></pre>
+</div>
+<p><img src="arima-with-r_files/figure-html5/unnamed-chunk-19-2.png" width="624" /></p>
+<pre><code>
+    Ljung-Box test
+
+data:  Residuals from ARIMA(0,1,2)(1,1,0)[12]
+Q* = 22.927, df = 21, p-value = 0.3479
+
+Model df: 3.   Total lags used: 24</code></pre>
+</div>
+<h3 id="추가-과대적합">추가 과대적합</h3>
+<p><span class="math inline">\(ARIMA(1, 1, 1)(1, 1, 0)_{12}\)</span>, <span class="math inline">\(ARIMA(0, 1, 2)(1, 1, 0)_{12}\)</span></p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/stats/confint.html'>confint</a></span><span class='op'>(</span><span class='fu'><a href='https://pkg.robjhyndman.com/forecast/reference/Arima.html'>Arima</a></span><span class='op'>(</span><span class='va'>lntour</span>, order <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>1</span>, <span class='fl'>2</span><span class='op'>)</span>, 
+              seasonal <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>order <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>1</span>, <span class='fl'>0</span><span class='op'>)</span>, period <span class='op'>=</span> <span class='fl'>12</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span> <span class='co'># 추가된 모수 비유의 </span>NA</code></pre>
+</div>
+<pre><code>          2.5 %     97.5 %
+ar1  -0.7327746  0.4113774
+ma1  -1.1291821 -0.0140854
+ma2  -0.2036577  0.5600746
+sar1 -0.6839650 -0.3642105</code></pre>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/stats/confint.html'>confint</a></span><span class='op'>(</span><span class='fu'><a href='https://pkg.robjhyndman.com/forecast/reference/Arima.html'>Arima</a></span><span class='op'>(</span><span class='va'>lntour</span>, order <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>2</span>, <span class='fl'>1</span>, <span class='fl'>1</span><span class='op'>)</span>, 
+              seasonal <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>order <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>1</span>, <span class='fl'>0</span><span class='op'>)</span>, period <span class='op'>=</span> <span class='fl'>12</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span> <span class='co'># 추가된 모수 비유의 </span>NA</code></pre>
+</div>
+<pre><code>          2.5 %       97.5 %
+ar1  -1.3501035  0.003178749
+ar2  -0.6346756  0.214711438
+ma1  -0.7557297  0.634389249
+sar1 -0.6863941 -0.367535856</code></pre>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/stats/confint.html'>confint</a></span><span class='op'>(</span><span class='fu'><a href='https://pkg.robjhyndman.com/forecast/reference/Arima.html'>Arima</a></span><span class='op'>(</span><span class='va'>lntour</span>, order <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>1</span>, <span class='fl'>3</span><span class='op'>)</span>, 
+              seasonal <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>order <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>1</span>, <span class='fl'>0</span><span class='op'>)</span>, period <span class='op'>=</span> <span class='fl'>12</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span> <span class='co'># 추가된 모수 비유의 </span>NA</code></pre>
+</div>
+<pre><code>           2.5 %     97.5 %
+ma1  -0.92461468 -0.5514994
+ma2   0.07239749  0.5423576
+ma3  -0.25181127  0.1276558
+sar1 -0.68456703 -0.3650019</code></pre>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='co'># fit2_1, fit2_2 잠정 후보 모형 </span>NA</code></pre>
+</div>
+</div>
+<p><span class="math inline">\(ARIMA(2, 1, 0)(0, 1, 1)_{12}\)</span></p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>fit3</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://pkg.robjhyndman.com/forecast/reference/Arima.html'>Arima</a></span><span class='op'>(</span><span class='va'>lntour</span>, order <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>2</span>, <span class='fl'>1</span>, <span class='fl'>0</span><span class='op'>)</span>, 
+              seasonal <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>order <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>1</span>, <span class='fl'>1</span><span class='op'>)</span>, period <span class='op'>=</span> <span class='fl'>12</span><span class='op'>)</span><span class='op'>)</span>
+
+<span class='fu'><a href='https://pkg.robjhyndman.com/forecast/reference/checkresiduals.html'>checkresiduals</a></span><span class='op'>(</span><span class='va'>fit3</span><span class='op'>)</span> <span class='co'># 백색잡음 오차 가정 위반 </span>NA</code></pre>
+</div>
+<p><img src="arima-with-r_files/figure-html5/unnamed-chunk-21-1.png" width="624" /></p>
+<pre><code>
+    Ljung-Box test
+
+data:  Residuals from ARIMA(2,1,0)(0,1,1)[12]
+Q* = 18.225, df = 21, p-value = 0.6348
+
+Model df: 3.   Total lags used: 24</code></pre>
+</div>
+<h3 id="과대적합-2">과대적합</h3>
+<p><span class="math inline">\(ARIMA(2, 1, 0)(0, 1, 1)_{12}\)</span></p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/stats/confint.html'>confint</a></span><span class='op'>(</span><span class='fu'><a href='https://pkg.robjhyndman.com/forecast/reference/Arima.html'>Arima</a></span><span class='op'>(</span><span class='va'>lntour</span>, order <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>2</span>, <span class='fl'>1</span>, <span class='fl'>1</span><span class='op'>)</span>, 
+              seasonal <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>order <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>1</span>, <span class='fl'>1</span><span class='op'>)</span>, period <span class='op'>=</span> <span class='fl'>12</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span> <span class='co'># 추가된 모수 비유의 </span>NA</code></pre>
+</div>
+<pre><code>          2.5 %      97.5 %
+ar1  -1.4005757  0.05563757
+ar2  -0.6505574  0.21547715
+ma1  -0.7633223  0.73372547
+sma1 -0.6770033 -0.36266535</code></pre>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/stats/confint.html'>confint</a></span><span class='op'>(</span><span class='fu'><a href='https://pkg.robjhyndman.com/forecast/reference/Arima.html'>Arima</a></span><span class='op'>(</span><span class='va'>lntour</span>, order <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>3</span>, <span class='fl'>1</span>, <span class='fl'>0</span><span class='op'>)</span>, 
+              seasonal <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>order <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>1</span>, <span class='fl'>1</span><span class='op'>)</span>, period <span class='op'>=</span> <span class='fl'>12</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span> <span class='co'># 추가된 모수 비유의 </span>NA</code></pre>
+</div>
+<pre><code>          2.5 %      97.5 %
+ar1  -0.8719017 -0.50296810
+ar2  -0.4487084 -0.00763568
+ar3  -0.1888452  0.18083322
+sma1 -0.6769962 -0.36266169</code></pre>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='co'># fit3 잠정 후보 모형 </span>NA</code></pre>
+</div>
+</div>
+<p><span class="math inline">\(ARIMA(2, 1, 0)(1, 1, 0)_{12}\)</span></p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>fit4</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://pkg.robjhyndman.com/forecast/reference/Arima.html'>Arima</a></span><span class='op'>(</span><span class='va'>lntour</span>, order <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>2</span>, <span class='fl'>1</span>, <span class='fl'>0</span><span class='op'>)</span>, 
+              seasonal <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>order <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>1</span>, <span class='fl'>0</span><span class='op'>)</span>, period <span class='op'>=</span> <span class='fl'>12</span><span class='op'>)</span><span class='op'>)</span>
+
+<span class='fu'><a href='https://pkg.robjhyndman.com/forecast/reference/checkresiduals.html'>checkresiduals</a></span><span class='op'>(</span><span class='va'>fit4</span><span class='op'>)</span> <span class='co'># 백색잡음 오차 가정 위반 </span>NA</code></pre>
+</div>
+<p><img src="arima-with-r_files/figure-html5/unnamed-chunk-23-1.png" width="624" /></p>
+<pre><code>
+    Ljung-Box test
+
+data:  Residuals from ARIMA(2,1,0)(1,1,0)[12]
+Q* = 24.531, df = 21, p-value = 0.268
+
+Model df: 3.   Total lags used: 24</code></pre>
+</div>
+<h3 id="과대-적합">과대 적합</h3>
+<p><span class="math inline">\(ARIMA(2, 1, 0)(1, 1, 0)_{12}\)</span></p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/stats/confint.html'>confint</a></span><span class='op'>(</span><span class='fu'><a href='https://pkg.robjhyndman.com/forecast/reference/Arima.html'>Arima</a></span><span class='op'>(</span><span class='va'>lntour</span>, order <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>2</span>, <span class='fl'>1</span>, <span class='fl'>1</span><span class='op'>)</span>, 
+              seasonal <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>order <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>1</span>, <span class='fl'>0</span><span class='op'>)</span>, period <span class='op'>=</span> <span class='fl'>12</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span> <span class='co'># 추가된 모수 비유의 </span>NA</code></pre>
+</div>
+<pre><code>          2.5 %       97.5 %
+ar1  -1.3501035  0.003178749
+ar2  -0.6346756  0.214711438
+ma1  -0.7557297  0.634389249
+sar1 -0.6863941 -0.367535856</code></pre>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/stats/confint.html'>confint</a></span><span class='op'>(</span><span class='fu'><a href='https://pkg.robjhyndman.com/forecast/reference/Arima.html'>Arima</a></span><span class='op'>(</span><span class='va'>lntour</span>, order <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>3</span>, <span class='fl'>1</span>, <span class='fl'>0</span><span class='op'>)</span>, 
+              seasonal <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>order <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>1</span>, <span class='fl'>0</span><span class='op'>)</span>, period <span class='op'>=</span> <span class='fl'>12</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span> <span class='co'># 추가된 모수 비유의 </span>NA</code></pre>
+</div>
+<pre><code>          2.5 %      97.5 %
+ar1  -0.9181728 -0.55167096
+ar2  -0.4827245 -0.03043428
+ar3  -0.2034879  0.16766886
+sar1 -0.6863178 -0.36759502</code></pre>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='co'># fit4 잠정 후보 모형 </span>NA</code></pre>
+</div>
+</div>
+<h2 id="잠정-후보-모형-aic-bic-비교">잠정 후보 모형 AIC, BIC 비교</h2>
+<p>최종모형 : <span class="math inline">\(ARIMA(2, 1, 0)(1, 1, 0)_{12}\)</span></p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='va'>fit1_1</span><span class='op'>$</span><span class='va'>aic</span>, <span class='va'>fit1_1</span><span class='op'>$</span><span class='va'>bic</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>[1] -335.1006 -323.9841</code></pre>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='va'>fit1_2</span><span class='op'>$</span><span class='va'>aic</span>, <span class='va'>fit1_2</span><span class='op'>$</span><span class='va'>bic</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>[1] -335.4349 -324.3184</code></pre>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='va'>fit2_1</span><span class='op'>$</span><span class='va'>aic</span>, <span class='va'>fit2_1</span><span class='op'>$</span><span class='va'>bic</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>[1] -337.3768 -326.2603</code></pre>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='va'>fit2_2</span><span class='op'>$</span><span class='va'>aic</span>, <span class='va'>fit2_2</span><span class='op'>$</span><span class='va'>bic</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>[1] -337.7425 -326.6260</code></pre>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='va'>fit3</span><span class='op'>$</span><span class='va'>aic</span>, <span class='va'>fit3</span><span class='op'>$</span><span class='va'>bic</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>[1] -335.8118 -324.6953</code></pre>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='va'>fit4</span><span class='op'>$</span><span class='va'>aic</span>, <span class='va'>fit4</span><span class='op'>$</span><span class='va'>bic</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>[1] -338.0812 -326.9647</code></pre>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='co'># fit4 최종 모형으로 선택 </span>NA</code></pre>
+</div>
+</div>
+<h2 id="예측-1">예측</h2>
+<h3 id="로그-변환된-자료에-대한-예측">로그 변환된 자료에 대한 예측</h3>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>fit4</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://pkg.robjhyndman.com/forecast/reference/Arima.html'>Arima</a></span><span class='op'>(</span><span class='va'>lntour</span>, order <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>2</span>, <span class='fl'>1</span>, <span class='fl'>0</span><span class='op'>)</span>, 
+              seasonal <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>order <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>1</span>, <span class='fl'>0</span><span class='op'>)</span>, period <span class='op'>=</span> <span class='fl'>12</span><span class='op'>)</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='fu'><a href='https://pkg.robjhyndman.com/forecast/reference/forecast.html'>forecast</a></span><span class='op'>(</span><span class='va'>fit4</span>, h <span class='op'>=</span> <span class='fl'>12</span><span class='op'>)</span><span class='op'>)</span>
+</code></pre>
+</div>
+<p><img src="arima-with-r_files/figure-html5/unnamed-chunk-26-1.png" width="624" /></p>
+</div>
+<h3 id="원자료에-대한-예측-1">원자료에 대한 예측</h3>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>fit4_1</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://pkg.robjhyndman.com/forecast/reference/Arima.html'>Arima</a></span><span class='op'>(</span><span class='va'>tour.ts</span>, order <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>2</span>, <span class='fl'>1</span>, <span class='fl'>0</span><span class='op'>)</span>, 
+              seasonal <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>order <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>1</span>, <span class='fl'>0</span><span class='op'>)</span>, period <span class='op'>=</span> <span class='fl'>12</span><span class='op'>)</span>, lambda <span class='op'>=</span> <span class='fl'>0</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='fu'><a href='https://pkg.robjhyndman.com/forecast/reference/forecast.html'>forecast</a></span><span class='op'>(</span><span class='va'>fit4_1</span>, h <span class='op'>=</span> <span class='fl'>12</span><span class='op'>)</span><span class='op'>)</span>
+</code></pre>
+</div>
+<p><img src="arima-with-r_files/figure-html5/unnamed-chunk-27-1.png" width="624" /></p>
+</div>
+<h2 id="실제값과-예측값-비교">실제값과 예측값 비교</h2>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>tour92</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/scan.html'>scan</a></span><span class='op'>(</span><span class='st'>'tour92.txt'</span><span class='op'>)</span>
+<span class='va'>tour92</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/ts.html'>ts</a></span><span class='op'>(</span><span class='va'>tour92</span>, start <span class='op'>=</span> <span class='fl'>1992</span>, freq <span class='op'>=</span> <span class='fl'>12</span><span class='op'>)</span>
+
+
+<span class='va'>fore_arima</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://pkg.robjhyndman.com/forecast/reference/forecast.html'>forecast</a></span><span class='op'>(</span><span class='va'>fit4_1</span>, h <span class='op'>=</span> <span class='fl'>12</span>, level <span class='op'>=</span> <span class='fl'>95</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>fore_arima</span><span class='op'>)</span>
+<span class='va'>new_t</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span><span class='op'>(</span><span class='fl'>1992</span>, by <span class='op'>=</span> <span class='fl'>1</span><span class='op'>/</span><span class='fl'>12</span>, length <span class='op'>=</span> <span class='fl'>12</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/lines.html'>lines</a></span><span class='op'>(</span><span class='va'>new_t</span>, <span class='va'>tour92</span>, col <span class='op'>=</span> <span class='st'>'red'</span><span class='op'>)</span>
+</code></pre>
+</div>
+<img src="arima-with-r_files/figure-html5/unnamed-chunk-28-1.png" width="624" />
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://pkg.robjhyndman.com/forecast/reference/accuracy.html'>accuracy</a></span><span class='op'>(</span><span class='va'>fore_arima</span>, <span class='va'>tour92</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>                      ME      RMSE       MAE         MPE     MAPE
+Training set   -101.7388  9382.833  6691.828  -0.1666852  4.06514
+Test set     -44218.3189 51964.159 44218.319 -16.5746164 16.57462
+                  MASE      ACF1 Theil&#39;s U
+Training set 0.3697756 0.1129040        NA
+Test set     2.4434060 0.6654927  1.920409</code></pre>
+</div>
+<h1 id="회귀모형을-이용한-시계열분석">회귀모형을 이용한 시계열분석</h1>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>tour</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/scan.html'>scan</a></span><span class='op'>(</span><span class='st'>'tourist.txt'</span><span class='op'>)</span>
+<span class='va'>tour.ts</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/ts.html'>ts</a></span><span class='op'>(</span><span class='va'>tour</span>, start <span class='op'>=</span> <span class='fl'>1981</span>, frequency <span class='op'>=</span> <span class='fl'>12</span><span class='op'>)</span>
+
+<span class='va'>tour92</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/scan.html'>scan</a></span><span class='op'>(</span><span class='st'>'tour92.txt'</span><span class='op'>)</span>
+<span class='va'>tour92</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/ts.html'>ts</a></span><span class='op'>(</span><span class='va'>tour92</span>, start <span class='op'>=</span> <span class='fl'>1992</span>, freq <span class='op'>=</span> <span class='fl'>12</span><span class='op'>)</span>
+
+<span class='va'>lntour</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/Log.html'>log</a></span><span class='op'>(</span><span class='va'>tour.ts</span><span class='op'>)</span>
+</code></pre>
+</div>
+</div>
+<h2 id="차-추세계절-회귀모형">1차 추세계절 회귀모형</h2>
+<p>2차 추세모형 or 강한 상관관계</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>Time</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/time.html'>time</a></span><span class='op'>(</span><span class='va'>lntour</span><span class='op'>)</span>
+<span class='va'>Month</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/time.html'>cycle</a></span><span class='op'>(</span><span class='va'>lntour</span><span class='op'>)</span>
+<span class='va'>fit1</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>lntour</span><span class='op'>~</span><span class='va'>Time</span> <span class='op'>+</span> <span class='fu'><a href='https://rdrr.io/r/base/factor.html'>factor</a></span><span class='op'>(</span><span class='va'>Month</span><span class='op'>)</span> <span class='op'>+</span> <span class='fl'>0</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>fit1</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>
+Call:
+lm(formula = lntour ~ Time + factor(Month) + 0)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-0.16248 -0.06957 -0.01932  0.07319  0.22759 
+
+Coefficients:
+                 Estimate Std. Error t value Pr(&gt;|t|)    
+Time               0.1195     0.0025   47.78   &lt;2e-16 ***
+factor(Month)1  -225.6597     4.9657  -45.44   &lt;2e-16 ***
+factor(Month)2  -225.6373     4.9659  -45.44   &lt;2e-16 ***
+factor(Month)3  -225.4362     4.9661  -45.40   &lt;2e-16 ***
+factor(Month)4  -225.3477     4.9663  -45.38   &lt;2e-16 ***
+factor(Month)5  -225.3286     4.9665  -45.37   &lt;2e-16 ***
+factor(Month)6  -225.3848     4.9667  -45.38   &lt;2e-16 ***
+factor(Month)7  -225.3999     4.9669  -45.38   &lt;2e-16 ***
+factor(Month)8  -225.3277     4.9671  -45.36   &lt;2e-16 ***
+factor(Month)9  -225.3804     4.9673  -45.37   &lt;2e-16 ***
+factor(Month)10 -225.2771     4.9675  -45.35   &lt;2e-16 ***
+factor(Month)11 -225.4349     4.9677  -45.38   &lt;2e-16 ***
+factor(Month)12 -225.6338     4.9679  -45.42   &lt;2e-16 ***
+---
+Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+
+Residual standard error: 0.09084 on 119 degrees of freedom
+Multiple R-squared:  0.9999,    Adjusted R-squared:  0.9999 
+F-statistic: 1.741e+05 on 13 and 119 DF,  p-value: &lt; 2.2e-16</code></pre>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://pkg.robjhyndman.com/forecast/reference/checkresiduals.html'>checkresiduals</a></span><span class='op'>(</span><span class='va'>fit1</span><span class='op'>)</span>
+</code></pre>
+</div>
+<p><img src="arima-with-r_files/figure-html5/unnamed-chunk-30-1.png" width="624" /></p>
+<pre><code>
+    Breusch-Godfrey test for serial correlation of order up to 16
+
+data:  Residuals
+LM test = 87.23, df = 16, p-value = 8.074e-12</code></pre>
+</div>
+<h2 id="차-추세모형">2차 추세모형</h2>
+<p>양의 상관관계 존재</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>fit2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>lntour</span><span class='op'>~</span><span class='va'>Time</span> <span class='op'>+</span> <span class='fu'><a href='https://rdrr.io/r/base/AsIs.html'>I</a></span><span class='op'>(</span><span class='va'>Time</span><span class='op'>^</span><span class='fl'>2</span><span class='op'>)</span> <span class='op'>+</span> <span class='fu'><a href='https://rdrr.io/r/base/factor.html'>factor</a></span><span class='op'>(</span><span class='va'>Month</span><span class='op'>)</span> <span class='op'>+</span> <span class='fl'>0</span><span class='op'>)</span>
+<span class='fu'><a href='https://pkg.robjhyndman.com/forecast/reference/checkresiduals.html'>checkresiduals</a></span><span class='op'>(</span><span class='va'>fit2</span><span class='op'>)</span>
+</code></pre>
+</div>
+<p><img src="arima-with-r_files/figure-html5/unnamed-chunk-31-1.png" width="624" /></p>
+<pre><code>
+    Breusch-Godfrey test for serial correlation of order up to 17
+
+data:  Residuals
+LM test = 69.78, df = 17, p-value = 2.354e-08</code></pre>
+</div>
+<h3 id="오차모형">오차모형</h3>
+<p>AR(3) 식별</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>Resid</span> <span class='op'>&lt;-</span> <span class='va'>fit2</span><span class='op'>$</span><span class='va'>residuals</span>
+<span class='fu'><a href='https://pkg.robjhyndman.com/forecast/reference/tsdisplay.html'>ggtsdisplay</a></span><span class='op'>(</span><span class='va'>Resid</span>, lag.max <span class='op'>=</span> <span class='fl'>48</span><span class='op'>)</span>
+</code></pre>
+</div>
+<p><img src="arima-with-r_files/figure-html5/unnamed-chunk-32-1.png" width="624" /></p>
+</div>
+<h3 id="오차-모형-적합">오차 모형 적합</h3>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>fit_r1</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://pkg.robjhyndman.com/forecast/reference/Arima.html'>Arima</a></span><span class='op'>(</span><span class='va'>Resid</span>, order <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>3</span>, <span class='fl'>0</span>, <span class='fl'>0</span><span class='op'>)</span>, include.mean <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/stats/confint.html'>confint</a></span><span class='op'>(</span><span class='va'>fit_r1</span><span class='op'>)</span> 
+</code></pre>
+</div>
+<pre><code>         2.5 %    97.5 %
+ar1 0.14262044 0.4814755
+ar2 0.09449107 0.4352225
+ar3 0.03698488 0.3775787</code></pre>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://pkg.robjhyndman.com/forecast/reference/checkresiduals.html'>checkresiduals</a></span><span class='op'>(</span><span class='va'>fit_r1</span><span class='op'>)</span>
+</code></pre>
+</div>
+<p><img src="arima-with-r_files/figure-html5/unnamed-chunk-33-1.png" width="624" /></p>
+<pre><code>
+    Ljung-Box test
+
+data:  Residuals from ARIMA(3,0,0) with zero mean
+Q* = 6.0871, df = 7, p-value = 0.5296
+
+Model df: 3.   Total lags used: 10</code></pre>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/stats/confint.html'>confint</a></span><span class='op'>(</span><span class='fu'><a href='https://pkg.robjhyndman.com/forecast/reference/Arima.html'>Arima</a></span><span class='op'>(</span><span class='va'>Resid</span>, order <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>3</span>, <span class='fl'>0</span>, <span class='fl'>1</span><span class='op'>)</span>, include.mean <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span><span class='op'>)</span> <span class='co'># 추가된 모수 비유의 </span>NA</code></pre>
+</div>
+<pre><code>          2.5 %    97.5 %
+ar1 -0.55000199 0.7343275
+ar2  0.04907373 0.6498214
+ar3  0.03680223 0.5309914
+ma1 -0.43556251 0.8971931</code></pre>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/stats/confint.html'>confint</a></span><span class='op'>(</span><span class='fu'><a href='https://pkg.robjhyndman.com/forecast/reference/Arima.html'>Arima</a></span><span class='op'>(</span><span class='va'>Resid</span>, order <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>4</span>, <span class='fl'>0</span>, <span class='fl'>0</span><span class='op'>)</span>, include.mean <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span><span class='op'>)</span> <span class='co'># 추가된 모수 비유의 </span>NA</code></pre>
+</div>
+<pre><code>          2.5 %    97.5 %
+ar1  0.15430624 0.5022553
+ar2  0.10729112 0.4628918
+ar3  0.04984801 0.4040409
+ar4 -0.24959477 0.1091437</code></pre>
+</div>
+<h2 id="차-추세계절-ar3-오차-회귀모형">2차 추세계절 + AR(3) 오차 회귀모형</h2>
+<p>역행렬 계산 안될 경우 1차 추세모형 대신 시도</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>fit_x</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/model.matrix.html'>model.matrix</a></span><span class='op'>(</span><span class='va'>fit2</span><span class='op'>)</span>
+<span class='va'>f1</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://pkg.robjhyndman.com/forecast/reference/Arima.html'>Arima</a></span><span class='op'>(</span><span class='va'>tour.ts</span>, order <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>3</span>, <span class='fl'>0</span>, <span class='fl'>0</span><span class='op'>)</span>, include.mean <span class='op'>=</span> <span class='cn'>FALSE</span>, xreg <span class='op'>=</span> <span class='va'>fit_x</span>, lambda <span class='op'>=</span> <span class='fl'>0</span><span class='op'>)</span>
+</code></pre>
+</div>
+</div>
+<h2 id="차-추세-계절-모형의-오차-모형">1차 추세 계절 모형의 오차 모형</h2>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>Resid</span> <span class='op'>&lt;-</span> <span class='va'>fit1</span><span class='op'>$</span><span class='va'>residuals</span>
+<span class='fu'><a href='https://pkg.robjhyndman.com/forecast/reference/tsdisplay.html'>ggtsdisplay</a></span><span class='op'>(</span><span class='va'>Resid</span>, lag.max <span class='op'>=</span> <span class='fl'>48</span><span class='op'>)</span> <span class='co'># AR(3)</span>
+</code></pre>
+</div>
+<p><img src="arima-with-r_files/figure-html5/unnamed-chunk-35-1.png" width="624" /></p>
+</div>
+<h3 id="오차-모형-적합-1">오차 모형 적합</h3>
+<p><span class="math inline">\(AR(3)\)</span> 모형 확정</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>fit_r2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://pkg.robjhyndman.com/forecast/reference/Arima.html'>Arima</a></span><span class='op'>(</span><span class='va'>Resid</span>, order <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>3</span>, <span class='fl'>0</span>, <span class='fl'>0</span><span class='op'>)</span>, include.mean <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/stats/confint.html'>confint</a></span><span class='op'>(</span><span class='va'>fit_r2</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>         2.5 %    97.5 %
+ar1 0.17792211 0.5181811
+ar2 0.12261593 0.4656961
+ar3 0.06598099 0.4075507</code></pre>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://pkg.robjhyndman.com/forecast/reference/checkresiduals.html'>checkresiduals</a></span><span class='op'>(</span><span class='va'>fit_r2</span><span class='op'>)</span>
+</code></pre>
+</div>
+<p><img src="arima-with-r_files/figure-html5/unnamed-chunk-36-1.png" width="624" /></p>
+<pre><code>
+    Ljung-Box test
+
+data:  Residuals from ARIMA(3,0,0) with zero mean
+Q* = 6.0104, df = 7, p-value = 0.5385
+
+Model df: 3.   Total lags used: 10</code></pre>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/stats/confint.html'>confint</a></span><span class='op'>(</span><span class='fu'><a href='https://pkg.robjhyndman.com/forecast/reference/Arima.html'>Arima</a></span><span class='op'>(</span><span class='va'>Resid</span>, order <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>3</span>, <span class='fl'>0</span>, <span class='fl'>1</span><span class='op'>)</span>, include.mean <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span><span class='op'>)</span> <span class='co'># 추가된 모수 비유의 </span>NA</code></pre>
+</div>
+<pre><code>          2.5 %    97.5 %
+ar1 -0.42304400 0.8008538
+ar2  0.04529015 0.6846541
+ar3  0.03132570 0.5676929
+ma1 -0.46971226 0.8080546</code></pre>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/stats/confint.html'>confint</a></span><span class='op'>(</span><span class='fu'><a href='https://pkg.robjhyndman.com/forecast/reference/Arima.html'>Arima</a></span><span class='op'>(</span><span class='va'>Resid</span>, order <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>4</span>, <span class='fl'>0</span>, <span class='fl'>0</span><span class='op'>)</span>, include.mean <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span><span class='op'>)</span> <span class='co'># 추가된 모수 비유의 </span>NA</code></pre>
+</div>
+<pre><code>          2.5 %    97.5 %
+ar1  0.18467678 0.5365285
+ar2  0.12910312 0.4899985
+ar3  0.07264062 0.4313678
+ar4 -0.23078402 0.1314767</code></pre>
+</div>
+<h2 id="차-추세계절-ar3-오차-회귀모형-1">1차 추세계절 + AR(3) 오차 회귀모형</h2>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>fit_x</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/model.matrix.html'>model.matrix</a></span><span class='op'>(</span><span class='va'>fit1</span><span class='op'>)</span>
+<span class='va'>f1</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://pkg.robjhyndman.com/forecast/reference/Arima.html'>Arima</a></span><span class='op'>(</span><span class='va'>tour.ts</span>, order <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>3</span>, <span class='fl'>0</span>, <span class='fl'>0</span><span class='op'>)</span>, include.mean <span class='op'>=</span> <span class='cn'>FALSE</span>, xreg <span class='op'>=</span> <span class='va'>fit_x</span>, lambda <span class='op'>=</span> <span class='fl'>0</span><span class='op'>)</span>
+</code></pre>
+</div>
+</div>
+<h2 id="예측-2">예측</h2>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>new.t</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/time.html'>time</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/stats/ts.html'>ts</a></span><span class='op'>(</span>start <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1992</span>, <span class='fl'>1</span><span class='op'>)</span>, end <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1992</span>, <span class='fl'>12</span><span class='op'>)</span>, freq <span class='op'>=</span> <span class='fl'>12</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>new.x</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/cbind.html'>cbind</a></span><span class='op'>(</span><span class='va'>new.t</span>, <span class='fu'><a href='https://rdrr.io/r/base/diag.html'>diag</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>12</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
+
+<span class='va'>fore_reg</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://pkg.robjhyndman.com/forecast/reference/forecast.html'>forecast</a></span><span class='op'>(</span><span class='va'>f1</span>, xreg <span class='op'>=</span> <span class='va'>new.x</span>, level <span class='op'>=</span> <span class='fl'>95</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>fore_reg</span><span class='op'>)</span>
+</code></pre>
+</div>
+<p><img src="arima-with-r_files/figure-html5/unnamed-chunk-38-1.png" width="624" /></p>
+</div>
+<h1 id="예측-성능-비교">예측 성능 비교</h1>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://pkg.robjhyndman.com/forecast/reference/accuracy.html'>accuracy</a></span><span class='op'>(</span><span class='va'>fore_arima</span>, <span class='va'>tour92</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>                      ME      RMSE       MAE         MPE     MAPE
+Training set   -101.7388  9382.833  6691.828  -0.1666852  4.06514
+Test set     -44218.3189 51964.159 44218.319 -16.5746164 16.57462
+                  MASE      ACF1 Theil&#39;s U
+Training set 0.3697756 0.1129040        NA
+Test set     2.4434060 0.6654927  1.920409</code></pre>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://pkg.robjhyndman.com/forecast/reference/accuracy.html'>accuracy</a></span><span class='op'>(</span><span class='va'>fore_reg</span>, <span class='va'>tour92</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>                      ME      RMSE       MAE         MPE      MAPE
+Training set    120.1524  9569.667  6442.998  -0.3146017  4.019269
+Test set     -53052.9409 61306.604 54979.697 -19.5490298 20.273884
+                  MASE      ACF1 Theil&#39;s U
+Training set 0.3560258 0.1121612        NA
+Test set     3.0380559 0.5282178  2.260151</code></pre>
+</div>
+<div class="sourceCode" id="cb54"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
+<!--radix_placeholder_article_footer-->
+<!--/radix_placeholder_article_footer-->
+</div>
+
+<div class="d-appendix">
+</div>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+<!--radix_placeholder_site_after_body-->
+<!--/radix_placeholder_site_after_body-->
+<!--radix_placeholder_appendices-->
+<div class="appendix-bottom"></div>
+<!--/radix_placeholder_appendices-->
+<!--radix_placeholder_navigation_after_body-->
+<!--/radix_placeholder_navigation_after_body-->
+
+</body>
+
+</html>

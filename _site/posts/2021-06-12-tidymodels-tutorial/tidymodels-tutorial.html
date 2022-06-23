@@ -1,0 +1,1873 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1"/>
+  <meta name="generator" content="distill" />
+
+  <style type="text/css">
+  /* Hide doc at startup (prevent jankiness while JS renders/transforms) */
+  body {
+    visibility: hidden;
+  }
+  </style>
+
+ <!--radix_placeholder_import_source-->
+ <!--/radix_placeholder_import_source-->
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css" data-origin="pandoc">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ad0000; } /* Alert */
+code span.an { color: #5e5e5e; } /* Annotation */
+code span.at { } /* Attribute */
+code span.bn { color: #ad0000; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007ba5; } /* ControlFlow */
+code span.ch { color: #20794d; } /* Char */
+code span.cn { color: #8f5902; } /* Constant */
+code span.co { color: #5e5e5e; } /* Comment */
+code span.cv { color: #5e5e5e; font-style: italic; } /* CommentVar */
+code span.do { color: #5e5e5e; font-style: italic; } /* Documentation */
+code span.dt { color: #ad0000; } /* DataType */
+code span.dv { color: #ad0000; } /* DecVal */
+code span.er { color: #ad0000; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #ad0000; } /* Float */
+code span.fu { color: #4758ab; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #5e5e5e; } /* Information */
+code span.kw { color: #007ba5; } /* Keyword */
+code span.op { color: #5e5e5e; } /* Operator */
+code span.ot { color: #007ba5; } /* Other */
+code span.pp { color: #ad0000; } /* Preprocessor */
+code span.sc { color: #5e5e5e; } /* SpecialChar */
+code span.ss { color: #20794d; } /* SpecialString */
+code span.st { color: #20794d; } /* String */
+code span.va { color: #111111; } /* Variable */
+code span.vs { color: #20794d; } /* VerbatimString */
+code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
+</style>
+
+  <!--radix_placeholder_meta_tags-->
+  <title>tidymodels tutorial</title>
+
+  <meta property="description" itemprop="description" content="tidymodels에 대한 간단한 소개"/>
+
+
+  <!--  https://schema.org/Article -->
+  <meta property="article:published" itemprop="datePublished" content="2021-05-29"/>
+  <meta property="article:created" itemprop="dateCreated" content="2021-05-29"/>
+  <meta name="article:author" content="dondon"/>
+
+  <!--  https://developers.facebook.com/docs/sharing/webmasters#markup -->
+  <meta property="og:title" content="tidymodels tutorial"/>
+  <meta property="og:type" content="article"/>
+  <meta property="og:description" content="tidymodels에 대한 간단한 소개"/>
+  <meta property="og:locale" content="en_US"/>
+
+  <!--  https://dev.twitter.com/cards/types/summary -->
+  <meta property="twitter:card" content="summary"/>
+  <meta property="twitter:title" content="tidymodels tutorial"/>
+  <meta property="twitter:description" content="tidymodels에 대한 간단한 소개"/>
+
+  <!--/radix_placeholder_meta_tags-->
+  <!--radix_placeholder_rmarkdown_metadata-->
+
+  <script type="text/json" id="radix-rmarkdown-metadata">
+  {"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","description","author","date","output","categories"]}},"value":[{"type":"character","attributes":{},"value":["tidymodels tutorial"]},{"type":"character","attributes":{},"value":["tidymodels에 대한 간단한 소개\n"]},{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","url"]}},"value":[{"type":"character","attributes":{},"value":["dondon"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":[]}},"value":[]}]}]},{"type":"character","attributes":{},"value":["2021-05-29"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["distill::distill_article"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["toc","toc_depth","self_contained","highlight","highlight_downlit","code_folding"]}},"value":[{"type":"logical","attributes":{},"value":[true]},{"type":"integer","attributes":{},"value":[3]},{"type":"logical","attributes":{},"value":[false]},{"type":"character","attributes":{},"value":["default"]},{"type":"logical","attributes":{},"value":[true]},{"type":"logical","attributes":{},"value":[false]}]}]},{"type":"character","attributes":{},"value":["Machine learning","R"]}]}
+  </script>
+  <!--/radix_placeholder_rmarkdown_metadata-->
+  
+  <script type="text/json" id="radix-resource-manifest">
+  {"type":"character","attributes":{},"value":["tidymodels-tutorial_files/anchor-4.2.2/anchor.min.js","tidymodels-tutorial_files/bowser-1.9.3/bowser.min.js","tidymodels-tutorial_files/distill-2.2.21/template.v2.js","tidymodels-tutorial_files/figure-html5/unnamed-chunk-15-1.png","tidymodels-tutorial_files/header-attrs-2.8/header-attrs.js","tidymodels-tutorial_files/jquery-1.11.3/jquery.min.js","tidymodels-tutorial_files/popper-2.6.0/popper.min.js","tidymodels-tutorial_files/tippy-6.2.7/tippy-bundle.umd.min.js","tidymodels-tutorial_files/tippy-6.2.7/tippy-light-border.css","tidymodels-tutorial_files/tippy-6.2.7/tippy.css","tidymodels-tutorial_files/tippy-6.2.7/tippy.umd.min.js","tidymodels-tutorial_files/webcomponents-2.0.0/webcomponents.js"]}
+  </script>
+  <!--radix_placeholder_navigation_in_header-->
+  <!--/radix_placeholder_navigation_in_header-->
+  <!--radix_placeholder_distill-->
+
+  <style type="text/css">
+
+  body {
+    background-color: white;
+  }
+
+  .pandoc-table {
+    width: 100%;
+  }
+
+  .pandoc-table>caption {
+    margin-bottom: 10px;
+  }
+
+  .pandoc-table th:not([align]) {
+    text-align: left;
+  }
+
+  .pagedtable-footer {
+    font-size: 15px;
+  }
+
+  d-byline .byline {
+    grid-template-columns: 2fr 2fr;
+  }
+
+  d-byline .byline h3 {
+    margin-block-start: 1.5em;
+  }
+
+  d-byline .byline .authors-affiliations h3 {
+    margin-block-start: 0.5em;
+  }
+
+  .authors-affiliations .orcid-id {
+    width: 16px;
+    height:16px;
+    margin-left: 4px;
+    margin-right: 4px;
+    vertical-align: middle;
+    padding-bottom: 2px;
+  }
+
+  d-title .dt-tags {
+    margin-top: 1em;
+    grid-column: text;
+  }
+
+  .dt-tags .dt-tag {
+    text-decoration: none;
+    display: inline-block;
+    color: rgba(0,0,0,0.6);
+    padding: 0em 0.4em;
+    margin-right: 0.5em;
+    margin-bottom: 0.4em;
+    font-size: 70%;
+    border: 1px solid rgba(0,0,0,0.2);
+    border-radius: 3px;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+
+  d-article table.gt_table td,
+  d-article table.gt_table th {
+    border-bottom: none;
+  }
+
+  .html-widget {
+    margin-bottom: 2.0em;
+  }
+
+  .l-screen-inset {
+    padding-right: 16px;
+  }
+
+  .l-screen .caption {
+    margin-left: 10px;
+  }
+
+  .shaded {
+    background: rgb(247, 247, 247);
+    padding-top: 20px;
+    padding-bottom: 20px;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  }
+
+  .shaded .html-widget {
+    margin-bottom: 0;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+  }
+
+  .shaded .shaded-content {
+    background: white;
+  }
+
+  .text-output {
+    margin-top: 0;
+    line-height: 1.5em;
+  }
+
+  .hidden {
+    display: none !important;
+  }
+
+  d-article {
+    padding-top: 2.5rem;
+    padding-bottom: 30px;
+  }
+
+  d-appendix {
+    padding-top: 30px;
+  }
+
+  d-article>p>img {
+    width: 100%;
+  }
+
+  d-article h2 {
+    margin: 1rem 0 1.5rem 0;
+  }
+
+  d-article h3 {
+    margin-top: 1.5rem;
+  }
+
+  d-article iframe {
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    margin-bottom: 2.0em;
+    width: 100%;
+  }
+
+  /* Tweak code blocks */
+
+  d-article div.sourceCode code,
+  d-article pre code {
+    font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+  }
+
+  d-article pre,
+  d-article div.sourceCode,
+  d-article div.sourceCode pre {
+    overflow: auto;
+  }
+
+  d-article div.sourceCode {
+    background-color: white;
+  }
+
+  d-article div.sourceCode pre {
+    padding-left: 10px;
+    font-size: 12px;
+    border-left: 2px solid rgba(0,0,0,0.1);
+  }
+
+  d-article pre {
+    font-size: 12px;
+    color: black;
+    background: none;
+    margin-top: 0;
+    text-align: left;
+    white-space: pre;
+    word-spacing: normal;
+    word-break: normal;
+    word-wrap: normal;
+    line-height: 1.5;
+
+    -moz-tab-size: 4;
+    -o-tab-size: 4;
+    tab-size: 4;
+
+    -webkit-hyphens: none;
+    -moz-hyphens: none;
+    -ms-hyphens: none;
+    hyphens: none;
+  }
+
+  d-article pre a {
+    border-bottom: none;
+  }
+
+  d-article pre a:hover {
+    border-bottom: none;
+    text-decoration: underline;
+  }
+
+  d-article details {
+    grid-column: text;
+    margin-bottom: 0.8em;
+  }
+
+  @media(min-width: 768px) {
+
+  d-article pre,
+  d-article div.sourceCode,
+  d-article div.sourceCode pre {
+    overflow: visible !important;
+  }
+
+  d-article div.sourceCode pre {
+    padding-left: 18px;
+    font-size: 14px;
+  }
+
+  d-article pre {
+    font-size: 14px;
+  }
+
+  }
+
+  figure img.external {
+    background: white;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    box-shadow: 0 1px 8px rgba(0, 0, 0, 0.1);
+    padding: 18px;
+    box-sizing: border-box;
+  }
+
+  /* CSS for d-contents */
+
+  .d-contents {
+    grid-column: text;
+    color: rgba(0,0,0,0.8);
+    font-size: 0.9em;
+    padding-bottom: 1em;
+    margin-bottom: 1em;
+    padding-bottom: 0.5em;
+    margin-bottom: 1em;
+    padding-left: 0.25em;
+    justify-self: start;
+  }
+
+  @media(min-width: 1000px) {
+    .d-contents.d-contents-float {
+      height: 0;
+      grid-column-start: 1;
+      grid-column-end: 4;
+      justify-self: center;
+      padding-right: 3em;
+      padding-left: 2em;
+    }
+  }
+
+  .d-contents nav h3 {
+    font-size: 18px;
+    margin-top: 0;
+    margin-bottom: 1em;
+  }
+
+  .d-contents li {
+    list-style-type: none
+  }
+
+  .d-contents nav > ul {
+    padding-left: 0;
+  }
+
+  .d-contents ul {
+    padding-left: 1em
+  }
+
+  .d-contents nav ul li {
+    margin-top: 0.6em;
+    margin-bottom: 0.2em;
+  }
+
+  .d-contents nav a {
+    font-size: 13px;
+    border-bottom: none;
+    text-decoration: none
+    color: rgba(0, 0, 0, 0.8);
+  }
+
+  .d-contents nav a:hover {
+    text-decoration: underline solid rgba(0, 0, 0, 0.6)
+  }
+
+  .d-contents nav > ul > li > a {
+    font-weight: 600;
+  }
+
+  .d-contents nav > ul > li > ul {
+    font-weight: inherit;
+  }
+
+  .d-contents nav > ul > li > ul > li {
+    margin-top: 0.2em;
+  }
+
+
+  .d-contents nav ul {
+    margin-top: 0;
+    margin-bottom: 0.25em;
+  }
+
+  .d-article-with-toc h2:nth-child(2) {
+    margin-top: 0;
+  }
+
+
+  /* Figure */
+
+  .figure {
+    position: relative;
+    margin-bottom: 2.5em;
+    margin-top: 1.5em;
+  }
+
+  .figure img {
+    width: 100%;
+  }
+
+  .figure .caption {
+    color: rgba(0, 0, 0, 0.6);
+    font-size: 12px;
+    line-height: 1.5em;
+  }
+
+  .figure img.external {
+    background: white;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    box-shadow: 0 1px 8px rgba(0, 0, 0, 0.1);
+    padding: 18px;
+    box-sizing: border-box;
+  }
+
+  .figure .caption a {
+    color: rgba(0, 0, 0, 0.6);
+  }
+
+  .figure .caption b,
+  .figure .caption strong, {
+    font-weight: 600;
+    color: rgba(0, 0, 0, 1.0);
+  }
+
+  /* Citations */
+
+  d-article .citation {
+    color: inherit;
+    cursor: inherit;
+  }
+
+  div.hanging-indent{
+    margin-left: 1em; text-indent: -1em;
+  }
+
+  /* Citation hover box */
+
+  .tippy-box[data-theme~=light-border] {
+    background-color: rgba(250, 250, 250, 0.95);
+  }
+
+  .tippy-content > p {
+    margin-bottom: 0;
+    padding: 2px;
+  }
+
+
+  /* Tweak 1000px media break to show more text */
+
+  @media(min-width: 1000px) {
+    .base-grid,
+    distill-header,
+    d-title,
+    d-abstract,
+    d-article,
+    d-appendix,
+    distill-appendix,
+    d-byline,
+    d-footnote-list,
+    d-citation-list,
+    distill-footer {
+      grid-template-columns: [screen-start] 1fr [page-start kicker-start] 80px [middle-start] 50px [text-start kicker-end] 65px 65px 65px 65px 65px 65px 65px 65px [text-end gutter-start] 65px [middle-end] 65px [page-end gutter-end] 1fr [screen-end];
+      grid-column-gap: 16px;
+    }
+
+    .grid {
+      grid-column-gap: 16px;
+    }
+
+    d-article {
+      font-size: 1.06rem;
+      line-height: 1.7em;
+    }
+    figure .caption, .figure .caption, figure figcaption {
+      font-size: 13px;
+    }
+  }
+
+  @media(min-width: 1180px) {
+    .base-grid,
+    distill-header,
+    d-title,
+    d-abstract,
+    d-article,
+    d-appendix,
+    distill-appendix,
+    d-byline,
+    d-footnote-list,
+    d-citation-list,
+    distill-footer {
+      grid-template-columns: [screen-start] 1fr [page-start kicker-start] 60px [middle-start] 60px [text-start kicker-end] 60px 60px 60px 60px 60px 60px 60px 60px [text-end gutter-start] 60px [middle-end] 60px [page-end gutter-end] 1fr [screen-end];
+      grid-column-gap: 32px;
+    }
+
+    .grid {
+      grid-column-gap: 32px;
+    }
+  }
+
+
+  /* Get the citation styles for the appendix (not auto-injected on render since
+     we do our own rendering of the citation appendix) */
+
+  d-appendix .citation-appendix,
+  .d-appendix .citation-appendix {
+    font-size: 11px;
+    line-height: 15px;
+    border-left: 1px solid rgba(0, 0, 0, 0.1);
+    padding-left: 18px;
+    border: 1px solid rgba(0,0,0,0.1);
+    background: rgba(0, 0, 0, 0.02);
+    padding: 10px 18px;
+    border-radius: 3px;
+    color: rgba(150, 150, 150, 1);
+    overflow: hidden;
+    margin-top: -12px;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+  }
+
+  /* Include appendix styles here so they can be overridden */
+
+  d-appendix {
+    contain: layout style;
+    font-size: 0.8em;
+    line-height: 1.7em;
+    margin-top: 60px;
+    margin-bottom: 0;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    color: rgba(0,0,0,0.5);
+    padding-top: 60px;
+    padding-bottom: 48px;
+  }
+
+  d-appendix h3 {
+    grid-column: page-start / text-start;
+    font-size: 15px;
+    font-weight: 500;
+    margin-top: 1em;
+    margin-bottom: 0;
+    color: rgba(0,0,0,0.65);
+  }
+
+  d-appendix h3 + * {
+    margin-top: 1em;
+  }
+
+  d-appendix ol {
+    padding: 0 0 0 15px;
+  }
+
+  @media (min-width: 768px) {
+    d-appendix ol {
+      padding: 0 0 0 30px;
+      margin-left: -30px;
+    }
+  }
+
+  d-appendix li {
+    margin-bottom: 1em;
+  }
+
+  d-appendix a {
+    color: rgba(0, 0, 0, 0.6);
+  }
+
+  d-appendix > * {
+    grid-column: text;
+  }
+
+  d-appendix > d-footnote-list,
+  d-appendix > d-citation-list,
+  d-appendix > distill-appendix {
+    grid-column: screen;
+  }
+
+  /* Include footnote styles here so they can be overridden */
+
+  d-footnote-list {
+    contain: layout style;
+  }
+
+  d-footnote-list > * {
+    grid-column: text;
+  }
+
+  d-footnote-list a.footnote-backlink {
+    color: rgba(0,0,0,0.3);
+    padding-left: 0.5em;
+  }
+
+
+
+  /* Anchor.js */
+
+  .anchorjs-link {
+    /*transition: all .25s linear; */
+    text-decoration: none;
+    border-bottom: none;
+  }
+  *:hover > .anchorjs-link {
+    margin-left: -1.125em !important;
+    text-decoration: none;
+    border-bottom: none;
+  }
+
+  /* Social footer */
+
+  .social_footer {
+    margin-top: 30px;
+    margin-bottom: 0;
+    color: rgba(0,0,0,0.67);
+  }
+
+  .disqus-comments {
+    margin-right: 30px;
+  }
+
+  .disqus-comment-count {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.4);
+    cursor: pointer;
+  }
+
+  #disqus_thread {
+    margin-top: 30px;
+  }
+
+  .article-sharing a {
+    border-bottom: none;
+    margin-right: 8px;
+  }
+
+  .article-sharing a:hover {
+    border-bottom: none;
+  }
+
+  .sidebar-section.subscribe {
+    font-size: 12px;
+    line-height: 1.6em;
+  }
+
+  .subscribe p {
+    margin-bottom: 0.5em;
+  }
+
+
+  .article-footer .subscribe {
+    font-size: 15px;
+    margin-top: 45px;
+  }
+
+
+  .sidebar-section.custom {
+    font-size: 12px;
+    line-height: 1.6em;
+  }
+
+  .custom p {
+    margin-bottom: 0.5em;
+  }
+
+  /* Styles for listing layout (hide title) */
+  .layout-listing d-title, .layout-listing .d-title {
+    display: none;
+  }
+
+  /* Styles for posts lists (not auto-injected) */
+
+
+  .posts-with-sidebar {
+    padding-left: 45px;
+    padding-right: 45px;
+  }
+
+  .posts-list .description h2,
+  .posts-list .description p {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", Arial, sans-serif;
+  }
+
+  .posts-list .description h2 {
+    font-weight: 700;
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+
+  .posts-list h2.post-tag {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+    padding-bottom: 12px;
+  }
+  .posts-list {
+    margin-top: 60px;
+    margin-bottom: 24px;
+  }
+
+  .posts-list .post-preview {
+    text-decoration: none;
+    overflow: hidden;
+    display: block;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    padding: 24px 0;
+  }
+
+  .post-preview-last {
+    border-bottom: none !important;
+  }
+
+  .posts-list .posts-list-caption {
+    grid-column: screen;
+    font-weight: 400;
+  }
+
+  .posts-list .post-preview h2 {
+    margin: 0 0 6px 0;
+    line-height: 1.2em;
+    font-style: normal;
+    font-size: 24px;
+  }
+
+  .posts-list .post-preview p {
+    margin: 0 0 12px 0;
+    line-height: 1.4em;
+    font-size: 16px;
+  }
+
+  .posts-list .post-preview .thumbnail {
+    box-sizing: border-box;
+    margin-bottom: 24px;
+    position: relative;
+    max-width: 500px;
+  }
+  .posts-list .post-preview img {
+    width: 100%;
+    display: block;
+  }
+
+  .posts-list .metadata {
+    font-size: 12px;
+    line-height: 1.4em;
+    margin-bottom: 18px;
+  }
+
+  .posts-list .metadata > * {
+    display: inline-block;
+  }
+
+  .posts-list .metadata .publishedDate {
+    margin-right: 2em;
+  }
+
+  .posts-list .metadata .dt-authors {
+    display: block;
+    margin-top: 0.3em;
+    margin-right: 2em;
+  }
+
+  .posts-list .dt-tags {
+    display: block;
+    line-height: 1em;
+  }
+
+  .posts-list .dt-tags .dt-tag {
+    display: inline-block;
+    color: rgba(0,0,0,0.6);
+    padding: 0.3em 0.4em;
+    margin-right: 0.2em;
+    margin-bottom: 0.4em;
+    font-size: 60%;
+    border: 1px solid rgba(0,0,0,0.2);
+    border-radius: 3px;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+
+  .posts-list img {
+    opacity: 1;
+  }
+
+  .posts-list img[data-src] {
+    opacity: 0;
+  }
+
+  .posts-more {
+    clear: both;
+  }
+
+
+  .posts-sidebar {
+    font-size: 16px;
+  }
+
+  .posts-sidebar h3 {
+    font-size: 16px;
+    margin-top: 0;
+    margin-bottom: 0.5em;
+    font-weight: 400;
+    text-transform: uppercase;
+  }
+
+  .sidebar-section {
+    margin-bottom: 30px;
+  }
+
+  .categories ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .categories li {
+    color: rgba(0, 0, 0, 0.8);
+    margin-bottom: 0;
+  }
+
+  .categories li>a {
+    border-bottom: none;
+  }
+
+  .categories li>a:hover {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.4);
+  }
+
+  .categories .active {
+    font-weight: 600;
+  }
+
+  .categories .category-count {
+    color: rgba(0, 0, 0, 0.4);
+  }
+
+
+  @media(min-width: 768px) {
+    .posts-list .post-preview h2 {
+      font-size: 26px;
+    }
+    .posts-list .post-preview .thumbnail {
+      float: right;
+      width: 30%;
+      margin-bottom: 0;
+    }
+    .posts-list .post-preview .description {
+      float: left;
+      width: 45%;
+    }
+    .posts-list .post-preview .metadata {
+      float: left;
+      width: 20%;
+      margin-top: 8px;
+    }
+    .posts-list .post-preview p {
+      margin: 0 0 12px 0;
+      line-height: 1.5em;
+      font-size: 16px;
+    }
+    .posts-with-sidebar .posts-list {
+      float: left;
+      width: 75%;
+    }
+    .posts-with-sidebar .posts-sidebar {
+      float: right;
+      width: 20%;
+      margin-top: 60px;
+      padding-top: 24px;
+      padding-bottom: 24px;
+    }
+  }
+
+
+  /* Improve display for browsers without grid (IE/Edge <= 15) */
+
+  .downlevel {
+    line-height: 1.6em;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", Arial, sans-serif;
+    margin: 0;
+  }
+
+  .downlevel .d-title {
+    padding-top: 6rem;
+    padding-bottom: 1.5rem;
+  }
+
+  .downlevel .d-title h1 {
+    font-size: 50px;
+    font-weight: 700;
+    line-height: 1.1em;
+    margin: 0 0 0.5rem;
+  }
+
+  .downlevel .d-title p {
+    font-weight: 300;
+    font-size: 1.2rem;
+    line-height: 1.55em;
+    margin-top: 0;
+  }
+
+  .downlevel .d-byline {
+    padding-top: 0.8em;
+    padding-bottom: 0.8em;
+    font-size: 0.8rem;
+    line-height: 1.8em;
+  }
+
+  .downlevel .section-separator {
+    border: none;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+  }
+
+  .downlevel .d-article {
+    font-size: 1.06rem;
+    line-height: 1.7em;
+    padding-top: 1rem;
+    padding-bottom: 2rem;
+  }
+
+
+  .downlevel .d-appendix {
+    padding-left: 0;
+    padding-right: 0;
+    max-width: none;
+    font-size: 0.8em;
+    line-height: 1.7em;
+    margin-bottom: 0;
+    color: rgba(0,0,0,0.5);
+    padding-top: 40px;
+    padding-bottom: 48px;
+  }
+
+  .downlevel .footnotes ol {
+    padding-left: 13px;
+  }
+
+  .downlevel .base-grid,
+  .downlevel .distill-header,
+  .downlevel .d-title,
+  .downlevel .d-abstract,
+  .downlevel .d-article,
+  .downlevel .d-appendix,
+  .downlevel .distill-appendix,
+  .downlevel .d-byline,
+  .downlevel .d-footnote-list,
+  .downlevel .d-citation-list,
+  .downlevel .distill-footer,
+  .downlevel .appendix-bottom,
+  .downlevel .posts-container {
+    padding-left: 40px;
+    padding-right: 40px;
+  }
+
+  @media(min-width: 768px) {
+    .downlevel .base-grid,
+    .downlevel .distill-header,
+    .downlevel .d-title,
+    .downlevel .d-abstract,
+    .downlevel .d-article,
+    .downlevel .d-appendix,
+    .downlevel .distill-appendix,
+    .downlevel .d-byline,
+    .downlevel .d-footnote-list,
+    .downlevel .d-citation-list,
+    .downlevel .distill-footer,
+    .downlevel .appendix-bottom,
+    .downlevel .posts-container {
+    padding-left: 150px;
+    padding-right: 150px;
+    max-width: 900px;
+  }
+  }
+
+  .downlevel pre code {
+    display: block;
+    border-left: 2px solid rgba(0, 0, 0, .1);
+    padding: 0 0 0 20px;
+    font-size: 14px;
+  }
+
+  .downlevel code, .downlevel pre {
+    color: black;
+    background: none;
+    font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+    text-align: left;
+    white-space: pre;
+    word-spacing: normal;
+    word-break: normal;
+    word-wrap: normal;
+    line-height: 1.5;
+
+    -moz-tab-size: 4;
+    -o-tab-size: 4;
+    tab-size: 4;
+
+    -webkit-hyphens: none;
+    -moz-hyphens: none;
+    -ms-hyphens: none;
+    hyphens: none;
+  }
+
+  .downlevel .posts-list .post-preview {
+    color: inherit;
+  }
+
+
+
+  </style>
+
+  <script type="application/javascript">
+
+  function is_downlevel_browser() {
+    if (bowser.isUnsupportedBrowser({ msie: "12", msedge: "16"},
+                                   window.navigator.userAgent)) {
+      return true;
+    } else {
+      return window.load_distill_framework === undefined;
+    }
+  }
+
+  // show body when load is complete
+  function on_load_complete() {
+
+    // add anchors
+    if (window.anchors) {
+      window.anchors.options.placement = 'left';
+      window.anchors.add('d-article > h2, d-article > h3, d-article > h4, d-article > h5');
+    }
+
+
+    // set body to visible
+    document.body.style.visibility = 'visible';
+
+    // force redraw for leaflet widgets
+    if (window.HTMLWidgets) {
+      var maps = window.HTMLWidgets.findAll(".leaflet");
+      $.each(maps, function(i, el) {
+        var map = this.getMap();
+        map.invalidateSize();
+        map.eachLayer(function(layer) {
+          if (layer instanceof L.TileLayer)
+            layer.redraw();
+        });
+      });
+    }
+
+    // trigger 'shown' so htmlwidgets resize
+    $('d-article').trigger('shown');
+  }
+
+  function init_distill() {
+
+    init_common();
+
+    // create front matter
+    var front_matter = $('<d-front-matter></d-front-matter>');
+    $('#distill-front-matter').wrap(front_matter);
+
+    // create d-title
+    $('.d-title').changeElementType('d-title');
+
+    // create d-byline
+    var byline = $('<d-byline></d-byline>');
+    $('.d-byline').replaceWith(byline);
+
+    // create d-article
+    var article = $('<d-article></d-article>');
+    $('.d-article').wrap(article).children().unwrap();
+
+    // move posts container into article
+    $('.posts-container').appendTo($('d-article'));
+
+    // create d-appendix
+    $('.d-appendix').changeElementType('d-appendix');
+
+    // flag indicating that we have appendix items
+    var appendix = $('.appendix-bottom').children('h3').length > 0;
+
+    // replace footnotes with <d-footnote>
+    $('.footnote-ref').each(function(i, val) {
+      appendix = true;
+      var href = $(this).attr('href');
+      var id = href.replace('#', '');
+      var fn = $('#' + id);
+      var fn_p = $('#' + id + '>p');
+      fn_p.find('.footnote-back').remove();
+      var text = fn_p.html();
+      var dtfn = $('<d-footnote></d-footnote>');
+      dtfn.html(text);
+      $(this).replaceWith(dtfn);
+    });
+    // remove footnotes
+    $('.footnotes').remove();
+
+    // move refs into #references-listing
+    $('#references-listing').replaceWith($('#refs'));
+
+    $('h1.appendix, h2.appendix').each(function(i, val) {
+      $(this).changeElementType('h3');
+    });
+    $('h3.appendix').each(function(i, val) {
+      var id = $(this).attr('id');
+      $('.d-contents a[href="#' + id + '"]').parent().remove();
+      appendix = true;
+      $(this).nextUntil($('h1, h2, h3')).addBack().appendTo($('d-appendix'));
+    });
+
+    // show d-appendix if we have appendix content
+    $("d-appendix").css('display', appendix ? 'grid' : 'none');
+
+    // localize layout chunks to just output
+    $('.layout-chunk').each(function(i, val) {
+
+      // capture layout
+      var layout = $(this).attr('data-layout');
+
+      // apply layout to markdown level block elements
+      var elements = $(this).children().not('details, div.sourceCode, pre, script');
+      elements.each(function(i, el) {
+        var layout_div = $('<div class="' + layout + '"></div>');
+        if (layout_div.hasClass('shaded')) {
+          var shaded_content = $('<div class="shaded-content"></div>');
+          $(this).wrap(shaded_content);
+          $(this).parent().wrap(layout_div);
+        } else {
+          $(this).wrap(layout_div);
+        }
+      });
+
+
+      // unwrap the layout-chunk div
+      $(this).children().unwrap();
+    });
+
+    // remove code block used to force  highlighting css
+    $('.distill-force-highlighting-css').parent().remove();
+
+    // remove empty line numbers inserted by pandoc when using a
+    // custom syntax highlighting theme
+    $('code.sourceCode a:empty').remove();
+
+    // load distill framework
+    load_distill_framework();
+
+    // wait for window.distillRunlevel == 4 to do post processing
+    function distill_post_process() {
+
+      if (!window.distillRunlevel || window.distillRunlevel < 4)
+        return;
+
+      // hide author/affiliations entirely if we have no authors
+      var front_matter = JSON.parse($("#distill-front-matter").html());
+      var have_authors = front_matter.authors && front_matter.authors.length > 0;
+      if (!have_authors)
+        $('d-byline').addClass('hidden');
+
+      // article with toc class
+      $('.d-contents').parent().addClass('d-article-with-toc');
+
+      // strip links that point to #
+      $('.authors-affiliations').find('a[href="#"]').removeAttr('href');
+
+      // add orcid ids
+      $('.authors-affiliations').find('.author').each(function(i, el) {
+        var orcid_id = front_matter.authors[i].orcidID;
+        if (orcid_id) {
+          var a = $('<a></a>');
+          a.attr('href', 'https://orcid.org/' + orcid_id);
+          var img = $('<img></img>');
+          img.addClass('orcid-id');
+          img.attr('alt', 'ORCID ID');
+          img.attr('src','data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA2ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo1N0NEMjA4MDI1MjA2ODExOTk0QzkzNTEzRjZEQTg1NyIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDozM0NDOEJGNEZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDozM0NDOEJGM0ZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M1IE1hY2ludG9zaCI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkZDN0YxMTc0MDcyMDY4MTE5NUZFRDc5MUM2MUUwNEREIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjU3Q0QyMDgwMjUyMDY4MTE5OTRDOTM1MTNGNkRBODU3Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+84NovQAAAR1JREFUeNpiZEADy85ZJgCpeCB2QJM6AMQLo4yOL0AWZETSqACk1gOxAQN+cAGIA4EGPQBxmJA0nwdpjjQ8xqArmczw5tMHXAaALDgP1QMxAGqzAAPxQACqh4ER6uf5MBlkm0X4EGayMfMw/Pr7Bd2gRBZogMFBrv01hisv5jLsv9nLAPIOMnjy8RDDyYctyAbFM2EJbRQw+aAWw/LzVgx7b+cwCHKqMhjJFCBLOzAR6+lXX84xnHjYyqAo5IUizkRCwIENQQckGSDGY4TVgAPEaraQr2a4/24bSuoExcJCfAEJihXkWDj3ZAKy9EJGaEo8T0QSxkjSwORsCAuDQCD+QILmD1A9kECEZgxDaEZhICIzGcIyEyOl2RkgwAAhkmC+eAm0TAAAAABJRU5ErkJggg==');
+          a.append(img);
+          $(this).append(a);
+        }
+      });
+
+      // hide elements of author/affiliations grid that have no value
+      function hide_byline_column(caption) {
+        $('d-byline').find('h3:contains("' + caption + '")').parent().css('visibility', 'hidden');
+      }
+
+      // affiliations
+      var have_affiliations = false;
+      for (var i = 0; i<front_matter.authors.length; ++i) {
+        var author = front_matter.authors[i];
+        if (author.affiliation !== "&nbsp;") {
+          have_affiliations = true;
+          break;
+        }
+      }
+      if (!have_affiliations)
+        $('d-byline').find('h3:contains("Affiliations")').css('visibility', 'hidden');
+
+      // published date
+      if (!front_matter.publishedDate)
+        hide_byline_column("Published");
+
+      // document object identifier
+      var doi = $('d-byline').find('h3:contains("DOI")');
+      var doi_p = doi.next().empty();
+      if (!front_matter.doi) {
+        // if we have a citation and valid citationText then link to that
+        if ($('#citation').length > 0 && front_matter.citationText) {
+          doi.html('Citation');
+          $('<a href="#citation"></a>')
+            .text(front_matter.citationText)
+            .appendTo(doi_p);
+        } else {
+          hide_byline_column("DOI");
+        }
+      } else {
+        $('<a></a>')
+           .attr('href', "https://doi.org/" + front_matter.doi)
+           .html(front_matter.doi)
+           .appendTo(doi_p);
+      }
+
+       // change plural form of authors/affiliations
+      if (front_matter.authors.length === 1) {
+        var grid = $('.authors-affiliations');
+        grid.children('h3:contains("Authors")').text('Author');
+        grid.children('h3:contains("Affiliations")').text('Affiliation');
+      }
+
+      // remove d-appendix and d-footnote-list local styles
+      $('d-appendix > style:first-child').remove();
+      $('d-footnote-list > style:first-child').remove();
+
+      // move appendix-bottom entries to the bottom
+      $('.appendix-bottom').appendTo('d-appendix').children().unwrap();
+      $('.appendix-bottom').remove();
+
+      // hoverable references
+      $('span.citation[data-cites]').each(function() {
+        var refs = $(this).attr('data-cites').split(" ");
+        var refHtml = refs.map(function(ref) {
+          return "<p>" + $('#ref-' + ref).html() + "</p>";
+        }).join("\n");
+        window.tippy(this, {
+          allowHTML: true,
+          content: refHtml,
+          maxWidth: 500,
+          interactive: true,
+          interactiveBorder: 10,
+          theme: 'light-border',
+          placement: 'bottom-start'
+        });
+      });
+
+      // clear polling timer
+      clearInterval(tid);
+
+      // show body now that everything is ready
+      on_load_complete();
+    }
+
+    var tid = setInterval(distill_post_process, 50);
+    distill_post_process();
+
+  }
+
+  function init_downlevel() {
+
+    init_common();
+
+     // insert hr after d-title
+    $('.d-title').after($('<hr class="section-separator"/>'));
+
+    // check if we have authors
+    var front_matter = JSON.parse($("#distill-front-matter").html());
+    var have_authors = front_matter.authors && front_matter.authors.length > 0;
+
+    // manage byline/border
+    if (!have_authors)
+      $('.d-byline').remove();
+    $('.d-byline').after($('<hr class="section-separator"/>'));
+    $('.d-byline a').remove();
+
+    // remove toc
+    $('.d-contents').remove();
+
+    // move appendix elements
+    $('h1.appendix, h2.appendix').each(function(i, val) {
+      $(this).changeElementType('h3');
+    });
+    $('h3.appendix').each(function(i, val) {
+      $(this).nextUntil($('h1, h2, h3')).addBack().appendTo($('.d-appendix'));
+    });
+
+
+    // inject headers into references and footnotes
+    var refs_header = $('<h3></h3>');
+    refs_header.text('References');
+    $('#refs').prepend(refs_header);
+
+    var footnotes_header = $('<h3></h3');
+    footnotes_header.text('Footnotes');
+    $('.footnotes').children('hr').first().replaceWith(footnotes_header);
+
+    // move appendix-bottom entries to the bottom
+    $('.appendix-bottom').appendTo('.d-appendix').children().unwrap();
+    $('.appendix-bottom').remove();
+
+    // remove appendix if it's empty
+    if ($('.d-appendix').children().length === 0)
+      $('.d-appendix').remove();
+
+    // prepend separator above appendix
+    $('.d-appendix').before($('<hr class="section-separator" style="clear: both"/>'));
+
+    // trim code
+    $('pre>code').each(function(i, val) {
+      $(this).html($.trim($(this).html()));
+    });
+
+    // move posts-container right before article
+    $('.posts-container').insertBefore($('.d-article'));
+
+    $('body').addClass('downlevel');
+
+    on_load_complete();
+  }
+
+
+  function init_common() {
+
+    // jquery plugin to change element types
+    (function($) {
+      $.fn.changeElementType = function(newType) {
+        var attrs = {};
+
+        $.each(this[0].attributes, function(idx, attr) {
+          attrs[attr.nodeName] = attr.nodeValue;
+        });
+
+        this.replaceWith(function() {
+          return $("<" + newType + "/>", attrs).append($(this).contents());
+        });
+      };
+    })(jQuery);
+
+    // prevent underline for linked images
+    $('a > img').parent().css({'border-bottom' : 'none'});
+
+    // mark non-body figures created by knitr chunks as 100% width
+    $('.layout-chunk').each(function(i, val) {
+      var figures = $(this).find('img, .html-widget');
+      if ($(this).attr('data-layout') !== "l-body") {
+        figures.css('width', '100%');
+      } else {
+        figures.css('max-width', '100%');
+        figures.filter("[width]").each(function(i, val) {
+          var fig = $(this);
+          fig.css('width', fig.attr('width') + 'px');
+        });
+
+      }
+    });
+
+    // auto-append index.html to post-preview links in file: protocol
+    // and in rstudio ide preview
+    $('.post-preview').each(function(i, val) {
+      if (window.location.protocol === "file:")
+        $(this).attr('href', $(this).attr('href') + "index.html");
+    });
+
+    // get rid of index.html references in header
+    if (window.location.protocol !== "file:") {
+      $('.distill-site-header a[href]').each(function(i,val) {
+        $(this).attr('href', $(this).attr('href').replace("index.html", "./"));
+      });
+    }
+
+    // add class to pandoc style tables
+    $('tr.header').parent('thead').parent('table').addClass('pandoc-table');
+    $('.kable-table').children('table').addClass('pandoc-table');
+
+    // add figcaption style to table captions
+    $('caption').parent('table').addClass("figcaption");
+
+    // initialize posts list
+    if (window.init_posts_list)
+      window.init_posts_list();
+
+    // implmement disqus comment link
+    $('.disqus-comment-count').click(function() {
+      window.headroom_prevent_pin = true;
+      $('#disqus_thread').toggleClass('hidden');
+      if (!$('#disqus_thread').hasClass('hidden')) {
+        var offset = $(this).offset();
+        $(window).resize();
+        $('html, body').animate({
+          scrollTop: offset.top - 35
+        });
+      }
+    });
+  }
+
+  document.addEventListener('DOMContentLoaded', function() {
+    if (is_downlevel_browser())
+      init_downlevel();
+    else
+      window.addEventListener('WebComponentsReady', init_distill);
+  });
+
+  </script>
+
+  <!--/radix_placeholder_distill-->
+  <script src="tidymodels-tutorial_files/header-attrs-2.8/header-attrs.js"></script>
+  <script src="tidymodels-tutorial_files/jquery-1.11.3/jquery.min.js"></script>
+  <script src="tidymodels-tutorial_files/popper-2.6.0/popper.min.js"></script>
+  <link href="tidymodels-tutorial_files/tippy-6.2.7/tippy.css" rel="stylesheet" />
+  <link href="tidymodels-tutorial_files/tippy-6.2.7/tippy-light-border.css" rel="stylesheet" />
+  <script src="tidymodels-tutorial_files/tippy-6.2.7/tippy.umd.min.js"></script>
+  <script src="tidymodels-tutorial_files/anchor-4.2.2/anchor.min.js"></script>
+  <script src="tidymodels-tutorial_files/bowser-1.9.3/bowser.min.js"></script>
+  <script src="tidymodels-tutorial_files/webcomponents-2.0.0/webcomponents.js"></script>
+  <script src="tidymodels-tutorial_files/distill-2.2.21/template.v2.js"></script>
+  <!--radix_placeholder_site_in_header-->
+  <!--/radix_placeholder_site_in_header-->
+
+
+</head>
+
+<body>
+
+<!--radix_placeholder_front_matter-->
+
+<script id="distill-front-matter" type="text/json">
+{"title":"tidymodels tutorial","description":"tidymodels에 대한 간단한 소개","authors":[{"author":"dondon","authorURL":{},"affiliation":"&nbsp;","affiliationURL":"#","orcidID":""}],"publishedDate":"2021-05-29T00:00:00.000+09:00","citationText":"dondon, 2021"}
+</script>
+
+<!--/radix_placeholder_front_matter-->
+<!--radix_placeholder_navigation_before_body-->
+<!--/radix_placeholder_navigation_before_body-->
+<!--radix_placeholder_site_before_body-->
+<!--/radix_placeholder_site_before_body-->
+
+<div class="d-title">
+<h1>tidymodels tutorial</h1>
+<!--radix_placeholder_categories-->
+<div class="dt-tags">
+<div class="dt=tag">Machine learning</div>
+<div class="dt=tag">R</div>
+</div>
+<!--/radix_placeholder_categories-->
+<p><p>tidymodels에 대한 간단한 소개</p></p>
+</div>
+
+<div class="d-byline">
+  dondon true 
+  
+<br/>2021-05-29
+</div>
+
+<div class="d-article">
+<div class="d-contents d-contents-float">
+<nav class="l-text toc figcaption" id="TOC">
+<h3>Contents</h3>
+<ul>
+<li><a href="#tidymodels-tutorial">tidymodels tutorial</a></li>
+<li><a href="#tidymodels-설치-방법">tidymodels 설치 방법</a></li>
+<li><a href="#data-split">Data split</a></li>
+<li><a href="#feature-engineering">Feature engineering</a>
+<ul>
+<li><a href="#recipe">Recipe</a></li>
+<li><a href="#prep">Prep</a></li>
+<li><a href="#bake">Bake</a></li>
+</ul></li>
+<li><a href="#workflow">Workflow</a></li>
+<li><a href="#참고-문헌">참고 문헌</a></li>
+</ul>
+</nav>
+</div>
+<h1 id="tidymodels-tutorial">tidymodels tutorial</h1>
+<p>tidymodels는 R 유저라면 한번쯤 써봤을 패키지인 tidyverse와 결이 같은 패키지이다. tidyverse가 데이터 전처리, 시각화를 간결한 파이프라인으로 만들 수 있는 것과 마찬가지로, tidymodels는 데이터 모델링 관점에서의 데이터 전처리, 모델링, 시각화 등을 쉽게 할 수 있게 고안된 패키지이다. tidyverse 수준으로 굉장히 완성도가 있고, R을 좋아하는 진성 유저들이 기존에 존재하는 패키지를 tidymodels와 결합하거나 새로운 함수를 끊임없이 만들고 있는 중이다.</p>
+<h1 id="tidymodels-설치-방법">tidymodels 설치 방법</h1>
+<p>tidymodels는 cran에 정식 등록된 패키지이므로 install_packages()로 설치가 가능하다. 설치 오류가 가끔 있는데 r 패키지를 전부 최신 버전으로 업데이트하면 오류 없이 설치가 가능하다.</p>
+<p>tidymodels 패키지에는 예제 데이터로 ames 데이터가 내장되어있다. 간결한 설명을 위해 예제 데이터를 이용한다.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>ames</span><span class='op'>)</span>
+<span class='va'>ames</span> <span class='op'>&lt;-</span> <span class='va'>ames</span> <span class='op'>%&gt;%</span> <span class='fu'>janitor</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/janitor/man/clean_names.html'>clean_names</a></span><span class='op'>(</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='va'>ames</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code># A tibble: 6 x 74
+  ms_sub_class  ms_zoning lot_frontage lot_area street alley lot_shape
+  &lt;fct&gt;         &lt;fct&gt;            &lt;dbl&gt;    &lt;int&gt; &lt;fct&gt;  &lt;fct&gt; &lt;fct&gt;    
+1 One_Story_19~ Resident~          141    31770 Pave   No_A~ Slightly~
+2 One_Story_19~ Resident~           80    11622 Pave   No_A~ Regular  
+3 One_Story_19~ Resident~           81    14267 Pave   No_A~ Slightly~
+4 One_Story_19~ Resident~           93    11160 Pave   No_A~ Regular  
+5 Two_Story_19~ Resident~           74    13830 Pave   No_A~ Slightly~
+6 Two_Story_19~ Resident~           78     9978 Pave   No_A~ Slightly~
+# ... with 67 more variables: land_contour &lt;fct&gt;, utilities &lt;fct&gt;,
+#   lot_config &lt;fct&gt;, land_slope &lt;fct&gt;, neighborhood &lt;fct&gt;,
+#   condition_1 &lt;fct&gt;, condition_2 &lt;fct&gt;, bldg_type &lt;fct&gt;,
+#   house_style &lt;fct&gt;, overall_cond &lt;fct&gt;, year_built &lt;int&gt;,
+#   year_remod_add &lt;int&gt;, roof_style &lt;fct&gt;, roof_matl &lt;fct&gt;,
+#   exterior_1st &lt;fct&gt;, exterior_2nd &lt;fct&gt;, mas_vnr_type &lt;fct&gt;,
+#   mas_vnr_area &lt;dbl&gt;, exter_cond &lt;fct&gt;, foundation &lt;fct&gt;,
+#   bsmt_cond &lt;fct&gt;, bsmt_exposure &lt;fct&gt;, bsmt_fin_type_1 &lt;fct&gt;,
+#   bsmt_fin_sf_1 &lt;dbl&gt;, bsmt_fin_type_2 &lt;fct&gt;, bsmt_fin_sf_2 &lt;dbl&gt;,
+#   bsmt_unf_sf &lt;dbl&gt;, total_bsmt_sf &lt;dbl&gt;, heating &lt;fct&gt;,
+#   heating_qc &lt;fct&gt;, central_air &lt;fct&gt;, electrical &lt;fct&gt;,
+#   first_flr_sf &lt;int&gt;, second_flr_sf &lt;int&gt;, gr_liv_area &lt;int&gt;,
+#   bsmt_full_bath &lt;dbl&gt;, bsmt_half_bath &lt;dbl&gt;, full_bath &lt;int&gt;,
+#   half_bath &lt;int&gt;, bedroom_abv_gr &lt;int&gt;, kitchen_abv_gr &lt;int&gt;,
+#   tot_rms_abv_grd &lt;int&gt;, functional &lt;fct&gt;, fireplaces &lt;int&gt;,
+#   garage_type &lt;fct&gt;, garage_finish &lt;fct&gt;, garage_cars &lt;dbl&gt;,
+#   garage_area &lt;dbl&gt;, garage_cond &lt;fct&gt;, paved_drive &lt;fct&gt;,
+#   wood_deck_sf &lt;int&gt;, open_porch_sf &lt;int&gt;, enclosed_porch &lt;int&gt;,
+#   three_season_porch &lt;int&gt;, screen_porch &lt;int&gt;, pool_area &lt;int&gt;,
+#   pool_qc &lt;fct&gt;, fence &lt;fct&gt;, misc_feature &lt;fct&gt;, misc_val &lt;int&gt;,
+#   mo_sold &lt;int&gt;, year_sold &lt;int&gt;, sale_type &lt;fct&gt;,
+#   sale_condition &lt;fct&gt;, sale_price &lt;int&gt;, longitude &lt;dbl&gt;,
+#   latitude &lt;dbl&gt;</code></pre>
+</div>
+<h1 id="data-split">Data split</h1>
+<p>데이터 모델링을 진행할 때 홀드 아웃 방식으로 train set과 test set을 나누는 과정을 거친다(validation set을 추가할 수도 있다). 보통 train set, test set을 5:5, 7:3, 8:2 등의 비율로 random sampling을 통해 나누고, 특정 변수가 불균형인 경우에는 층화추출을 이용하기도 한다. tidymodels에서는 이렇게 데이터를 분할하는 과정을 <strong>initial_split()</strong> 을 이용해서 간단하게 처리할 수 있다. <strong>initial_split()</strong> 을 통해 분할된 데이터는 <strong>training()</strong>, <strong>testing()</strong> 함수를 이용해서 호출하고, train set, test set을 구축할 수 있다.</p>
+<p>기본적으로 random sampling을 통해 데이터를 나누지만 범주형 변수의 category 빈도가 불균형할 경우, 연속형 변수의 분포가 치우쳐져있을 경우 random sampling이 적절하지 않을 수 있다. 이 때 <strong>strata</strong> 옵션을 이용하면 간단하게 해결할 수 있다.</p>
+<p><strong>initial_split()</strong></p>
+<ul>
+<li>prop : train set 비율</li>
+<li>strata : 범주간 불균형 문제를 해결하기 위해 층을 나누고 서브샘플링. 연속형 변수의 경우 사분위수를 기준으로 데이터를 나누고 서브샘플링</li>
+</ul>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span><span class='op'>(</span><span class='fl'>2021</span><span class='op'>)</span>
+<span class='va'>ames_split</span> <span class='op'>&lt;-</span> <span class='fu'>initial_split</span><span class='op'>(</span><span class='va'>ames</span>, prop <span class='op'>=</span> <span class='fl'>0.8</span>, strata <span class='op'>=</span> <span class='va'>sale_price</span><span class='op'>)</span>
+<span class='va'>ames_train</span> <span class='op'>&lt;-</span> <span class='fu'>training</span><span class='op'>(</span><span class='va'>ames_split</span><span class='op'>)</span>
+<span class='va'>ames_test</span> <span class='op'>&lt;-</span> <span class='fu'>testing</span><span class='op'>(</span><span class='va'>ames_split</span><span class='op'>)</span>
+</code></pre>
+</div>
+</div>
+<h1 id="feature-engineering">Feature engineering</h1>
+<p>tidymodels 는 복잡한 데이터 전처리 과정을 간소화시키기 위해서 총 3단계의 데이터 전처리 프로세스를 도입했다. 각 단계는 recipe(요리 방식을 정의하는 단계), prep(요리 재료를 준비하는 단계), bake(요리를 하는 단계)로 구성된다.</p>
+<p>각 단계별로 살펴보면 첫 번째로, recipe는 사전에 처리할 함수를 정의하는 단계이다. recipe와 연동되는 데이터 전처리에 필요한 함수가 사전 정의되어 있으며, 이를 이용해서 데이터 전처리 과정을 정의한다. 두 번째로, prep은 training set으로 부터 recipe에서 정의한 데이터 전처리 과정을 계산하는 단계이다. 계산 결과를 바로 output으로 출력되지는 않는다. 세 번째로, bake는 recipe, prep을 이용해서 계산된 전처리 방식을 output으로 출력하는 단계이다.</p>
+<p>사실 사용하면서 데이터 전처리 과정을 사전 정의한다는 개념이 익숙하지 않았는데 각 단계별 세부 내용을 기술하면서 나름의 이유를 설명해보도록 하겠다.</p>
+<h2 id="recipe">Recipe</h2>
+<p>데이터 전처리를 위한 단계를 정의하는 object이다. 특이한 점은 즉시 실행되지 않고 단계를 <strong>정의</strong>만한다는 것이다. 왜 번거롭게 recipe를 사용해야 하는지 의문이 생길 수 있다.</p>
+<p>Recipe의 장점은 다음과 같다.</p>
+<ul>
+<li><p>recipe object를 여러가지 모델에 재사용 가능</p></li>
+<li><p>recipe 내에 사전 정의된 함수를 이용하면 코드의 간결성 확보 가능</p></li>
+</ul>
+<p>즉, recipe를 이용해서 사전 정의된 object는 linear regression, random forest, xgboost 등등 tidymodel과 연동된 여러가지 모델에 대해 동일하게 적용할 수 있다. 또 recipe에는 생각보다 다양한 데이터 전처리 관련 함수가 있는데 이를 이용하면 기존에 각 변수별로 정의를 해주어야했던 데이터 전처리 과정을 간결하고 가독성 있는 코드로 구현이 가능하다.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>ames_rec</span> <span class='op'>&lt;-</span> 
+  <span class='fu'>recipe</span><span class='op'>(</span><span class='va'>sale_price</span> <span class='op'>~</span> <span class='va'>.</span>, data <span class='op'>=</span> <span class='va'>ames_train</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>step_string2factor</span><span class='op'>(</span><span class='fu'>all_nominal</span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span> 
+  <span class='fu'>step_other</span><span class='op'>(</span><span class='fu'>all_nominal</span><span class='op'>(</span><span class='op'>)</span>, threshold <span class='op'>=</span> <span class='fl'>0.01</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>step_nzv</span><span class='op'>(</span><span class='fu'>all_nominal</span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span>
+</code></pre>
+</div>
+</div>
+<p>recipe 내에 step_function은 다음과 같다. 이외에도 imputation 관련 다양한 함수가 존재하며, 데이터 전처리에 필요한 거의 대부분의 함수가 내장되어있다.</p>
+<ul>
+<li><p>Normalization</p>
+<div>
+<ul>
+<li>step_center(var) - 평균을 빼서 중심 이동</li>
+<li>step_normalize(var) - 평균 빼고, 분산으로 나눠서 표준화</li>
+</ul>
+</div></li>
+<li><p>Filters</p>
+<div>
+<ul>
+<li><p>step_corr(threshold = 0.9) - 상관계수 절대값이 큰 변수 제거</p></li>
+<li><p>step_rm(var) - 변수 제거</p></li>
+<li><p>step_zv() - 분산이 0인 변수 제거</p></li>
+<li><p>step_nzv() - 분산이 거의 0인 변수 제거</p></li>
+</ul>
+</div></li>
+<li><p>Transformations</p>
+<div>
+<ul>
+<li><p>step_log(var, base = exp(1) ) - 로그 변환</p></li>
+<li><p>step_logit(var) - 로짓 변환</p></li>
+<li><p>step_poly(var, degree = 2) - 변수에 polynomial term 추가(glm에서 poly() 와 동일, 즉 orthogonal polynomial 이용)</p></li>
+<li><p>step_BoxCox() - Boxcox 변환</p></li>
+<li><p>step_YeoJohnson - YeoJohnson 변환</p></li>
+</ul>
+</div></li>
+<li><p>Discretization</p>
+<div>
+<ul>
+<li><p>step_discretize(var, num_breaks = 4) - 연속형 변수 이산형으로 변환</p></li>
+<li><p>step_cut() - 연속형 변수를 지정한 값을 기준으로 이산형으로 변환</p>
+<div>
+<ul>
+<li><p>include_outside_range - 지정한 범위를 넘어선 값을 양끝 break에 포함시킬지 여부. default = FALSE이며 결측치 처리됨</p></li>
+<li><p>breaks - 절단 기준이 되는 값</p></li>
+</ul>
+</div></li>
+</ul>
+</div></li>
+<li><p>Dummy variables and encodings</p>
+<div>
+<ul>
+<li><p>step_date() - date 변수에서 year, month, day of week 변수를 새롭게 생성</p>
+<ul>
+<li><p>feature = c(‘dow’, ‘month’, ‘year’) - 요일, 달, 연도 변수 추가</p></li>
+<li><p>abbr = T - Sunday or Sun</p></li>
+<li><p>label = Sunday or number</p></li>
+</ul></li>
+<li><p>step_holiday() - date 변수에서 공휴일에 관한 이진변수 새롭게 생성</p>
+<div>
+<ul>
+<li><p>holidays = c(‘LaborDay’, ‘NewYearDay’, ‘ChristmasDay’)</p></li>
+<li><p>holidays = timeDate::listHolidays(‘US’)</p></li>
+</ul>
+</div></li>
+<li><p>step_dummy() - character or factor 변수를 더미변수로 변환</p>
+<div>
+<ul>
+<li>one_hot = TRUE - C +1개의 더미변수 생성(one_hot = F: C-1개 더미변수 생성</li>
+</ul>
+</div></li>
+<li><p>step_other() - 범주형 변수의 level이 여러개일 때, 하위 범주를 기타로 묶음</p>
+<div>
+<ul>
+<li><p>threshold = 0.05 - 하위 5% 범주는 기타로 묶임</p></li>
+<li><p>other : 기타로 지정할 level 이름 지정</p></li>
+</ul>
+</div></li>
+<li><p>step_interact() - 상호작용 항 추가</p></li>
+</ul>
+</div></li>
+</ul>
+<h2 id="prep">Prep</h2>
+<p>recipe object를 설정한 후에 prep을 이용해서 계산을 한다.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>ames_rec_prepped</span> <span class='op'>&lt;-</span> <span class='fu'>prep</span><span class='op'>(</span><span class='va'>ames_rec</span><span class='op'>)</span>
+</code></pre>
+</div>
+</div>
+<h2 id="bake">Bake</h2>
+<p>recipe, prep을 거쳐서 전처리된 데이터를 output으로 내보내는 단계이다.</p>
+<p>데이터 전처리를 완료한 결과를 보고 싶으면 bake 함수를 이용하면 되는데 training data를 기준으로 이전에 데이터 전처리를 했기 때문에 <strong>new_data = training set을</strong> 넣고 중복 계산할 필요가 없다.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>ames_train_prepped</span> <span class='op'>&lt;-</span> <span class='fu'>bake</span><span class='op'>(</span><span class='va'>ames_rec_prepped</span>, new_data <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span>
+</code></pre>
+</div>
+</div>
+<p>test 데이터를 기준으로 전처리를 진행할 때 <strong>new_data = test set</strong>을 넣어주기만 하면 recipe, prep을 재지정해줄 필요 없이 곧바로 데이터 전처리가 가능하다.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>ames_test_prepped</span> <span class='op'>&lt;-</span> <span class='fu'>bake</span><span class='op'>(</span><span class='va'>ames_rec_prepped</span>, <span class='va'>ames_test</span><span class='op'>)</span>
+</code></pre>
+</div>
+</div>
+<h1 id="workflow">Workflow</h1>
+<p>워크플로우는 recipe, prep, bake를 이용해서 생성된 데이터를 이용해서 모델을 피팅하는 일련의 과정을 생성하는 것이다. 워크플로우의 플로우에 익숙해지면 가독성있게 코드 구현이 가능하며, tidymodels에서 제공하는 여러가지 모형을 간편하게 사용할 수 있다.</p>
+<p>tidymodels에서는 워크플로우에 세팅할 수 있는 다양한 모형을 제공한다. 대표적으로 glm, random forest, XGboost Lightgbm, knn 등이 있으며, 모델을 튜닝하는 방식도 기본적인 gridsearch부터 bayes tuning까지 전부 지원한다.</p>
+<p>예시로 간단하게 LASSO 모델을 구축해보겠다.</p>
+<p>먼저 모형을 세팅하는 단계이다. tidymodels에는 LASSO가 사전에 구현되어있기 때문에 튜닝하고 싶은 파라미터만 정하면 된다. mixture = 1은 LASSO, mixture = 0은 ridge이며, mixture 까지 튜닝 파라미터로 넣으면 엘라스틱넷 모형이 된다.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>lasso_spec</span> <span class='op'>&lt;-</span> <span class='fu'>linear_reg</span><span class='op'>(</span>penalty <span class='op'>=</span> <span class='fu'>tune</span><span class='op'>(</span><span class='op'>)</span>, mixture <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span> <span class='op'>%&gt;%</span> <span class='co'># mixture = 1 : LASSO, 0 : ridge </span>
+  <span class='fu'>set_engine</span><span class='op'>(</span><span class='st'>"glmnet"</span><span class='op'>)</span>
+</code></pre>
+</div>
+</div>
+<p>다음으로 세팅한 모델을 워크플로우에 태우는 단계이다. <strong>workflow()</strong>를 불러오고 <strong>add_formula()</strong> 를 이용해서 모델의 formula를 지정해준다. 마지막으로 이전에 세팅했던 LASSO 모델을 <strong>add_model()</strong> 을 이용해서 워크플로우에 태워준다.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>lasso_wf</span> <span class='op'>&lt;-</span> <span class='fu'>workflow</span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span> 
+    <span class='fu'>add_formula</span><span class='op'>(</span><span class='va'>sale_price</span> <span class='op'>~</span><span class='va'>.</span><span class='op'>)</span> <span class='op'>%&gt;%</span> 
+    <span class='fu'>add_model</span><span class='op'>(</span><span class='va'>lasso_spec</span><span class='op'>)</span>
+<span class='va'>lasso_wf</span>
+</code></pre>
+</div>
+<pre><code>== Workflow ==========================================================
+Preprocessor: Formula
+Model: linear_reg()
+
+-- Preprocessor ------------------------------------------------------
+sale_price ~ .
+
+-- Model -------------------------------------------------------------
+Linear Regression Model Specification (regression)
+
+Main Arguments:
+  penalty = tune()
+  mixture = 1
+
+Computational engine: glmnet </code></pre>
+</div>
+<p><strong>add_formula()</strong>를 이용해서 formula를 지정할 수도 있지만 <strong>add_recipe()</strong>를 이용해서 워크플로우에 세팅할 수도 있다. <strong>add_recipe()</strong>에는 formula가 지정되어 있기 때문에 <strong>add_formula()</strong>로 중복지정해주면 에러가 난다. 만약에 formula를 재지정해주고 싶으면 <strong>remove_formula()</strong> 를 이용해서 formula를 제거하고 재지정해주면 된다.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>lasso_wf1</span> <span class='op'>&lt;-</span> <span class='fu'>workflow</span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span> 
+  <span class='fu'>add_recipe</span><span class='op'>(</span><span class='va'>ames_rec</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>add_model</span><span class='op'>(</span><span class='va'>lasso_spec</span><span class='op'>)</span>
+</code></pre>
+</div>
+</div>
+<p>다음으로는 모델 튜닝 방식을 정하는 단계이다. tidymodels에는 다양한 하이퍼파라미터 튜닝 방식이 존재한다. 대표적으로 grid_regular(), grid_latine_hypercube(), grid_max_entropy 등이 있다. LASSO는 튜닝 파라미터가 1개이므로 grid_regular()를 이용해서 튜닝을 해보도록 하겠다. levels는 튜닝 파라미터 후보군의 개수를 지정해주는 옵션이다.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>lambda_grid</span> <span class='op'>&lt;-</span> <span class='fu'>grid_regular</span><span class='op'>(</span><span class='fu'>penalty</span><span class='op'>(</span><span class='op'>)</span>, levels <span class='op'>=</span> <span class='fl'>50</span><span class='op'>)</span>
+</code></pre>
+</div>
+</div>
+<p>다음으로 모델 튜닝에 필요한 교차검증 데이터를 생성하는 단계이다. 교차검증 데이터셋은 <strong>vfold_cv()</strong>를 이용해서 구축할 수 있다.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>vb_folds</span> <span class='op'>&lt;-</span> <span class='fu'>vfold_cv</span><span class='op'>(</span><span class='va'>ames_train_prepped</span>, v <span class='op'>=</span> <span class='fl'>5</span><span class='op'>)</span>
+<span class='va'>vb_folds</span>
+</code></pre>
+</div>
+<pre><code>#  5-fold cross-validation 
+# A tibble: 5 x 2
+  splits             id   
+  &lt;list&gt;             &lt;chr&gt;
+1 &lt;split [1873/469]&gt; Fold1
+2 &lt;split [1873/469]&gt; Fold2
+3 &lt;split [1874/468]&gt; Fold3
+4 &lt;split [1874/468]&gt; Fold4
+5 &lt;split [1874/468]&gt; Fold5</code></pre>
+</div>
+<p>다음으로 실제로 튜닝을 진행하는 단계이다. tidymodels는 모델을 튜닝할 때 계산속도 향상을 위해서 병렬처리 옵션을 지원한다. doParallel::registerDoParallel()을 지정해주면 코어 수에 맞게 병렬처리를 해준다.</p>
+<p><strong>tune_grid()는</strong> 하이퍼파라미터 튜닝을 수행하는 함수이다. <strong>tune_grid()</strong>에는 워크플로우(lasso_wf), 교차검증셋(vb_folds), 튜닝 방식(lambda_grid)이 지정되어야한다. control 옵션은 최종 모델 피팅 후에 pred 값을 저장해주는 옵션이다. 옵션을 지정해놓으면 모델 피팅 후에 ROC plot을 그리거나 다른 기타 그래프로 그리는데 사용할 수 있다.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>lasso_res</span> <span class='op'>&lt;-</span> <span class='fu'>tune_grid</span><span class='op'>(</span>
+    <span class='va'>lasso_wf</span>, 
+    resamples <span class='op'>=</span> <span class='va'>vb_folds</span>, 
+    grid <span class='op'>=</span> <span class='va'>lambda_grid</span>, 
+    control <span class='op'>=</span> <span class='fu'>control_grid</span><span class='op'>(</span>save_pred <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>, 
+<span class='op'>)</span>
+</code></pre>
+</div>
+</div>
+<p><strong>show_best()</strong> 를 이용해서 rmse 기준 best parameter를 볼 수 있다.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'>show_best</span><span class='op'>(</span><span class='va'>lasso_res</span>, <span class='st'>'rmse'</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code># A tibble: 5 x 7
+   penalty .metric .estimator   mean     n std_err .config            
+     &lt;dbl&gt; &lt;chr&gt;   &lt;chr&gt;       &lt;dbl&gt; &lt;int&gt;   &lt;dbl&gt; &lt;chr&gt;              
+1 1   e-10 rmse    standard   29251.     5   2602. Preprocessor1_Mode~
+2 1.60e-10 rmse    standard   29251.     5   2602. Preprocessor1_Mode~
+3 2.56e-10 rmse    standard   29251.     5   2602. Preprocessor1_Mode~
+4 4.09e-10 rmse    standard   29251.     5   2602. Preprocessor1_Mode~
+5 6.55e-10 rmse    standard   29251.     5   2602. Preprocessor1_Mode~</code></pre>
+</div>
+<p>penalty parameter에 따라 rmse 값이 어떻게 바뀌는지 ggplot을 이용해서 그래프를 그릴 수 있다.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>lasso_res</span> <span class='op'>%&gt;%</span> 
+    <span class='fu'>collect_metrics</span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span> 
+    <span class='fu'>ggplot</span><span class='op'>(</span><span class='fu'>aes</span><span class='op'>(</span><span class='va'>penalty</span>, <span class='va'>mean</span>, color <span class='op'>=</span> <span class='va'>.metric</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span> <span class='co'># .metric : rmse </span>
+    <span class='fu'>geom_errorbar</span><span class='op'>(</span><span class='fu'>aes</span><span class='op'>(</span>ymin <span class='op'>=</span> <span class='va'>mean</span> <span class='op'>-</span> <span class='va'>std_err</span>, ymax <span class='op'>=</span> <span class='va'>mean</span> <span class='op'>+</span> <span class='va'>std_err</span><span class='op'>)</span>, alpha <span class='op'>=</span> <span class='fl'>0.5</span><span class='op'>)</span> <span class='op'>+</span> 
+    <span class='fu'>geom_line</span><span class='op'>(</span>size <span class='op'>=</span> <span class='fl'>1.5</span>, show.legend <span class='op'>=</span> <span class='cn'>F</span><span class='op'>)</span> <span class='op'>+</span> 
+    <span class='fu'>facet_wrap</span><span class='op'>(</span><span class='op'>~</span><span class='va'>.metric</span>, scales <span class='op'>=</span> <span class='st'>'free'</span>, nrow <span class='op'>=</span> <span class='fl'>2</span><span class='op'>)</span>
+</code></pre>
+</div>
+<p><img src="tidymodels-tutorial_files/figure-html5/unnamed-chunk-15-1.png" width="624" /></p>
+</div>
+<p>튜닝이 끝난 best parameter를 <strong>finalize_workflow()</strong> 를 이용해서 workflow에 업데이트한다.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>best_param</span> <span class='op'>&lt;-</span> <span class='fu'>select_best</span><span class='op'>(</span><span class='va'>lasso_res</span>, <span class='st'>'rmse'</span><span class='op'>)</span>
+<span class='va'>final_lasso</span> <span class='op'>&lt;-</span> <span class='fu'>finalize_workflow</span><span class='op'>(</span><span class='va'>lasso_wf</span>, <span class='va'>best_param</span><span class='op'>)</span>
+<span class='va'>final_lasso</span>
+</code></pre>
+</div>
+<pre><code>== Workflow ==========================================================
+Preprocessor: Formula
+Model: linear_reg()
+
+-- Preprocessor ------------------------------------------------------
+sale_price ~ .
+
+-- Model -------------------------------------------------------------
+Linear Regression Model Specification (regression)
+
+Main Arguments:
+  penalty = 1e-10
+  mixture = 1
+
+Computational engine: glmnet </code></pre>
+</div>
+<p>최종 모형을 train set에 적합시킨다.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>lasso_fit</span> <span class='op'>&lt;-</span> <span class='fu'>fit</span><span class='op'>(</span><span class='va'>final_lasso</span>, data <span class='op'>=</span> <span class='va'>ames_train_prepped</span><span class='op'>)</span>
+</code></pre>
+</div>
+</div>
+<p>마지막으로 test set에 모형을 적합시켜서 결과를 확인한다.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>pred_lasso</span> <span class='op'>&lt;-</span> 
+    <span class='fu'><a href='https://rdrr.io/r/stats/predict.html'>predict</a></span><span class='op'>(</span><span class='va'>lasso_fit</span>, <span class='va'>ames_test_prepped</span><span class='op'>)</span> <span class='op'>%&gt;%</span> 
+    <span class='fu'>mutate</span><span class='op'>(</span>modelo <span class='op'>=</span> <span class='st'>"LASSO"</span><span class='op'>)</span>
+
+<span class='va'>pred_lasso</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code># A tibble: 6 x 2
+    .pred modelo
+    &lt;dbl&gt; &lt;chr&gt; 
+1 208329. LASSO 
+2 188538. LASSO 
+3  89542. LASSO 
+4 213798. LASSO 
+5 137118. LASSO 
+6 126011. LASSO </code></pre>
+</div>
+<h1 id="참고-문헌">참고 문헌</h1>
+<p><a href="https://www.tmwr.org/ames.html">tidymodel with R bookdown</a></p>
+<p><a href="https://recipes.tidymodels.org/reference/index.html">tidymodel recipe object</a></p>
+<p><a href="%5Btidymodel%20recipe%20object%5D(https://recipes.tidymodels.org/reference/index.html)">How are categorical predictors handled in recipes?</a></p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
+<!--radix_placeholder_article_footer-->
+<!--/radix_placeholder_article_footer-->
+</div>
+
+<div class="d-appendix">
+</div>
+
+
+<!--radix_placeholder_site_after_body-->
+<!--/radix_placeholder_site_after_body-->
+<!--radix_placeholder_appendices-->
+<div class="appendix-bottom"></div>
+<!--/radix_placeholder_appendices-->
+<!--radix_placeholder_navigation_after_body-->
+<!--/radix_placeholder_navigation_after_body-->
+
+</body>
+
+</html>

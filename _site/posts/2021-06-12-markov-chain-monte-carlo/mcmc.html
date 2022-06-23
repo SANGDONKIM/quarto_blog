@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-0.9.426">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Don Don">
+<meta name="dcterms.date" content="2021-01-06">
+<meta name="description" content="Introduction to MCMC">
+
+<title>Don Don - Markov Chain Monte Carlo</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link id="quarto-text-highlighting-styles" href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+</head>
+
+<body class="nav-fixed fullcontent">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Don Don</span>
+  </a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html">about</a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/SANGDONKIM"><i class="bi bi-github" role="img">
+</i> 
+ </a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://www.linkedin.com/in/%EC%83%81%EB%8F%88-%EA%B9%80-b89985199/"><i class="bi bi-linkedin" role="img">
+</i> 
+ </a>
+  </li>  
+</ul>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Markov Chain Monte Carlo</h1>
+                          <div class="quarto-categories">
+                <div class="quarto-category">R</div>
+                <div class="quarto-category">statistics</div>
+              </div>
+                  </div>
+  </div>
+    
+  <div>
+    <div class="description">
+      <p>Introduction to MCMC</p>
+    </div>
+  </div>
+
+
+
+
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Don Don </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">January 6, 2021</p>
+      </div>
+    </div>
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+<section id="markov-chain-monte-carlomcmc" class="level1">
+<h1>Markov Chain Monte Carlo(MCMC)</h1>
+<p>켤레 사전 분포처럼 분포함수 간에 관계가 있거나 함수가 간단한 형태의 경우 적분을 쉽게 할 수 있다. 하지만 복잡한 함수 형태이거나 high dimension인 경우 Monte carlo integration이나 numerical method를 이용한 적분 방법을 적용하기 힘들다. 이 때 사용하는 방법이 Markov chain Monte Carlo 방법이다.</p>
+<p>Monte Carlo integration의 경우 independence sample을 뽑는데 high dimension인 경우 independence sample을 뽑는 것이 어렵다. 따라서 dependence sample을 뽑아서 이 문제를 해결해보자는 것이 Markov Chain Monte Carlo(MCMC)의 아이디어이다. 앞에 Markov Chain이 붙은 것은 dependence sample을 Markov Chain 구조에서 뽑기 때문이다. 이상적인 Markov Chain의 경우 특정 정칙 조건을 만족해야한다.</p>
+<section id="regularity-conditions" class="level2">
+<h2 class="anchored" data-anchor-id="regularity-conditions">regularity conditions</h2>
+<ul>
+<li>irreducibility</li>
+<li>positive recurrence</li>
+<li>aperiodicity</li>
+</ul>
+</section>
+</section>
+<section id="metopolis-hasting-algorithm" class="level1">
+<h1>Metopolis-Hasting algorithm</h1>
+<p>Markov Chain을 따르는 <span class="math inline">\(X\)</span>를 발생시키기 위해서는 regularity conditions을 만족해야 한다. <strong>일반적으로 target distribution과 같은 support set을 갖는 proposal distribution의 경우 regularity conditions를 만족한다.</strong> proposal distribution이 regularity condition을 만족하는 경우 Metropolis-Hastings chain의 stationary distribution은 taget distribution이 된다.</p>
+<ol type="1">
+<li>target distribution과 support set이 같은 임의의 proposal distribution <span class="math inline">\(g(\cdot|X_t)\)</span>를 선정한다.<br>
+</li>
+<li><span class="math inline">\(g(\cdot|X_t)\)</span>에서 초기값 <span class="math inline">\(X_0\)</span>를 생성한다.</li>
+<li>chain이 정상 분포로 수렴할 때까지 다음의 과정을 반복한다.</li>
+</ol>
+<ul>
+<li><span class="math inline">\(g(\cdot|X_t)\)</span>로부터 <span class="math inline">\(Y\)</span>를 발생시킨다.</li>
+<li><span class="math inline">\(U(0,1)\)</span>에서 random number <span class="math inline">\(U\)</span>를 발생시킨다.</li>
+<li>If <span class="math inline">\(U\le r(X_t, Y) = \frac{f(Y)g(X_t|Y)}{f(X_t)g(Y|X_t)}\)</span> <span class="math inline">\(Y\)</span>를 채택, <span class="math inline">\(X_{t+1}=Y\)</span> otherwise <span class="math inline">\(X_{t+1}=X_t\)</span></li>
+<li>Increment t</li>
+</ul>
+<section id="example" class="level2">
+<h2 class="anchored" data-anchor-id="example">Example</h2>
+<p>Metropolis-Hasting algorithm을 이용해서 Rayleigh 분포에서 표본을 추출하기 해보자.</p>
+<p><span class="math inline">\(f(x) = \frac{x}{\sigma^2}e^\frac{-x^2}{2\sigma^2}\)</span>, <span class="math inline">\(x\ge0\)</span>, <span class="math inline">\(\sigma&gt;0\)</span></p>
+<ol type="1">
+<li>target distribution과 support set이 같은 임의의 proposal distribution로 <span class="math inline">\(\mathcal{X}^2(X)\)</span>를 선정한다.<br>
+</li>
+<li><span class="math inline">\(\mathcal{X}^2(1)\)</span>에서 초기값 <span class="math inline">\(X_0\)</span>를 생성하고 x[1]에 저장한다.<br>
+</li>
+<li><span class="math inline">\(i=2,...,N\)</span>까지 반복한다.</li>
+</ol>
+<ul>
+<li><span class="math inline">\(\mathcal{X}^2(df = X_t)=\mathcal{X}^2(df = X[i-1])\)</span>로부터 <span class="math inline">\(Y\)</span>를 발생시킨다.</li>
+<li><span class="math inline">\(U(0,1)\)</span>에서 random number <span class="math inline">\(U\)</span>를 발생시킨다.</li>
+<li><span class="math inline">\(X_t\)</span>=x[i-1], If <span class="math inline">\(U\le \frac{f(Y)g(X_t|Y)}{f(X_t)g(Y|X_t)}\)</span> <span class="math inline">\(Y\)</span>를 채택, <span class="math inline">\(X_{t+1}=Y\)</span> otherwise <span class="math inline">\(X_{t+1}=X_t\)</span> <span class="math inline">\(X_t+1\)</span>을 x[i]에 저장한다.</li>
+<li>Increment t</li>
+</ul>
+<p><span class="math inline">\(Y\)</span>가 accept 될 확률은 다음과 같다. <span class="math inline">\(\alpha (X_t, Y) = min(1, \frac{f(Y)g(X_t|Y)}{f(X_t)g(Y|X_t)})\)</span></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>rayleigh <span class="ot">&lt;-</span> <span class="cf">function</span>(x, sigma){</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>        <span class="fu">return</span> ((x<span class="sc">/</span>sigma<span class="sc">^</span><span class="dv">2</span>)<span class="sc">*</span><span class="fu">exp</span>(<span class="sc">-</span>x<span class="sc">^</span><span class="dv">2</span><span class="sc">/</span>(<span class="dv">2</span><span class="sc">*</span>sigma<span class="sc">^</span><span class="dv">2</span>))) <span class="co"># Rayleigh distribution를 함수로 정의</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>m <span class="ot">&lt;-</span> <span class="dv">10000</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>sigma <span class="ot">&lt;-</span> <span class="dv">4</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">numeric</span>(m)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>x[<span class="dv">1</span>] <span class="ot">&lt;-</span> <span class="fu">rchisq</span>(<span class="dv">1</span>, <span class="at">df =</span> <span class="dv">1</span>) <span class="co"># initial value </span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>k <span class="ot">&lt;-</span> <span class="dv">0</span> </span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>u <span class="ot">&lt;-</span> <span class="fu">runif</span>(m) <span class="co"># generate u from U(0,1)</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">2</span><span class="sc">:</span>m) {</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>        xt <span class="ot">&lt;-</span> x[i<span class="dv">-1</span>]</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>        y <span class="ot">&lt;-</span> <span class="fu">rchisq</span>(<span class="dv">1</span>, <span class="at">df =</span> xt)</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>        num <span class="ot">&lt;-</span> <span class="fu">rayleigh</span>(y, sigma)<span class="sc">*</span><span class="fu">dchisq</span>(xt, <span class="at">df =</span> y) <span class="co"># posterior theta t</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>        den <span class="ot">&lt;-</span> <span class="fu">rayleigh</span>(xt, sigma)<span class="sc">*</span><span class="fu">dchisq</span>(y, <span class="at">df =</span> xt) <span class="co"># posterior theta t-1</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> (u[i] <span class="sc">&lt;=</span> num<span class="sc">/</span>den) {</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>                x[i] <span class="ot">&lt;-</span> y <span class="co"># accept </span></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>        }<span class="cf">else</span> {</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>                x[i] <span class="ot">&lt;-</span> xt <span class="co"># reject </span></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>                k <span class="ot">&lt;-</span> k<span class="sc">+</span><span class="dv">1</span></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>        }</span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>k <span class="co"># reject된 갯수 </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 4008</code></pre>
+</div>
+</div>
+<p>실제 Rayleigh 분포와 같은지를 비교하기 위해 QQplot을 그리면 다음과 같다.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>b <span class="ot">&lt;-</span> <span class="dv">2001</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> x[b<span class="sc">:</span>m]</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>a <span class="ot">&lt;-</span> <span class="fu">ppoints</span>(<span class="dv">100</span>)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>QR <span class="ot">&lt;-</span> sigma<span class="sc">*</span><span class="fu">sqrt</span>(<span class="sc">-</span><span class="dv">2</span><span class="sc">*</span><span class="fu">log</span>(<span class="dv">1</span><span class="sc">-</span>a))</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>Q <span class="ot">&lt;-</span> <span class="fu">quantile</span>(y, a)</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="fu">qqplot</span>(QR, Q, <span class="at">main =</span> <span class="st">''</span>, <span class="at">cex =</span> <span class="fl">0.5</span>, <span class="at">xlab =</span> <span class="st">'Rayleigh Quantiles'</span>, <span class="at">ylab =</span> <span class="st">'Sample Quantiles'</span>)</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="dv">0</span>,<span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="mcmc_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>proposal distribution을 gamma distribution으로 변경할 경우 다음과 같다.</p>
+</section>
+</section>
+<section id="metropolis-sampler" class="level1">
+<h1>Metropolis Sampler</h1>
+<p>Matropolis Hastings sampler는 Metropolis sampler의 일반화이다. Metropolis sampler는 Metropolis algorithm에서 proposal distribution이 symmetric일 때를 의미한다.</p>
+<p>proposal distribution이 symmetric이므로</p>
+<p><span class="math inline">\(g(X|Y) = g(Y|X)\)</span></p>
+<p>를 만족한다.</p>
+<p>따라서 기존의 Metropolis Hastings sampler 식은 조건부 분포 <span class="math inline">\(g\)</span>가 약분되므로 식이 간소화된다. <span class="math inline">\(r(X_t, Y) = \frac{f(Y)g(X_t|Y)}{f(X_t)g(Y|X_t)} = \frac{f(Y)}{f(X_t)}\)</span></p>
+</section>
+<section id="random-walk-metropolis" class="level1">
+<h1>Random Walk Metropolis</h1>
+<p>Random Walk Metropolis sampler는 Metropolis Sampler의 special case이다. proposal distribution은 symmetric이며, <span class="math inline">\(g(Y|X_t) = g(X_t - Y)\)</span>로 정의한다.</p>
+<ol type="1">
+<li><p>random increment <span class="math inline">\(Z\)</span>를 <span class="math inline">\(g(\cdot)\)</span>로 부터 발생시킨다.</p></li>
+<li><p><span class="math inline">\(Y=X_t+Z\)</span> 로 정의한다.</p></li>
+<li><p><span class="math inline">\(r(X_t, Y) = \frac{f(Y)}{f(X_t)}\)</span>를 계산한다.</p></li>
+<li><p>target distribution과 support set이 같은 임의의 proposal distribution <span class="math inline">\(g(\cdot|X_t)\)</span>를 선정한다. proposal distribution은 symmetric이며, <span class="math inline">\(g(Y|X_t) = g(X_t - Y)\)</span>로 정의한다.</p></li>
+<li><p>random increment <span class="math inline">\(Z\)</span>를 <span class="math inline">\(g(\cdot)\)</span>로 부터 발생시키고, <span class="math inline">\(Y=X_t+Z\)</span> 로 정의한다.</p></li>
+<li><p>chain이 정상 분포로 수렴할 때까지 다음의 과정을 반복한다.</p></li>
+</ol>
+<ul>
+<li><span class="math inline">\(r(X_t, Y) = \frac{f(Y)}{f(X_t)}\)</span>를 계산한다.</li>
+<li><span class="math inline">\(U(0,1)\)</span>에서 random number <span class="math inline">\(U\)</span>를 발생시킨다.</li>
+<li>If <span class="math inline">\(U\le r(X_t, Y) = \frac{f(Y)g(X_t|Y)}{f(X_t)g(Y|X_t)}\)</span> <span class="math inline">\(Y\)</span>를 채택, <span class="math inline">\(X_{t+1}=Y\)</span> otherwise <span class="math inline">\(X_{t+1}=X_t\)</span></li>
+<li>Increment t</li>
+</ul>
+</section>
+<section id="independence-sampler" class="level1">
+<h1>independence sampler</h1>
+<p>independence sampler는 Metropolis Hastings Sampler의 special case이다. independence sampler에서 proposal distribution은 다음과 같이 정의된다.</p>
+<p><span class="math inline">\(g(Y|X_t) = g(Y)\)</span></p>
+<p>즉, independence sampler는 chain의 이전 값에 의존하지 않는다.</p>
+<p>independence sampler는 proposal density가 target density에 가깝게 match될 경우에 잘 동작한다. 하지만 이러한 경우는 거의 없으며, independence sampler는 잘 동작하지 않는 경우가 많다. 따라서 단독으로 쓰이는 경우는 없으며, 보통 hybrid MCMC method에서 사용한다.</p>
+</section>
+<section id="gibbs-sampler" class="level1">
+<h1>Gibbs sampler</h1>
+<p>Gibbs sampler도 Metropolis Hastings Sampler의 special case이다. target distribution이 multivariate distribution일 때 주로 적용한다. Gibbs sampler는 일변량 조건부 분포를 계산할 수 있고, 쉽게 simulation이 가능한 경우에 사용할 수 있다.</p>
+<p><span class="math inline">\(X_{(-j)} = (X_1, ... , X_{j-1}, X_{j+1}, ... , X_d)\)</span></p>
+<p><span class="math inline">\(f(x_1, x_2, ..., x_k)\)</span> : joint pdf를 계산하기 어려움 <span class="math inline">\(f(x_1) = \int f(x_1, x_2, ..., x_k)\, dx_2...dx_d\)</span> : marginal pdf를 계산하기 어려움 <span class="math inline">\(f(x_1|x_2,...,x_d)\)</span> : conditional pdf는 구하기 쉬움</p>
+<p>간단하게 multivariate distribution일 때를 예로 들면</p>
+<p><span class="math inline">\(f(x, y)\)</span> : joint pdf를 계산하기 어려움 <span class="math inline">\(f(x) = \int f(x,y)\, dy\)</span> : marginal pdf를 계산하기 어려움 <span class="math inline">\(f(y) = \int f(x,y)\, dx\)</span> <span class="math inline">\(f(x|y)\)</span>, <span class="math inline">\(f(y|x)\)</span> : conditional pdf는 구하기 쉬움</p>
+<p>Gibbs sampler를 직관적으로 설명하면</p>
+<ol type="1">
+<li><span class="math inline">\(y\)</span>가 주어졌을 때 <span class="math inline">\(f(x|y)\)</span>로 부터 구한 <span class="math inline">\(x\)</span>값을 <span class="math inline">\(f(y|x)\)</span>의 given <span class="math inline">\(x\)</span>값으로 집어넣는다.</li>
+<li><span class="math inline">\(f(y|x)\)</span>에서 나온 <span class="math inline">\(y\)</span>값을 <span class="math inline">\(f(x|y)\)</span>의 given <span class="math inline">\(y\)</span> 값으로 집어넣는다.</li>
+<li>이러한 과정을 계속 반복해서 <span class="math inline">\((X_1, Y_1, ....)\)</span>를 구한다.</li>
+<li><span class="math inline">\((X_1, Y_1, ....|X_i, Y_i......)\)</span>의 일정 부분을 burn out하고 <span class="math inline">\((X_i, Y_i......)\)</span>만 남긴다.</li>
+<li><span class="math inline">\((X_i, Y_i......)\)</span>는 <span class="math inline">\(f(x,y)\)</span>에서 뽑은 sample이 된다.</li>
+</ol>
+<p>즉, Gibbs sampler의 핵심은 conditinal pdf로부터 joint pdf or marginal pdf를 쉽게 계산할 수 있다는 것이다. 핵심이다.</p>
+<section id="gibbs-sampler-algorithm" class="level2">
+<h2 class="anchored" data-anchor-id="gibbs-sampler-algorithm">Gibbs sampler algorithm</h2>
+<p><span class="math inline">\(X_{(-j)} = (X_1, ... , X_{j-1}, X_{j+1}, ... , X_d)\)</span></p>
+<ol type="1">
+<li><span class="math inline">\(t=0\)</span> 시점에서의 초기값 <span class="math inline">\(X(0)\)</span>를 생성한다.</li>
+<li><span class="math inline">\(t=1, 2, ...\)</span> 에 대해 다음을 반복한다.</li>
+</ol>
+<ul>
+<li><span class="math inline">\(x_1=X_1(t-1)\)</span>을 구한다.</li>
+<li>각 <span class="math inline">\(j = 1, 2,...,d\)</span>에 대해</li>
+</ul>
+<ol type="a">
+<li><span class="math inline">\(f(X_j|x_{(-j)})\)</span>로 부터 <span class="math inline">\(X_j^*(t)\)</span>를 발생시킨다.</li>
+<li><span class="math inline">\(x_j=X_j^*(t)\)</span>를 update한다.</li>
+</ol>
+<ul>
+<li><span class="math inline">\(X(t)=(X_1^*(t), ... , X_d^*(t)\)</span>를 구한다.</li>
+<li>Increment t</li>
+</ul>
+<section id="example-beta-binomial-distribution" class="level3">
+<h3 class="anchored" data-anchor-id="example-beta-binomial-distribution">Example (beta-binomial distribution)</h3>
+<p><span class="math inline">\(f(x,y) = {n \choose x}y^{x+a-1}(1-y)^{n-x+b-1}\)</span>, <span class="math inline">\(x=0,1,....,n\)</span>, <span class="math inline">\(0 \le y \le 1\)</span> <span class="math inline">\(X|y \sim Bin(n, y)\)</span>, <span class="math inline">\(Y|x \sim Beta(x+\alpha, n-x+\beta)\)</span></p>
+<p>Gibbs sampling의 목적은 conditional pdf로 모르는 형태의 joint pdf와 marginal pdf를 구하는 것이다. 따라서 <span class="math inline">\(f(x,y)\)</span>는 실제로는 beta-binomial 분포로 구할 수 있지만 gibbs sampling을 위해서 <span class="math inline">\(f(x,y)\)</span>를 모르고 <span class="math inline">\(f(x|y)\)</span>와 <span class="math inline">\(f(y|x)\)</span>는 안다고 가정한다.</p>
+</section>
+<section id="algorithm" class="level3">
+<h3 class="anchored" data-anchor-id="algorithm">Algorithm</h3>
+<ol type="1">
+<li><span class="math inline">\(Bin(n, p = Y(t-1))\)</span>로부터 <span class="math inline">\(X^*(t)\)</span>를 발생시킨다.</li>
+<li><span class="math inline">\(x(t) = X^*(t)\)</span>를 update한다.</li>
+<li><span class="math inline">\(Beta(x(t)+\alpha, n-x(t)+\beta)\)</span>로부터 <span class="math inline">\(Y^*(t)\)</span>를 발생시킨다.</li>
+<li>Set <span class="math inline">\((X(t), Y(t)) = (X^*(t), Y^*(t))\)</span>.</li>
+</ol>
+<p>추가적으로 <span class="math inline">\((X^*(t), Y^*(t))\)</span>에 대해서 일정량을 burn in 하는데 이는 초기값의 영향을 없애기 위해서이다. burn in의 비율은 임의로 설정한다.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>N <span class="ot">&lt;-</span> <span class="dv">500</span>               </span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>burn <span class="ot">&lt;-</span> <span class="dv">100</span>            </span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">16</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>alpha <span class="ot">&lt;-</span> <span class="dv">2</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>beta <span class="ot">&lt;-</span> <span class="dv">4</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="dv">0</span>, N)</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="dv">0</span>, N)</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>x[<span class="dv">1</span>] <span class="ot">&lt;-</span> <span class="fu">rbinom</span>(<span class="dv">1</span>, <span class="at">prob =</span> <span class="fl">0.5</span>, <span class="at">size =</span> n)</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>y[<span class="dv">1</span>] <span class="ot">&lt;-</span> <span class="fu">rbeta</span>(<span class="dv">1</span>, x[<span class="dv">1</span>]<span class="sc">+</span>alpha, n<span class="sc">-</span>x[<span class="dv">1</span>]<span class="sc">+</span>beta)</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">2</span><span class="sc">:</span>N) {</span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>        x[i] <span class="ot">&lt;-</span> <span class="fu">rbinom</span>(<span class="dv">1</span>, <span class="at">prob =</span> y[i<span class="dv">-1</span>], <span class="at">size =</span> n)</span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>        y[i] <span class="ot">&lt;-</span> <span class="fu">rbeta</span>(<span class="dv">1</span>, x[i]<span class="sc">+</span>alpha, n<span class="sc">-</span>x[i]<span class="sc">+</span>beta)</span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>burn_x <span class="ot">&lt;-</span> x[(burn<span class="sc">+</span><span class="dv">1</span>)<span class="sc">:</span>N]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="example-bivariate-distribution" class="level3">
+<h3 class="anchored" data-anchor-id="example-bivariate-distribution">Example (Bivariate distribution)</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>N <span class="ot">&lt;-</span> <span class="dv">5000</span>               </span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>burn <span class="ot">&lt;-</span> <span class="dv">1000</span>            </span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>X <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="dv">0</span>, N, <span class="dv">2</span>)    </span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>rho <span class="ot">&lt;-</span> <span class="sc">-</span>.<span class="dv">75</span>             </span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>mu1 <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>mu2 <span class="ot">&lt;-</span> <span class="dv">2</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>sigma1 <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>sigma2 <span class="ot">&lt;-</span> .<span class="dv">5</span></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>s1 <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(<span class="dv">1</span><span class="sc">-</span>rho<span class="sc">^</span><span class="dv">2</span>)<span class="sc">*</span>sigma1</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>s2 <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(<span class="dv">1</span><span class="sc">-</span>rho<span class="sc">^</span><span class="dv">2</span>)<span class="sc">*</span>sigma2</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>X[<span class="dv">1</span>, ] <span class="ot">&lt;-</span> <span class="fu">c</span>(mu1, mu2) <span class="co"># 초기값</span></span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">2</span><span class="sc">:</span>N) {</span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>        x2 <span class="ot">&lt;-</span> X[i<span class="dv">-1</span>, <span class="dv">2</span>] <span class="co"># x2가 주어짐</span></span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>        m1 <span class="ot">&lt;-</span> mu1 <span class="sc">+</span> rho <span class="sc">*</span> (x2 <span class="sc">-</span> mu2) <span class="sc">*</span> sigma1<span class="sc">/</span>sigma2 <span class="co"># x2가 주어졌을 때 x1 조건부 분포의 평균 </span></span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>        X[i, <span class="dv">1</span>] <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">1</span>, m1, s1) <span class="co"># 조건부 분포로 생성된 x1 업데이트 </span></span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>        x1 <span class="ot">&lt;-</span> X[i, <span class="dv">1</span>]</span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>        m2 <span class="ot">&lt;-</span> mu2 <span class="sc">+</span> rho <span class="sc">*</span> (x1 <span class="sc">-</span> mu1) <span class="sc">*</span> sigma2<span class="sc">/</span>sigma1 <span class="co"># x1이 주어졌을 때 x2 조건부 분포의 평균</span></span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>        X[i, <span class="dv">2</span>] <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">1</span>, m2, s2) <span class="co"># 조건부 분포로 생성된 x1 업데이트</span></span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a>b <span class="ot">&lt;-</span> burn <span class="sc">+</span> <span class="dv">1</span> <span class="co"># 임의로 부여한 initial value의 효과를 없앰. </span></span>
+<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> X[b<span class="sc">:</span>N, ] <span class="co"># 1000개 버림</span></span>
+<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a><span class="fu">colMeans</span>(x) <span class="co"># 0, 2에 거의 근사 </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] -0.003416818  1.997563728</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cov</span>(x)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>           [,1]       [,2]
+[1,]  1.0212784 -0.3875986
+[2,] -0.3875986  0.2546840</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cor</span>(x) <span class="co"># rho = -0.75에 거의 근사 </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>           [,1]       [,2]
+[1,]  1.0000000 -0.7599925
+[2,] -0.7599925  1.0000000</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(x, <span class="at">main =</span> <span class="st">''</span>, <span class="at">cex =</span> <span class="fl">0.5</span>, <span class="at">xlab =</span> <span class="fu">bquote</span>(X[<span class="dv">1</span>]), <span class="at">ylab =</span> <span class="fu">bquote</span>(X[<span class="dv">2</span>]), <span class="at">ylim =</span> <span class="fu">range</span>(x[, <span class="dv">2</span>]))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="mcmc_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+
+
+</section>
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    setTimeout(function() {
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      let href = ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
+      });
+      return popup.innerHTML;
+    });
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

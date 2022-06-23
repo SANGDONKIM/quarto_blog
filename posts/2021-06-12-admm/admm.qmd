@@ -1,0 +1,199 @@
+---
+title: "ADMM example"
+description: |
+  ADMM example code
+author: "Don Don"
+date: "2022-06-22"
+categories: [R, optimization]
+---
+
+
+## scaled dual ADMM algorithm
+
+-   Given x, z and \mu, \rho to some initial value.
+
+-   Repeat:
+
+    -   $x:= \arg\max_{x}(f(x) + \frac{\rho}{2}\|Ax+Bz-c+\mu\|_2^2)$
+    -   $x:= \arg\max_{x}(g(z) + \frac{\rho}{2}\|Ax+Bz-c+\mu\|_2^2)$
+    -   $\mu:= \mu + (Ax + Bz - c)$
+    -   Stopping criterion : quit $\|r\|_2<\epsilon$ and $\|s\|_2<\epsilon$ <br><br><br>
+
+### Stopping criterion
+
+We can define the primal and dual residuals in ADMM at step k+1.\
+\* Primal residuals : $r^{k+1} = Ax^{k+1} + Bz^{k+1} - c$\
+\* Dual residuals : $s^{k+1} = \rho A^TB(z^{k+1} - z^k)$\
+
+Therefore stopping criterion satisfies that $\|r\|_2$ and $\|s\|_2$ are smaller than any $\epsilon$
+
+<br><br>
+
+### Lasso example
+
+$$
+\begin{equation*}
+\begin{aligned}
+& \underset{\beta}{\text{minimize}}
+& & \sum_{i=1}^n (y_i - \beta_0 - x_i^t\beta)^2 + \lambda \sum_{j = 1}^p |\beta_j| \\
+\end{aligned}
+\end{equation*}
+$$
+
+$\Leftrightarrow$
+
+$$
+\begin{equation*}
+\begin{aligned}
+& \underset{\beta}{\text{minimize}}
+& & f(\beta) + f(z) \\
+& \text{subject to}
+& & I\beta - IZ = 0
+\end{aligned}
+\end{equation*}
+$$
+
+\
+
+$$
+\begin{align}
+r = I\beta - IZ \newline
+L_\rho(\beta, z, v) &= f(\beta) + g(z) + v^tr + \frac{\rho}{2}||r||_2^2 \newline
+                    &= f(\beta) + g(z) + \frac{\rho}{2}||r+\frac{1}{\rho}v||_2^2 - \frac{\rho}{2}||v||_2^2 \newline
+                    &= f(\beta) + g(z) + \frac{\rho}{2}||r+\mu||_2^2 - constant_v, \quad \mu = \frac{1}{\rho}v 
+\end{align}
+$$\
+
+$$
+\begin{align}
+\beta^{k+1} &:= \operatorname*{argmin}_\beta (f(\beta) + \frac{\rho}{2}||I\beta - IZ^k + \mu^k||_2^2) \newline
+            &= \operatorname*{argmin}_\beta (y-X\beta)^t(y-X\beta) + \frac{\rho}{2}||I\beta - IZ^k + \mu^k||_2^2) \newline
+            &\Rightarrow -2X^ty + 2X^tX\beta + \rho\beta - \rho Z^k +\rho\mu^k = 0 \newline
+            &\Leftrightarrow (2X^tX + \rho I)\beta = 2X^ty + \rho(Z^k - \mu^k) \newline
+            &\therefore \beta^{k+1} = (2X^tX + \rho I)^{-1}(2X^ty + \rho(Z^k - \mu^k))
+\end{align}
+$$
+
+\
+
+$$
+\begin{align}
+\beta^{k+1} &:= \operatorname*{argmin}_\beta (f(\beta) + \frac{\rho}{2}||I\beta - IZ^k + \mu^k||_2^2) \newline
+            &= \operatorname*{argmin}_\beta (y-X\beta)^t(y-X\beta) + \frac{\rho}{2}||I\beta - IZ^k + \mu^k||_2^2) \newline
+            &\Rightarrow -2X^ty + 2X^tX\beta + \rho\beta - \rho Z^k +\rho\mu^k = 0 \newline
+            &\Leftrightarrow (2X^tX + \rho I)\beta = 2X^ty + \rho(Z^k - \mu^k) \newline
+            &\therefore \beta^{k+1} = (2X^tX + \rho I)^{-1}(2X^ty + \rho(Z^k - \mu^k))
+\end{align}
+$$
+
+\
+
+The prox operatior for $g(z) = \lambda||z||_1$
+
+$$
+\begin{align}
+prox_{\lambda, g}(z) &= \operatorname*{argmin}_v (\lambda||z||_1 + \frac{1}{2}||z-v||_2^2) \newline
+                     &= \operatorname*{argmin}_v (||v||_1 + \frac{1}{2\cdot \lambda}||z-v||_2^2) \newline
+                     &\therefore \operatorname*{argmin}_{v_i} (\frac{1}{2}(v_i - z_i)^2 + \lambda|v_i|) 
+\end{align}
+$$
+
+\
+
+$$
+\begin{align}
+Z^{k+1} &:= \operatorname*{argmin}_Z (g(Z) + \frac{\rho}{2}||I\beta^{k+1} - IZ + \mu^k||_2^2) \newline
+            &= \operatorname*{argmin}_Z (g(Z) + \frac{\rho}{2}||\beta^{k+1} + \mu^k - Z) ||_2^2 \newline
+            &= \operatorname*{argmin}_Z (g(Z) + \frac{1}{2\cdot \frac{1}{\rho}}||\beta^{k+1} + \mu^k - Z) ||_2^2 \newline
+            &\therefore prox_{\frac{1}{\rho}, g}(\beta^{k+1} + \mu^k)
+\end{align}
+$$
+
+\
+
+-   Given $\beta$, $z$, $\mu$, $\rho$ to some initial value
+
+-   Repeat:
+
+    -   $\therefore \beta^{k+1} = (2X^tX + \rho I)^{-1}(2X^ty + \rho(Z^k - \mu^k))$
+    -   $\therefore Z^{k+1} = prox_{\frac{1}{\rho}, g}(\beta^{k+1} + \mu^k)$
+    -   $\mu^{k+1}:= \mu^k + (\beta^{k+1} - Z^{k+1})$
+    -   Stopping criterion : quit $\|r\|_2<\epsilon$ and $\|s\|_2<\epsilon$
+
+<br>
+
+-   prime resdual : $r^{k+1} = \beta^{k+1} - z^{k+1}$
+-   dual resdual : \$s\^{k+1} = -\rho (z\^{k+1} - z\^k) \$
+
+\
+
+## R code 
+
+```{r}
+nll <- function(X, Y, beta) {
+                A <- Y - X %*% beta
+                loglike <- crossprod(A)
+                return(loglike)
+}
+
+# Proximal operator
+prox.l1 <- function(u, lambda) {
+                uhat <- abs(u) - lambda
+                prox <- sign(u) * pmax(rep(0, length(u)), uhat)
+                return(prox)
+}
+
+l2norm <- function(x) sqrt(sum(x^2))
+
+
+ADMM <- function(X,Y,rho=5,lambda=.1,iter=100, eps = 0.0001){
+                
+                n <- nrow(X)
+                p <- ncol(X)
+                
+                beta <- matrix(0, nrow=iter, ncol=p) 
+                beta[1,] <- rep(0, p)
+                
+                obj <- rep(0, iter)
+                obj[1] <- nll(X, Y, beta[1,]) + lambda * sum(abs(beta[1,]))
+                
+                z <- matrix(0, nrow=iter, ncol=p)
+                v <- rep(0, p)     
+                
+                invmat <- solve(2*crossprod(X) + diag(rho, p))
+                
+                s <- 0    
+                r <- 0    
+                t <- 0
+                
+                for (t in 2:iter){
+                                
+                                beta[t,] <- invmat %*% (2*crossprod(X, Y) + rho * (z[t-1,]-v))
+                                z[t,] <- prox.l1(beta[t,] + v, lambda/rho)
+                                v <- v + beta[t,] - z[t,]
+                                obj[t] <- nll(X, Y, beta[t,]) + lambda * sum(abs(beta[t,]))
+                                
+                                r <- beta[t,] - z[t,]
+                                s <- -rho * (z[t,] - z[t-1,])
+                                
+                                r.norm <- l2norm(r)
+                                s.norm <- l2norm(s)
+                                
+                                if (r.norm < eps & s.norm < eps) {
+                                                break
+                                }
+                }
+                beta <- beta[-c(t+1:iter),]
+                obj <- obj[-c(t+1:iter)]
+                result <- list("beta.hat" = beta[nrow(beta),], "beta"=beta, "objective"=obj, "iter"=t)
+                return(result)
+}
+
+x <- cbind(1, matrix(rnorm(1000*4), ncol = 4))
+beta <- c(1.4, -2, -3, 4, 5)
+
+eps <- rnorm(1000*1)　
+y <- x%*%beta + eps 
+
+ADMM(X = x, Y = y)
+```

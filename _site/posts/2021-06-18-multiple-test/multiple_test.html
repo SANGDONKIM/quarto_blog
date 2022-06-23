@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-0.9.426">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Don Don">
+<meta name="dcterms.date" content="2021-06-18">
+<meta name="description" content="Multiple test에 대한 소개">
+
+<title>Don Don - multiple test</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link id="quarto-text-highlighting-styles" href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+</head>
+
+<body class="nav-fixed fullcontent">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Don Don</span>
+  </a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html">about</a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/SANGDONKIM"><i class="bi bi-github" role="img">
+</i> 
+ </a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://www.linkedin.com/in/%EC%83%81%EB%8F%88-%EA%B9%80-b89985199/"><i class="bi bi-linkedin" role="img">
+</i> 
+ </a>
+  </li>  
+</ul>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">multiple test</h1>
+                          <div class="quarto-categories">
+                <div class="quarto-category">R</div>
+                <div class="quarto-category">statistics</div>
+              </div>
+                  </div>
+  </div>
+    
+  <div>
+    <div class="description">
+      <p>Multiple test에 대한 소개</p>
+    </div>
+  </div>
+
+
+
+
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Don Don </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">June 18, 2021</p>
+      </div>
+    </div>
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+<p>다중검정은 multiple test, simultaneous tes, joint test 등으로 불리우는데, 보통 ANOVA 이후 집단 간의 세부적인 차이를 알아보기 위한 사후 검정으로 활용된다. 이번에 다중 검정 관련 논문을 읽을 일이 있어서 기본 개념에 대해 정리를 해보려고 한다.</p>
+<section id="motivation" class="level1">
+<h1>Motivation</h1>
+<p>먼저 ANOVA부터 시작해서 왜 다중 검정이 필요한지, 다중 검정을 수행할 때 발생하는 문제점에 대해 정리해본다.</p>
+<section id="one-way-anova" class="level2">
+<h2 class="anchored" data-anchor-id="one-way-anova">One-way ANOVA</h2>
+<p>세 집단에 약물을 복용했을 때 치료 효과가 있는지 ANOVA를 실시한다고 해보자. ANOVA를 수식으로 표현하면 다음과 같다.</p>
+<p><span class="math display">\[
+Y_{ij} = \mu + \alpha_i + \epsilon_{ij}, \quad i = 1,2, 3 \quad j = 1, \cdots ,n \\
+\alpha_i : \text{i - th treatment effect}
+\]</span></p>
+<p>수식을 직관적으로 표로 표현하면 다음과 같다.</p>
+<table class="table">
+<colgroup>
+<col style="width: 8%">
+<col style="width: 14%">
+<col style="width: 20%">
+<col style="width: 25%">
+<col style="width: 30%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Treat \ Rep</th>
+<th><span class="math display">\[
+1
+\]</span></th>
+<th><span class="math display">\[
+2
+\]</span></th>
+<th><span class="math display">\[
+\cdots
+\]</span></th>
+<th><span class="math display">\[
+n
+\]</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><span class="math display">\[
+1
+\]</span></td>
+<td><span class="math display">\[
+                Y_{11}
+                \]</span></td>
+<td><span class="math display">\[
+                         Y_{12}
+                         \]</span></td>
+<td><span class="math display">\[
+                                  \cdots
+                                  \]</span></td>
+<td><span class="math display">\[
+                                           Y_{1n}
+                                           \]</span></td>
+</tr>
+<tr class="even">
+<td><span class="math display">\[
+2
+\]</span></td>
+<td><span class="math display">\[
+                Y_{21}
+                \]</span></td>
+<td><span class="math display">\[
+                         Y_{22}
+                         \]</span></td>
+<td><span class="math display">\[
+                                  \cdots
+                                  \]</span></td>
+<td><span class="math display">\[
+                                           Y_{2n}
+                                           \]</span></td>
+</tr>
+<tr class="odd">
+<td><span class="math display">\[
+3
+\]</span></td>
+<td><span class="math display">\[
+                Y_{31}
+                \]</span></td>
+<td><span class="math display">\[
+                         Y_{32}
+                         \]</span></td>
+<td><span class="math display">\[
+                                  \cdots
+                                  \]</span></td>
+<td><span class="math display">\[
+                                           Y_{3n}
+                                           \]</span></td>
+</tr>
+</tbody>
+</table>
+<p>ANOVA에 대한 가설은 다음과 같이 도출될 수 있다.</p>
+<p><span class="math display">\[
+H_0 : \alpha_1 = \alpha_2 = \alpha_3 \quad \text{(no treatment effect)} \\
+H_1: \text{Not }H_0
+\]</span></p>
+<p>다음과 같은 가설 설정에 대해서 등분산 가정 하에 ANOVA를 수행했을 때 항상 두 가지 결론이 도출될 수 있다.</p>
+<ol type="1">
+<li><p>귀무가설을 기각하지 못할 경우</p>
+<ul>
+<li>즉 세 집단 간의 평균 차이가 없다(혹은 약물의 치료 효과가 없다)</li>
+</ul></li>
+<li><p>귀무가설을 기각할 경우</p>
+<ul>
+<li>즉, 세 집단 간의 평균 차이가 존재한다.</li>
+</ul></li>
+</ol>
+<p>여기서 귀무가설을 기각할 경우를 주목해보자. 귀무가설을 기각할 경우 내릴 수 있는 결론은 “세 집단 간의 평균 차이가 존재한다”이다. 다시 풀어서 써보면 “세 집단 간 중에 적어도 하나는 평균 차이가 존재한다”이며, 이는 어느 집단 간에 차이가 나는지 모른다는 의미와 같다. 즉, 다음과 같은 경우의 수가 도출될 수 있다.</p>
+<p><span class="math display">\[H_1 : \\
+\alpha_1 = \alpha_2 &gt; \alpha3 \\
+\alpha_1 = \alpha_2 &lt; \alpha3 \\
+\alpha_1 &lt; \alpha_2 = \alpha3 \\
+\vdots \\
+\alpha_1 \neq \alpha_2 \neq \alpha3
+\]</span></p>
+<p>ANOVA test로는 어느 집단 간에 평균 차이가 존재하는지 모르기 때문에 <strong>사후검정</strong> 을 추가적으로 실시해야만 이를 알 수 있다. 이 때 수행하는 것이 다중 검정(multiple test)이다.</p>
+<p><span class="math display">\[
+H_{01}: \alpha_1 = \alpha_2, \quad H_{02}: \alpha_1 = \alpha_3, \quad H_{03}: \alpha_2 = \alpha_3,
+\]</span></p>
+<p>가설의 개수는 treatment 3일 때, 2개의 쌍을 뽑는 것이므로 <span class="math inline">\(3 \choose 2\)</span>가 된다.</p>
+</section>
+<section id="multiple-test" class="level2">
+<h2 class="anchored" data-anchor-id="multiple-test">Multiple test</h2>
+<p>다중 검정이 왜 필요한지에 대해 이해했으니, 이제 다중 검정을 실시할 때의 문제점에 대해 알아보자.</p>
+<p><span class="math inline">\(m\)</span>개의 가설이 있다고 해보자.</p>
+<p><span class="math display">\[
+H_{0i} : \mu_{1i} = \mu_{2i}, \quad i = 1, \cdots, m
+\]</span></p>
+<p>각 가설에 대한 제 1종 오류를 수식으로 표현하면 다음과 같다.</p>
+<p><span class="math display">\[
+E_i = \{\text{reject }H_{0i} \text{ when }H_{0i}\text{ is true}\}, \quad i = 1, \cdots, m
+\]</span></p>
+<p><span class="math inline">\(m\)</span> 개의 가설에 대한 제 1종 오류의 upper bound를 표현하면</p>
+<p><span class="math display">\[
+\begin{equation*}
+\begin{aligned}
+P(\bigcup_{i=1}^{m} E_{i}) &amp;= 1-P(\bigcap_{i=1}^{m} E_{i}^c) \\
+&amp;= 1 -  \prod_{i=1}^{m} P(E_i^c) \\
+&amp;\le 1 - (1-\alpha)^m, \quad P(E_i) \le \alpha
+\end{aligned}
+\end{equation*}
+\]</span></p>
+<p>여기서 <span class="math inline">\(\bigcap\)</span>이 <span class="math inline">\(\prod\)</span>로 표현되는 이유는 가설 설정 시에 모든 가설(<span class="math inline">\(E_i\)</span>)은 서로 독립이기 때문이다. <span class="math inline">\(m\)</span> 에 값을 대입하면서 1종 오류의 upper bound에 대해 알아보자.</p>
+<p><span class="math display">\[
+\begin{equation*}
+\begin{aligned}
+&amp;\alpha = 0.05 \text{일 때}, \\
+&amp;m = 2,\quad 1 - (1-\alpha)^m=0.0975 \\
+&amp;m = 3,\quad 1 - (1-\alpha)^m=0.1426 \\
+&amp;m = 100,\quad 1 - (1-\alpha)^m \backsimeq 0.9941 \backsimeq 1 \\
+\end{aligned}
+\end{equation*}
+\]</span></p>
+<p><span class="math inline">\(m\)</span> 이 증가할 때, 즉 가설의 개수가 많아질 때 제 1종 오류가 발생할 upper bound는 거의 1에 가깝게 되며, 이는 거의 항상 error가 발생한다고 할 수 있다. 따라서 이러한 문제를 해결하기 위해서 제 1종 오류에 대한 일종의 보정을 수행해야 하는데 대표적인 방법이 Bonferroni correction이다. Bonferroni correction을 설명하기 이전에 광의적인 개념인 FWER에 대해 집고 넘어간다.</p>
+</section>
+<section id="family-wise-error-ratefwer" class="level2">
+<h2 class="anchored" data-anchor-id="family-wise-error-ratefwer">Family-wise error rate(FWER)</h2>
+<p><span class="math inline">\(m\)</span> 개의 가설검정(<span class="math inline">\(H^1, H^2,\cdots, H^m\)</span>)을 수행한다고 가정했을 때 결과를 table로 정리해보면 다음과 같다.</p>
+<table class="table">
+<caption>Result of m multiple hypothesis</caption>
+<colgroup>
+<col style="width: 11%">
+<col style="width: 20%">
+<col style="width: 29%">
+<col style="width: 39%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>true state \ decision</th>
+<th><span class="math display">\[
+\text{accept }H_0
+\]</span></th>
+<th><span class="math display">\[
+\text{reject }H_0
+\]</span></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><span class="math display">\[
+H_0: \text{true}
+\]</span></td>
+<td><span class="math display">\[
+                          U\text{(unknown)}
+                          \]</span></td>
+<td><span class="math display">\[
+                                              V\text{(unknown)}
+                                              \]</span></td>
+<td><span class="math display">\[
+                                                                  m_0\text{(unknown)}
+                                                                  \]</span></td>
+</tr>
+<tr class="even">
+<td><span class="math display">\[
+H_1: \text{true}
+\]</span></td>
+<td><span class="math display">\[
+                          T\text{(unknown)}
+                          \]</span></td>
+<td><span class="math display">\[
+                                              S\text{(unknown)}
+                                              \]</span></td>
+<td><span class="math display">\[
+                                                                  m_1\text{(unknown)}
+                                                                  \]</span></td>
+</tr>
+<tr class="odd">
+<td><span class="math display">\[
+\text{Total}
+\]</span></td>
+<td><span class="math display">\[
+                          m-R\text{(known)}
+                          \]</span></td>
+<td><span class="math display">\[
+                                              R\text{(known)}
+                                              \]</span></td>
+<td><span class="math display">\[
+                                                                  m\text{(known)}
+                                                                  \]</span></td>
+</tr>
+</tbody>
+</table>
+<p>FWER의 의미는 the probability of at least one type 1 error, 즉 1번이라도 1종 오류가 발생할 확률을 의미한다. 이를 수식으로 표현하면 <span class="math inline">\(P(V \ge1)\)</span> 이다. FWER을 통제한다는 의미는 <span class="math inline">\(P(V \ge1) \le \alpha\)</span> , 즉 최소 1번이라도 제 1종 오류를 범할 확률을 <span class="math inline">\(\alpha\)</span> 이하로 조절한다는 의미이고, 이를 위해서는 개별 검정 결과에 대한 제 1종 오류를 범할 확률을 조절해야한다.</p>
+<section id="bonferroni-correction" class="level3">
+<h3 class="anchored" data-anchor-id="bonferroni-correction">Bonferroni Correction</h3>
+<p>FWER을 조절하는 대표적인 방법이 본페로니 보정방법이다. FWER은 Bonferroni inequality에 의해 다음과 같은 upper bound를 얻을 수 있다.</p>
+<p><span class="math display">\[
+P(V \ge 1)=P(\bigcup_{i=1}^{m} E_{i}) \le \sum_{i=1}^m P(E_i) \le \alpha
+\]</span></p>
+<p>Bonferroni Correction은 위의 upper bound를 이용해서 개별 가설에 대한 <span class="math inline">\(\alpha^*\)</span> 값을 전체 <span class="math inline">\(\alpha\)</span> 를 개별 가설의 개수 <span class="math inline">\(m\)</span>으로 나눠준다.</p>
+<p><span class="math display">\[\alpha^* = \frac{\alpha}{m}\]</span></p>
+<p>Bonferroni Correction은 <span class="math inline">\(m\)</span> 이 작을 때, 비교적 잘 작동한다. <span class="math inline">\(m\)</span> 이 클 경우 Bonferroni Correction은 잘 작동하지 않는다. 수식을 보면 직관적으로 알 수 있는데 <span class="math inline">\(m\)</span>이 커질 경우 <span class="math inline">\(\alpha^*\)</span> 값이 매우 작아지기 때문에 개별 가설에 대해서 거의 기각하지 못하는 문제가 발생한다. 즉 Bonferroni Correction은 매우 보수적인 방법이라고 할 수 있다.</p>
+</section>
+<section id="sidak-correction" class="level3">
+<h3 class="anchored" data-anchor-id="sidak-correction">Sidak Correction</h3>
+<p>시닥 보정 방법은 본페로니 보정 방법에서 조금 개선된 버전이다. 하지만 본페로니 보정의 문제점을 그대로 가지고 있다.</p>
+<p><span class="math display">\[
+\begin{equation*}
+\begin{aligned}
+P(\bigcup_{i=1}^{m} E_{i}) &amp;= 1-P(\bigcap_{i=1}^{m} E_{i}^c) \\
+&amp;= 1 - \prod_{i=1}^{m} P(E_i^c) \\
+&amp;= 1 - \{1-P(E_i)\}^m \\
+&amp;= 1 - (1-\alpha^*)^m \le \alpha \\
+&amp;\therefore \alpha^* = 1-(1-\alpha)^\frac{1}{m}
+\end{aligned}
+\end{equation*}
+\]</span></p>
+</section>
+<section id="example" class="level3">
+<h3 class="anchored" data-anchor-id="example">Example</h3>
+<section id="no-correction" class="level4">
+<h4 class="anchored" data-anchor-id="no-correction">No correction</h4>
+<p><span class="math display">\[
+\begin{equation*}
+\begin{aligned}
+P(\text{at least one significant result}) &amp;= 1-P(\text{no significant result}) \\
+&amp;= 1 - (1-0.05)^{20} \\
+&amp;\simeq 0.64
+\end{aligned}
+\end{equation*}
+\]</span></p>
+</section>
+<section id="bonferroni-correction-1" class="level4">
+<h4 class="anchored" data-anchor-id="bonferroni-correction-1">Bonferroni correction</h4>
+<p><span class="math display">\[
+\begin{equation*}
+\begin{aligned}
+P(\text{at least one significant result}) &amp;= 1-P(\text{no significant result}) \\
+&amp;= 1 - (1-\frac{0.05}{20})^{20} \\
+&amp;\simeq 0.0488
+\end{aligned}
+\end{equation*}
+\]</span></p>
+</section>
+<section id="sidak-correction-1" class="level4">
+<h4 class="anchored" data-anchor-id="sidak-correction-1">Sidak correction</h4>
+<p><span class="math display">\[
+\begin{equation*}
+\begin{aligned}
+P(\text{at least one significant result}) &amp;= 1-P(\text{no significant result}) \\
+&amp;= 1 - (1-\alpha^*)^{20} \\
+&amp;\simeq 0.1854
+\end{aligned}
+\end{equation*}
+\]</span></p>
+</section>
+</section>
+</section>
+<section id="false-discovery-ratefdr" class="level2">
+<h2 class="anchored" data-anchor-id="false-discovery-ratefdr">False Discovery Rate(FDR)</h2>
+<p>FDR은 FWER의 단점인 가설의 수가 많아질 때 개별 가설에 대해서 거의 기각하지 못하는 단점을 보완한 방법이다.</p>
+<p>Benjamini and Hochberg(1995)</p>
+<p><span class="math inline">\(E[\frac{V}{R}] \le q, \quad q \text{ : correspond to level of significance}\)</span></p>
+<p>식을 해석해보면 잘못기각되는 가설의 비율의 기댓값을 <span class="math inline">\(q\)</span> 수준으로 조절하는 것이라고 할 수 있다.</p>
+<p><strong>Benjamini and hochberg FDR procedure</strong></p>
+<p>To control FDR at level <span class="math inline">\(\delta\)</span></p>
+<ol type="1">
+<li>Order the unadjusted p-values: <span class="math inline">\(p_1 \le p_2 \le \cdots \le p_m\)</span></li>
+<li>Then find the test with the highest rank, <span class="math inline">\(j\)</span>, for which the p-value, <span class="math inline">\(p_j\)</span>, is less than or equal to <span class="math inline">\(\frac{j}{m}\cdot \delta\)</span></li>
+<li>Declare the tests of rank <span class="math inline">\(1, 2, \cdots, j\)</span> as significant <span class="math inline">\(p(j) \le \delta \cdot \frac{j}{m}\)</span></li>
+</ol>
+<section id="code" class="level3">
+<h3 class="anchored" data-anchor-id="code">Code</h3>
+<section id="no-corrections" class="level4">
+<h4 class="anchored" data-anchor-id="no-corrections">No corrections</h4>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">311</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fu">rnorm</span>(<span class="dv">900</span>), <span class="fu">rnorm</span>(<span class="dv">100</span>, <span class="at">mean =</span> <span class="dv">3</span>))</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">density</span>(x))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="multiple_test_files/figure-html/unnamed-chunk-1-1.png" class="img-fluid" width="672"></p>
+</div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fu">pnorm</span>(x, <span class="at">lower.tail =</span> F)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(p)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  [1] 1000</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>test <span class="ot">&lt;-</span> p <span class="sc">&gt;</span> <span class="fl">0.05</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(test[<span class="dv">1</span><span class="sc">:</span><span class="dv">900</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     Mode   FALSE    TRUE 
+  logical      45     855</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(test[<span class="dv">901</span><span class="sc">:</span><span class="dv">1000</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     Mode   FALSE    TRUE 
+  logical      95       5</code></pre>
+</div>
+</div>
+</section>
+<section id="bonferroni-correction-2" class="level4">
+<h4 class="anchored" data-anchor-id="bonferroni-correction-2">Bonferroni correction</h4>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>bonftest <span class="ot">&lt;-</span> p <span class="sc">&gt;</span> <span class="fl">0.00005</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(bonftest[<span class="dv">1</span><span class="sc">:</span><span class="dv">900</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     Mode    TRUE 
+  logical     900</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(bonftest[<span class="dv">901</span><span class="sc">:</span><span class="dv">1000</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     Mode   FALSE    TRUE 
+  logical      20      80</code></pre>
+</div>
+</div>
+</section>
+<section id="fdr" class="level4">
+<h4 class="anchored" data-anchor-id="fdr">FDR</h4>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>psort <span class="ot">&lt;-</span> <span class="fu">sort</span>(p)</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>fdrtest <span class="ot">&lt;-</span> <span class="cn">NULL</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">1000</span>){</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>  fdrtest <span class="ot">&lt;-</span> <span class="fu">c</span>(fdrtest, p[i] <span class="sc">&gt;</span> <span class="fu">match</span>(p[i],psort) <span class="sc">*</span> .<span class="dv">05</span><span class="sc">/</span><span class="dv">1000</span>)</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fdrtest[<span class="dv">1</span><span class="sc">:</span><span class="dv">900</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     Mode   FALSE    TRUE 
+  logical       2     898</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fdrtest[<span class="dv">901</span><span class="sc">:</span><span class="dv">1000</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     Mode   FALSE    TRUE 
+  logical      62      38</code></pre>
+</div>
+</div>
+</section>
+<section id="fdr-using-r-stat-package" class="level4">
+<h4 class="anchored" data-anchor-id="fdr-using-r-stat-package">FDR using R stat package</h4>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>p.adj <span class="ot">&lt;-</span> stats<span class="sc">::</span><span class="fu">p.adjust</span>(p, <span class="at">method =</span> <span class="st">'BH'</span>, <span class="at">n =</span> <span class="fu">length</span>(p))</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>fdrtest2 <span class="ot">&lt;-</span> p.adj <span class="sc">&gt;</span> <span class="fl">0.05</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fdrtest2[<span class="dv">1</span><span class="sc">:</span><span class="dv">900</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     Mode   FALSE    TRUE 
+  logical       2     898</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fdrtest2[<span class="dv">901</span><span class="sc">:</span><span class="dv">1000</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     Mode   FALSE    TRUE 
+  logical      62      38</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">matplot</span>(p, p.adj)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="multiple_test_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+</section>
+<section id="참고-자료" class="level3">
+<h3 class="anchored" data-anchor-id="참고-자료">참고 자료</h3>
+<p><a href="https://www.stat.berkeley.edu/~mgoldman/Section0402.pdf" class="uri">https://www.stat.berkeley.edu/~mgoldman/Section0402.pdf</a></p>
+<p><a href="https://be-favorite.tistory.com/26" class="uri">https://be-favorite.tistory.com/26</a></p>
+<p><a href="https://www.tandfonline.com/doi/suppl/10.1080/01621459.2020.1859379?scroll=top" class="uri">https://www.tandfonline.com/doi/suppl/10.1080/01621459.2020.1859379?scroll=top</a></p>
+<p><a href="https://ndownloader.figstatic.com/files/25717051" class="uri">https://ndownloader.figstatic.com/files/25717051</a></p>
+<p><a href="https://www.gs.washington.edu/academics/courses/akey/56008/lecture/lecture10.pdf" class="uri">https://www.gs.washington.edu/academics/courses/akey/56008/lecture/lecture10.pdf</a></p>
+
+
+</section>
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    setTimeout(function() {
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      let href = ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
+      });
+      return popup.innerHTML;
+    });
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>
