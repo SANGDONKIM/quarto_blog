@@ -3,7 +3,7 @@ title: "ADMM example"
 description: |
   ADMM example code
 author: "Don Don"
-date: "2022-06-22"
+date: "2021-05-30"
 categories: [R, optimization]
 ---
 
