@@ -83,3 +83,9 @@ sticker(subplot = img, # 저장된 image 불러오기
         print()
 
 ```
+
+## 참고자료 
+
+<https://github.com/GuangchuangYu/hexSticker>
+
+<https://www.youtube.com/watch?v=O34vzdHOaEk&t=132s>

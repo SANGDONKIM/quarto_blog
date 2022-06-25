@@ -1,7 +1,7 @@
 ---
-title: "sensmakr"
+title: "sensemakr"
 description: |
-  sensmakr 패키지 소개 및 간단한 논문 리뷰
+  sensemakr 패키지 소개 및 간단한 논문 리뷰
 author: "Don Don"
 date: "2022-06-24"
 categories: [causal inference]

@@ -162,6 +162,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <h1 class="title">hexSticker</h1>
                           <div class="quarto-categories">
                 <div class="quarto-category">hexSticker</div>
+                <div class="quarto-category">R</div>
               </div>
                   </div>
   </div>
@@ -254,21 +255,21 @@ Disabled features: fftw, ghostscript, x11</code></pre>
 # Outcome: y
 #
 # A tibble: 13 × 8
-   name        x      y direction to       xend   yend circular
-   &lt;chr&gt;   &lt;dbl&gt;  &lt;dbl&gt; &lt;fct&gt;     &lt;chr&gt;   &lt;dbl&gt;  &lt;dbl&gt; &lt;lgl&gt;   
- 1 v      1.23   -1.86  -&gt;        z1     1.25   -0.468 FALSE   
- 2 v      1.23   -1.86  -&gt;        z2    -0.185  -1.83  FALSE   
- 3 w1     0.229  -0.341 -&gt;        x     -0.0204  0.258 FALSE   
- 4 w1     0.229  -0.341 -&gt;        y     -0.894  -0.444 FALSE   
- 5 w1     0.229  -0.341 -&gt;        z1     1.25   -0.468 FALSE   
- 6 w1     0.229  -0.341 &lt;-&gt;       w2    -0.552  -0.947 FALSE   
- 7 w2    -0.552  -0.947 -&gt;        x     -0.0204  0.258 FALSE   
- 8 w2    -0.552  -0.947 -&gt;        y     -0.894  -0.444 FALSE   
- 9 w2    -0.552  -0.947 -&gt;        z2    -0.185  -1.83  FALSE   
-10 x     -0.0204  0.258 -&gt;        y     -0.894  -0.444 FALSE   
-11 z1     1.25   -0.468 -&gt;        x     -0.0204  0.258 FALSE   
-12 z2    -0.185  -1.83  -&gt;        y     -0.894  -0.444 FALSE   
-13 y     -0.894  -0.444 &lt;NA&gt;      &lt;NA&gt;  NA      NA     FALSE   </code></pre>
+   name      x     y direction to     xend   yend circular
+   &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;fct&gt;     &lt;chr&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;lgl&gt;   
+ 1 v     -2.45 1.20  -&gt;        z1    -3.16  2.42  FALSE   
+ 2 v     -2.45 1.20  -&gt;        z2    -3.68  0.487 FALSE   
+ 3 w1    -4.10 2.07  -&gt;        x     -4.64  2.40  FALSE   
+ 4 w1    -4.10 2.07  -&gt;        y     -4.39  1.16  FALSE   
+ 5 w1    -4.10 2.07  -&gt;        z1    -3.16  2.42  FALSE   
+ 6 w1    -4.10 2.07  &lt;-&gt;       w2    -4.99  1.29  FALSE   
+ 7 w2    -4.99 1.29  -&gt;        x     -4.64  2.40  FALSE   
+ 8 w2    -4.99 1.29  -&gt;        y     -4.39  1.16  FALSE   
+ 9 w2    -4.99 1.29  -&gt;        z2    -3.68  0.487 FALSE   
+10 x     -4.64 2.40  -&gt;        y     -4.39  1.16  FALSE   
+11 z1    -3.16 2.42  -&gt;        x     -4.64  2.40  FALSE   
+12 z2    -3.68 0.487 -&gt;        y     -4.39  1.16  FALSE   
+13 y     -4.39 1.16  &lt;NA&gt;      &lt;NA&gt;  NA    NA     FALSE   </code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggdag</span>(tidy_ggdag) <span class="sc">+</span></span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_dag</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -312,6 +313,11 @@ Disabled features: fftw, ghostscript, x11</code></pre>
 <p><img src="hexsticker_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
+</section>
+<section id="참고자료" class="level2">
+<h2 class="anchored" data-anchor-id="참고자료">참고자료</h2>
+<p><a href="https://github.com/GuangchuangYu/hexSticker" class="uri">https://github.com/GuangchuangYu/hexSticker</a></p>
+<p><a href="https://www.youtube.com/watch?v=O34vzdHOaEk&amp;t=132s" class="uri">https://www.youtube.com/watch?v=O34vzdHOaEk&amp;t=132s</a></p>
 
 
 </section>
