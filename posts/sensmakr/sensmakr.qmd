@@ -1,0 +1,308 @@
+---
+title: "sensmakr"
+description: |
+  sensmakr 패키지 소개 및 간단한 논문 리뷰
+author: "Don Don"
+date: "2022-06-24"
+categories: [causal inference]
+---
+
+# Making Sense of Sensitivity: Extending Omitted Variable Bias
+
+# Frisch-waugh-Lovell theorem
+
+설명 추가
+
+$X_1, X_2$는 독립변수의 집합을 의미함
+
+$$
+\begin{align*}
+y = X_1 \beta_1 + X_2 \beta_2 + \epsilon
+\end{align*}
+$$ 추정하고자 하는 $\hat{\beta}$는 다음과 같음
+
+1.  $y ~ \sim X_1$의 잔차 $\longrightarrow$ $y^*$
+
+    -   $y ~ \sim X_1$로 회귀모형을 fitting해서 잔차 $y^*$을 구한다.
+
+2.  $X_2 ~ \sim X_1$의 잔차 $\longrightarrow$ $X_2^*$
+
+    -   $X_2 ~ \sim X_1$로 회귀모형을 fitting해서 잔차 $X_2^*$를 구한다.
+
+3.  $y^* \sim X_2^*$ $\longrightarrow$ $\hat{\beta}_2$
+
+    -   잔차 $y^*$와 잔차 $X_2^*$를 회귀모형으로 fitting해서 얻은 coefficient는 $\hat{\beta}_2$와 같다.
+
+$$
+\begin{align*}
+y = X_1 \hat{\beta_1} + X_2 \hat{\beta_2} + e
+\end{align*}
+$$ normal equation으로 표현하면 다음과 같음
+
+$$
+\begin{align*}
+\begin{bmatrix}
+X_1^t X_1 & X_1^t X_2 \\
+X_2^t X_1 & X_1^2 X_2
+\end{bmatrix}
+\begin{bmatrix}
+\hat{\beta_1}  \\
+\hat{\beta_2} 
+\end{bmatrix} = 
+\begin{bmatrix}
+X_1^t y  \\
+X_2^t y 
+\end{bmatrix} 
+\end{align*}
+$$
+
+먼저 $\hat{\beta_1}$에 대해 풀면 다음과 같다.
+
+$$
+\begin{align*}
+(X_1^tX_1)\hat{\beta_1} + (X_1^tX_2)\hat{\beta_2} &= X_1^ty \\
+(X_1^tX_1)\hat{\beta_1} &= X_1^ty - (X_1^tX_2)\hat{\beta_2} \\ 
+\hat{\beta_1} &= (X_1^tX_1)^{-1}X_1^ty - (X_1^tX_1)^{-1}X_1^tX_2\hat{\beta_2} \\
+\hat{\beta_1} &= (X_1^tX_1)^{-1}X_1^t(y - X_2\hat{\beta_2}) 
+\end{align*}
+$$
+
+다음으로 $\hat{\beta_2}$에 대해 정리하면 다음과 같다.
+
+$$
+\begin{align*}
+(X_2^tX_1)\hat{\beta_1} + (X_2^tX_2)\hat{\beta_2} &= X_2^ty \\
+(X_2^tX_1) (X_1^tX_1)^{-1}X_1^t(y - X_2\hat{\beta_2}) +(X_2^tX_2)\hat{\beta_2} &= X_2^ty \\ 
+X_2^tX_1(X_1^tX_1)^{-1}X_1^ty - X_2^tX_1(X_1^tX_1)^{-1}X_2^t\hat{\beta}_2 + X_2^tX_2\hat{\beta}_2 &=X_2^ty \\
+X_2^ty - X_2^tX_1(X_1^tX_1)^{-1}X_1^ty &= X_2^tX_2\hat{\beta}_2 - X_2^tX_1(X_1^tX_1)^{-1}X_2^t\hat{\beta}_2 \\ 
+X_2^t(I - X_1(X_1^tX_1)^{-1}X_1^t)y &= [X_2^t(I - X_1(X_1^tX_1)^{-1}X_1^t)X_2]\hat{\beta}_2 \\
+\hat{\beta}_2 &= [X_2^t(I - X_1(X_1^tX_1)^{-1}X_1^t)X_2]^{-1}X_2^t(I - X_1(X_1^tX_1)^{-1}X_1^t)y \\
+&=[X_2^tM_1X_2]^{-1}X_2^tM_1y, \quad M_1 = I - X_1(X_1^tX_1)^{-1}X_1^t
+\end{align*}
+$$
+
+회귀분석에서 $M$은 residual maker로 $My$는 $y \sim X$의 잔차를 의미한다.
+
+$$
+\begin{align*}
+e &= y - X\hat{\beta} \\ 
+&=y - X(X^tX)^{-1}X^ty \\ 
+&=(I - X(X^tX)^{-1}X^t)y \\ 
+&=My
+\end{align*}
+$$
+
+따라서 위의 식 $\hat{\beta}_2 = [X_2^tM_1X_2]^{-1}X_2^tM_1y$에서
+
+$M_1y$는 $y \sim X_1$의 잔차, $M_1X_2$는 $X_2 \sim X_1$를 의미한다.
+
+$$
+\begin{align*}
+\hat{\beta}_2 &= [X_2^tM_1X_2]^{-1}X_2^tM_1y \\ 
+&=[X_2^tM_1^tM_1X_2]^{-1}X_2^tM_1^tM_1y, \quad M_1^tM1 = M_1 : \text{idempotent matrix} \\ 
+&= [X_2^{*t}X_2^*]^{-1}X_2^{*t}y^*, \quad X_2^* = M_1X_2, \quad y^* = M_1y
+\end{align*}
+$$
+
+즉, 정리하면 다음과 같다.
+
+$$
+\begin{align*}
+y = X_1\beta_1 + X_2\beta_2 + \epsilon \longrightarrow y &= X_1\hat{\beta}_1 + X_2\hat{\beta}_2 + e \\ 
+\therefore \hat{\beta}_2 &= [X_2^{*t}X_2^*]^{-1}X_2^{*t}y^*, \quad X_2^* = M_1X_2, \quad y^* = M_1y
+\end{align*}
+$$
+
+## Example
+
+-   $D$ : treatment variable
+
+-   $X$ : observed covariates
+
+-   $Z$ : unobserved covariates
+
+$$
+\begin{align*}
+Y = \hat{\tau}D + X\hat{\beta} + \hat{\gamma}Z + \hat{\epsilon}_{null}
+\end{align*}
+$$
+
+**Frisch-waugh-Lovell theorem**을 적용하면 $Y = \hat{\tau}D + X\hat{\beta} + \hat{\gamma}Z + \hat{\epsilon}_{null}$에 **FWL**을 적용하면
+
+1.  $Y ~ \sim X$의 잔차 $\longrightarrow$ $Y^{\perp X}$
+
+2.  $D ~ \sim X$의 잔차 $\longrightarrow$ $D^{\perp X}$
+
+3.  $Z ~ \sim X$의 잔차 $\longrightarrow$ $Z^{\perp X}$
+
+4.  $Y^{\perp X} \sim D^{\perp X} + Z^{\perp X}$ $\longrightarrow$ $\hat{\tau}, \, \hat{\gamma}$
+
+    -   $Y^{\perp X} = \hat{\tau}D^{\perp X} + \hat{\gamma}Z^{\perp X}$
+
+```{r}
+set.seed(13)
+N = 10000
+
+df <- data.frame(
+    Z = rnorm(N, 1),
+    X = rnorm(N, 1.5),
+    D = rnorm(N, 2.5), 
+    Y = rnorm(N, 3))
+
+YperpX <- lm(Y ~ X, df)$residuals
+DperpX <- lm(D ~ X, df)$residuals
+ZperpX <- lm(Z ~ X, df)$residuals
+
+resid_df <- data.frame(YperpX, DperpX, ZperpX)
+
+print(coef(lm(YperpX ~ DperpX+ZperpX, resid_df))[c(2, 3)], digits = 2)
+
+print(coef(lm(Y~D+X+Z, df))[c(2, 4)], digits = 2)
+```
+
+$$
+\begin{align*}
+Y = \hat{\tau}_{res}D + X\hat{\beta}_{res} + \hat{\epsilon}_{res}
+\end{align*}
+$$
+
+$Y = \hat{\tau}_{res}D + X\hat{\beta}_{res} + \hat{\epsilon}_{res}$에 **FWL**을 적용하면
+
+1.  $y ~ \sim X$의 잔차 $\longrightarrow$ $Y^{\perp X}$
+
+2.  $D ~ \sim X$의 잔차 $\longrightarrow$ $D^{\perp X}$
+
+3.  $Y^{\perp X} \sim D^{\perp X}$ $\longrightarrow$ $\hat{\tau}_{res}$
+
+```{r}
+set.seed(13)
+N = 10000
+
+df <- data.frame(
+    X = rnorm(N, 1.5),
+    D = rnorm(N, 2.5), 
+    Y = rnorm(N, 3))
+
+YperpX <- lm(Y ~ X, df)$residuals
+DperpX <- lm(D ~ X, df)$residuals
+
+resid_df <- data.frame(YperpX, DperpX)
+
+print(coef(lm(YperpX ~ DperpX, resid_df))[2], digits = 2)
+
+print(coef(lm(Y~D+X, df))[2], digits = 2)
+```
+
+## 3.1 The traditional omitted variable bias
+
+$$
+\begin{align*}
+\hat{\tau}_{res} &= \frac{cov(D^{\perp X}, Y^{\perp X})}{var(D^{\perp X})} \\ 
+&= \frac{cov(D^{\perp X},\hat{\tau}D^{\perp X} + \hat{\gamma}Z^{\perp X})}{var(D^{\perp X})} \\ 
+&= \frac{\hat{\tau}cov(D^{\perp X},D^{\perp X}) + \hat{\gamma}cov(D^{\perp X}, Z^{\perp X})}{var(D^{\perp X})} \\
+&=\hat{\tau} + \hat{\gamma} \cdot \hat{\delta}, \quad \hat{\delta} = \frac{cov(D^{\perp X}, Z^{\perp X})}{var(D^{\perp X})}, \quad \hat{\gamma} = \frac{cov(Y^{\perp X, D}, Z^{\perp X, D})}{var(Z^{\perp X, D})}
+\end{align*}
+$$
+
+따라서 unobserved confounder에 의한 추정량의 bias는 다음과 같다.
+
+$$
+\begin{align*}
+\hat{bias} = \hat{\tau}_{res} - \hat{\tau} =  \hat{\gamma} \cdot \hat{\delta}
+\end{align*}
+$$
+
+$Z$는 unobserved confounder이므로 $\hat{\gamma}, \, \hat{\delta}$의 부호를 알 수 없다. 따라서 unobserved confounder의 추정량에 영향을 미치는 크기를 고려해야 한다. 즉, 연구의 주요 결론에 영향을 줄 정도로 추정량을 변경하려면 unobserved confounder $Z$의 효과는 어느 정도 크기여야 하는가?
+
+이는 sensitivity analysis를 통해 파악할 수 있다.
+
+## contour plot
+
+## OVB with the partial $R^2$ parameterization
+
+$$
+\begin{align*}
+\hat{bias} &= \hat{\gamma} \cdot \hat{\delta} \\ 
+&=\sqrt{\frac{R^2_{Y \sim Z|D, X} \cdot R^2_{D \sim Z|X}}{1-R^2_{D \sim Z|X}}} \cdot \frac{sd(Y^{\perp X,D})}{sd(D^{\perp X})} \\
+&=\hat{se}(\hat{\tau}_{res})\cdot\sqrt{\frac{R^2_{Y \sim Z|D, X} \cdot R^2_{D \sim Z|X}}{1-R^2_{D \sim Z|X}}}(df)
+\end{align*}
+$$
+
+## Robustness value
+
+$$
+\begin{align*}
+RV_q = \frac{1}{2}(\sqrt{f^4_q + 4f^2_q - f^2_q})
+\end{align*}
+$$
+
+# Example
+
+```{r}
+library(tidyverse)
+df <- read.csv("ex_data.csv")[, -1]
+
+df %>% head()
+```
+
+```{r}
+df$gender <- as.factor(df$gender)
+
+fit <- lm(wage ~ ., df)
+summary(fit)
+```
+
+-   education의 coef는 양수임 
+
+-   unobserved confounder(ability)가 있으므로, OVB가 존재함 
+
+```{r}
+library(sensemakr)
+sens <- sensemakr(model = fit, treatment = "education")
+sens
+```
+
+-   교육이 임금에 미치는 영향의 부호가 바뀌려면, 교육과 임금의 residual variance 중 어느 정도를 ability로 설명해야 하는지? 
+
+
+```{r}
+summary(sens)
+```
+
+
+```{r}
+plot(sens, xlab = "Partial R^2 of ability with education", 
+     ylab = "Partial $R^2$ of ability with wage")
+```
+
+-   unadjusted는 unobserved confounder인 ability가 wage, education에 미치는 효과가 없을 때를 의미함 
+
+    -   위에서 lm 결과와 동일함 
+
+-   우측 상단으로 갈수록 ability의 power는 증가하고, 추정된 회귀계수 값은 감소함 
+
+-   빨간 점선일 때, 추정된 회귀계수 값은 0이 됨 
+
+```{r}
+sens2 <- sensemakr(model = fit, treatment = "education", 
+                  benchmark_covariates = "age", 
+                  kd = c(0.5, 1, 2), 
+                  ky = c(0.5, 1, 2))
+
+plot(sens2)
+```
+
+
+
+```{r}
+plot(sens, type = "extreme")
+
+```
+
+# 참고자료
+
+<https://bookdown.org/ts_robinson1994/10_fundamental_theorems_for_econometrics/frisch.html>
+
+<https://arelbundock.com/posts/robustness_values/>
+
+<https://web.stanford.edu/~mrosenfe/soc_meth_proj3/matrix_OLS_2_Beck_UCSD.pdf>
