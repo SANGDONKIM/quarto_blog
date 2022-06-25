@@ -5,6 +5,7 @@ description: |
 author: "Don Don"
 date: "2022-06-24"
 categories: [causal inference]
+image: "https://raw.githubusercontent.com/carloscinelli/sensemakr/master/man/figures/sensemakr-logo-small.png"
 ---
 
 # Making Sense of Sensitivity: Extending Omitted Variable Bias

@@ -4,7 +4,8 @@ description: |
   R 패키지 logo 만들기 
 author: "Don Don"
 date: "2022-06-24"
-categories: [hexSticker]
+categories: [hexSticker, R]
+image: "https://raw.githubusercontent.com/GuangchuangYu/hexSticker/master/inst/figures/baseplot.png"
 ---
 
 
