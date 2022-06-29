@@ -1,0 +1,48 @@
+---
+title: "install MySQL for mac"
+description: |
+  mac m1 pro에 MySQL 설치하기 
+author: "Don Don"
+date: "2022-06-28"
+categories: [Mysql]
+image: "https://upload.wikimedia.org/wikipedia/en/thumb/d/dd/MySQL_logo.svg/2880px-MySQL_logo.svg.png"
+
+---
+
+
+## homebrew 설치 
+
+homebrew 홈페이지 : <https://brew.sh/>
+
+terminal 창에 아래 코드를 입력하면 homebrew가 설치된다. homebrew 홈페이지에 있는 코드와 동일하다. 
+
+`/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"`
+
+설치가 완료된 후에는 terminal 창을 끄지말고, Next step 문구에 있는 코드를 복사해서 넣어줘야 한다. 
+
+Next step 하단에 `echo 'eval $(블라블라) eval $(/opt/homebrew/bin/brew shellenv)'`를 복사해서 terminal에 붙여넣기를 해준다. 
+
+
+
+## mysql 설치 
+
+1. mysql 설치 : `brew install mysql`
+
+2. 설치 버전 확인 : `mysql -V` 
+
+3. 서버 켜기 : `mysql.server start`
+
+4. 초기 설정 : `mysql_secure_installation` (재설정하고 싶을 때도 동일하게 입력)
+
+    -   복잡한 비밀번호 설정 : Yes or No
+
+    -   익명 유저 설정 여부 : Yes or No
+
+    -   localhost에서만 root 접속 여부 : Yes or No
+
+    -   test 데이터베이스 삭제 여부 : Yes or No
+
+
+5. mysql 접속 : `mysql -u root -p`
+
+6. 서버 종료 : `mysql.server stop`
