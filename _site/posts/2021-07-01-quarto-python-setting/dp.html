@@ -209,7 +209,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>quarto는 vscode에서도 잘 작동한다. Rstudio에서 quarto를 사용할 수 있지만, vscode가 파이썬에 좀 더 친숙하기 때문에 vscode를 이용하기로 마음먹었다.</p>
 <p>quarto를 이용하면 r, python을 왔다갔다하면서 글을 쉽게 쓸 수 있는 것이 큰 장점인 것 같다(Rmd도 되긴함..).</p>
 <p>quarto는 r에서 reticulate를 통해 파이썬을 세팅 안해도 되서, Rmd보다 편하다.</p>
-<p>세팅하는 방법은 몇 번의 시도 끝에 한 것이기 때문에..글을 올리기 위해 실험을 다시 하는 것은 번거롭고, 내가 했던 방법에 대해 공유를 해보면</p>
+<p>세팅하는 방법은 몇 번의 시도 끝에 한 것이기 때문에..글을 올리기 위해 실험을 다시 하는 것은 번거롭고, 내가 했던 방법에 대해 공유를 해보면 다음과 같다.</p>
 <ol type="1">
 <li><p>vscode 설치</p></li>
 <li><p>python 가상환경 세팅</p></li>
@@ -224,6 +224,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ul>
 <li>Ctrl + Shift + p : python interpreter를 치고, 만든 가상환경으로 선택</li>
 </ul>
+<p>마지막으로 title 청크 옵션에 <code>jupyter: python3</code>을 넣어줘야 한다.</p>
 <p>아래는 quarto 홈페이지에 있는 튜토리얼 코드이다. 해당 코드를 돌려보면 정상적으로 돌아가는 것을 볼 수 있다.</p>
 <p>For a demonstration of a line plot on a polar axis, see <a href="#fig-polar">Figure&nbsp;1</a>.</p>
 <div class="cell" data-execution_count="1">

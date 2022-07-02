@@ -5,6 +5,7 @@ description: |
 author: "Don Don"
 date: "2022-07-01"
 categories: [R, python]
+image: "https://rstudio.github.io/reticulate/reference/figures/reticulated_python.png"
 ---
 
 ## reticulate 소개 
