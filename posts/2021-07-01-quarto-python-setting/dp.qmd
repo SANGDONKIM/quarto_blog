@@ -6,6 +6,7 @@ author: "Don Don"
 date: "2022-06-22"
 categories: [python]
 image: "https://quarto.org/docs/tools/images/vscode-render.png"
+jupyter: python3
 ---
 
 # quarto vscode 파이썬 세팅 

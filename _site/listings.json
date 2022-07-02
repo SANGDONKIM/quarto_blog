@@ -2,14 +2,15 @@
   {
     "listing": "/index.html",
     "items": [
+      "/posts/2022-07-01-python-test/python.html",
       "/posts/2021-06-28-install-sql-for-mac/sql.html",
       "/posts/2021-06-26-create-logo/hexsticker.html",
       "/posts/sensmakr/sensmakr.html",
       "/posts/welcome/index.html",
       "/posts/com_sep/com_sep.html",
       "/posts/logistic_reg/index.html",
+      "/posts/2021-07-01-quarto-python-setting/dp.html",
       "/posts/data/blog_building/build_blog.html",
-      "/posts/py_example/py_ex.html",
       "/posts/2021-10-02-docker/docker.html",
       "/posts/2021-08-24-packrat/packrat_renv.html",
       "/posts/2021-07-29-machine-learning-explainability/ML_explain.html",

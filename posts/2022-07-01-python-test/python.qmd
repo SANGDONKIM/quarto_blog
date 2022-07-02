@@ -1,0 +1,43 @@
+---
+title: "python test"
+description: |
+  quarto python setting
+author: "Don Don"
+date: "2022-07-01"
+categories: [R, python]
+---
+
+
+```{r}
+library(tidyverse)
+library(gt)
+library(sknifedatar)
+library(patchwork)
+```
+
+
+-   pytorch-test 폴더에 만든 가상환경 env로 reticulate path를 맞춰줘야 잘 동작함 
+```{r}
+Sys.setenv(RETICULATE_PYTHON="/Users/sangdon/pytorch-test/env/bin/python")
+reticulate::use_condaenv(condaenv = 'env')
+```
+
+
+```{python}
+import pandas as pd 
+import numpy as np 
+import torch
+from torch_geometric.data import Data
+```
+
+
+```{python}
+edge_index = torch.tensor([[0, 1, 1, 2],
+                           [1, 0, 2, 1]], dtype=torch.long)
+x = torch.tensor([[-1], [0], [1]], dtype=torch.float)
+
+data = Data(x=x, edge_index=edge_index)
+data
+
+```
+

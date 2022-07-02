@@ -7,10 +7,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Don Don">
-<meta name="dcterms.date" content="2022-06-28">
-<meta name="description" content="mac m1 pro에 MySQL 설치하기">
+<meta name="dcterms.date" content="2022-06-22">
+<meta name="description" content="vscode에서 quarto와 파이썬 사용하기">
 
-<title>Don Don - install MySQL for mac</title>
+<title>Don Don - quarto vscode and python</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -18,6 +18,69 @@ span.underline{text-decoration: underline;}
 div.column{display: inline-block; vertical-align: top; width: 50%;}
 div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
 <script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
@@ -96,16 +159,16 @@ ul.task-list{list-style: none;}
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">install MySQL for mac</h1>
+      <h1 class="title">quarto vscode and python</h1>
                           <div class="quarto-categories">
-                <div class="quarto-category">Mysql</div>
+                <div class="quarto-category">python</div>
               </div>
                   </div>
   </div>
     
   <div>
     <div class="description">
-      <p>mac m1 pro에 MySQL 설치하기</p>
+      <p>vscode에서 quarto와 파이썬 사용하기</p>
     </div>
   </div>
 
@@ -124,7 +187,7 @@ ul.task-list{list-style: none;}
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">June 28, 2022</p>
+        <p class="date">June 22, 2022</p>
       </div>
     </div>
       
@@ -141,42 +204,54 @@ ul.task-list{list-style: none;}
 
 
 
-<section id="homebrew-설치" class="level2">
-<h2 class="anchored" data-anchor-id="homebrew-설치">homebrew 설치</h2>
-<p>homebrew 홈페이지 : <a href="https://brew.sh/" class="uri">https://brew.sh/</a></p>
-<p>terminal 창에 아래 코드를 입력하면 homebrew가 설치된다. homebrew 홈페이지에 있는 코드와 동일하다.</p>
-<p><code>/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"</code></p>
-<p>설치가 완료된 후에는 terminal 창을 끄지말고, Next step 문구에 있는 코드를 복사해서 넣어줘야 한다.</p>
-<p>Next step 하단에 <code>echo 'eval $(블라블라) eval $(/opt/homebrew/bin/brew shellenv)'</code>를 복사해서 terminal에 붙여넣기를 해준다.</p>
-</section>
-<section id="mysql-설치" class="level2">
-<h2 class="anchored" data-anchor-id="mysql-설치">mysql 설치</h2>
+<section id="quarto-vscode-파이썬-세팅" class="level1">
+<h1>quarto vscode 파이썬 세팅</h1>
+<p>quarto는 vscode에서도 잘 작동한다. Rstudio에서 quarto를 사용할 수 있지만, vscode가 파이썬에 좀 더 친숙하기 때문에 vscode를 이용하기로 마음먹었다.</p>
+<p>quarto를 이용하면 r, python을 왔다갔다하면서 글을 쉽게 쓸 수 있는 것이 큰 장점인 것 같다(Rmd도 되긴함..).</p>
+<p>quarto는 r에서 reticulate를 통해 파이썬을 세팅 안해도 되서, Rmd보다 편하다.</p>
+<p>세팅하는 방법은 몇 번의 시도 끝에 한 것이기 때문에..글을 올리기 위해 실험을 다시 하는 것은 번거롭고, 내가 했던 방법에 대해 공유를 해보면</p>
 <ol type="1">
-<li><p>mysql 설치 : <code>brew install mysql</code></p></li>
-<li><p>설치 버전 확인 : <code>mysql -V</code></p></li>
-<li><p>서버 켜기 : <code>mysql.server start</code></p></li>
-<li><p>초기 설정 : <code>mysql_secure_installation</code> (재설정하고 싶을 때도 동일하게 입력)</p>
-<ul>
-<li><p>복잡한 비밀번호 설정 : Yes or No</p></li>
-<li><p>익명 유저 설정 여부 : Yes or No</p></li>
-<li><p>localhost에서만 root 접속 여부 : Yes or No</p></li>
-<li><p>test 데이터베이스 삭제 여부 : Yes or No</p></li>
-</ul></li>
-<li><p>mysql 접속 : <code>mysql -u root -p</code></p></li>
-<li><p>sql 종료 : <code>exit</code></p></li>
-<li><p>서버 종료 : <code>mysql.server stop</code></p></li>
+<li><p>vscode 설치</p></li>
+<li><p>python 가상환경 세팅</p></li>
+<li><p>vscode에서 파이썬 가상환경 세팅</p></li>
 </ol>
+<ul>
+<li>가상환경에 필요한 파이썬 패키지 설치</li>
+</ul>
+<pre><code>-   python3 -m pip install matplotlib plotly_express
+
+-   python3 -m pip install jupyter(**필수**)  </code></pre>
+<ul>
+<li>Ctrl + Shift + p : python interpreter를 치고, 만든 가상환경으로 선택</li>
+</ul>
+<p>아래는 quarto 홈페이지에 있는 튜토리얼 코드이다. 해당 코드를 돌려보면 정상적으로 돌아가는 것을 볼 수 있다.</p>
+<p>For a demonstration of a line plot on a polar axis, see <a href="#fig-polar">Figure&nbsp;1</a>.</p>
+<div class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>r <span class="op">=</span> np.arange(<span class="dv">0</span>, <span class="dv">2</span>, <span class="fl">0.01</span>)</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>theta <span class="op">=</span> <span class="dv">2</span> <span class="op">*</span> np.pi <span class="op">*</span> r</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>  subplot_kw <span class="op">=</span> {<span class="st">'projection'</span>: <span class="st">'polar'</span>} </span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>ax.plot(theta, r)</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>ax.set_rticks([<span class="fl">0.5</span>, <span class="dv">1</span>, <span class="fl">1.5</span>, <span class="dv">2</span>])</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>ax.grid(<span class="va">True</span>)</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div id="fig-polar" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="dp_files/figure-html/fig-polar-output-1.png" class="img-fluid figure-img"></p>
+<p></p><figcaption aria-hidden="true" class="figure-caption">Figure 1: A line plot on a polar axis</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
 </section>
-<section id="workbench-설치" class="level2">
-<h2 class="anchored" data-anchor-id="workbench-설치">workbench 설치</h2>
-<ol type="1">
-<li><p><code>brew install --cask mysqlworkbench</code></p></li>
-<li><p>mysqlworkbench 실행</p></li>
-<li><p>workbench 세팅 방법 참고 : https://dearmycode.tistory.com/15</p>
-<ul>
-<li><code>mysql.server start</code> 하고 연결해야 잘 작동함</li>
-</ul></li>
-</ol>
+<section id="참고" class="level1">
+<h1>참고</h1>
+<p><a href="https://quarto.org/docs/get-started/hello/vscode.html" class="uri">https://quarto.org/docs/get-started/hello/vscode.html</a></p>
 
 
 </section>

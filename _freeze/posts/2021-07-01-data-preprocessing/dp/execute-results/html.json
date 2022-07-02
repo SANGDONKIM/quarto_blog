@@ -1,0 +1,11 @@
+{
+  "hash": "c1d761929dbf4da1d0f649c9d88b485b",
+  "result": {
+    "markdown": "---\ntitle: data preprocessing\ndescription: |\n  전처리\nauthor: Don Don\ndate: '2022-07-01'\ncategories:\n  - R\n  - python\n---\n\n::: {.cell execution_count=1}\n``` {.python .cell-code}\nimport pandas as pd\nimport numpy as np \n```\n:::\n\n\n",
+    "supporting": [
+      "dp_files"
+    ],
+    "filters": [],
+    "includes": {}
+  }
+}

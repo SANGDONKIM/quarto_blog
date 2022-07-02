@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Don Don">
-<meta name="dcterms.date" content="2022-06-22">
+<meta name="dcterms.date" content="2021-01-06">
 <meta name="description" content="gradient boosting machine 소개">
 
 <title>Don Don - gradient boosting machine tutorial</title>
@@ -162,7 +162,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <div class="quarto-title column-body">
       <h1 class="title">gradient boosting machine tutorial</h1>
                           <div class="quarto-categories">
-                <div class="quarto-category">python</div>
+                <div class="quarto-category">R</div>
+                <div class="quarto-category">gbm</div>
               </div>
                   </div>
   </div>
@@ -188,7 +189,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">June 22, 2022</p>
+        <p class="date">January 6, 2021</p>
       </div>
     </div>
       
@@ -370,21 +371,21 @@ Speciesversicolor  Speciesvirginica
 <span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>                <span class="at">distribution =</span> <span class="st">'gaussian'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Iter   TrainDeviance   ValidDeviance   StepSize   Improve
-     1        0.6732             nan     0.0100    0.0080
-     2        0.6663             nan     0.0100    0.0077
-     3        0.6580             nan     0.0100    0.0072
-     4        0.6502             nan     0.0100    0.0079
-     5        0.6426             nan     0.0100    0.0076
-     6        0.6357             nan     0.0100    0.0076
-     7        0.6285             nan     0.0100    0.0070
-     8        0.6206             nan     0.0100    0.0071
-     9        0.6137             nan     0.0100    0.0066
-    10        0.6079             nan     0.0100    0.0058
-    20        0.5428             nan     0.0100    0.0060
-    40        0.4444             nan     0.0100    0.0041
-    60        0.3683             nan     0.0100    0.0020
-    80        0.3145             nan     0.0100    0.0022
-   100        0.2734             nan     0.0100    0.0016</code></pre>
+     1        0.6725             nan     0.0100    0.0076
+     2        0.6647             nan     0.0100    0.0081
+     3        0.6561             nan     0.0100    0.0079
+     4        0.6480             nan     0.0100    0.0075
+     5        0.6403             nan     0.0100    0.0074
+     6        0.6330             nan     0.0100    0.0075
+     7        0.6262             nan     0.0100    0.0072
+     8        0.6191             nan     0.0100    0.0070
+     9        0.6115             nan     0.0100    0.0071
+    10        0.6047             nan     0.0100    0.0073
+    20        0.5411             nan     0.0100    0.0060
+    40        0.4426             nan     0.0100    0.0035
+    60        0.3684             nan     0.0100    0.0030
+    80        0.3145             nan     0.0100    0.0023
+   100        0.2726             nan     0.0100    0.0015</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fit_pack)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
@@ -392,8 +393,8 @@ Speciesversicolor  Speciesvirginica
 </div>
 <div class="cell-output cell-output-stdout">
 <pre><code>                      var   rel.inf
-Petal.Length Petal.Length 96.855875
-Petal.Width   Petal.Width  3.144125
+Petal.Length Petal.Length 97.863376
+Petal.Width   Petal.Width  2.136624
 Sepal.Width   Sepal.Width  0.000000
 Species           Species  0.000000</code></pre>
 </div>
@@ -402,15 +403,15 @@ Species           Species  0.000000</code></pre>
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">pretty.gbm.tree</span>(fit_pack, <span class="at">i =</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  SplitVar SplitCodePred LeftNode RightNode MissingNode ErrorReduction Weight
-0        2   1.150000000        1         2           3        29.2772     75
-1       -1  -0.007754762       -1        -1          -1         0.0000     28
-2       -1   0.005162411       -1        -1          -1         0.0000     47
-3       -1   0.000340000       -1        -1          -1         0.0000     75
-    Prediction
-0  0.000340000
-1 -0.007754762
-2  0.005162411
-3  0.000340000</code></pre>
+0        1  4.5500000000        1         2           3       35.72057     75
+1       -1 -0.0067060606       -1        -1          -1        0.00000     44
+2       -1  0.0073086022       -1        -1          -1        0.00000     31
+3       -1 -0.0009133333       -1        -1          -1        0.00000     75
+     Prediction
+0 -0.0009133333
+1 -0.0067060606
+2  0.0073086022
+3 -0.0009133333</code></pre>
 </div>
 </div>
 <p>pretty.gbm.tree()를 이용하면 개별 tree를 적합할 때 진행상황을 모니터링할 수 있다. 여기서의 predict 값은 개별 tree에 대한 값이므로 pseudo residual 값에 해당한다(참고 3).</p>
