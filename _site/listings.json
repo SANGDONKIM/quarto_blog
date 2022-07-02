@@ -2,6 +2,7 @@
   {
     "listing": "/index.html",
     "items": [
+      "/posts/welcome/index.html",
       "/posts/2022-07-01-python-test/python.html",
       "/posts/2021-06-28-install-sql-for-mac/sql.html",
       "/posts/2021-06-26-create-logo/hexsticker.html",
@@ -19,8 +20,7 @@
       "/posts/2021-06-12-modeltime-with-tidymodels/modeltime.html",
       "/posts/2021-06-12-tidymodels-tutorial/tidymodels_tutorial.html",
       "/posts/2021-06-12-gradient-boosting-regression/gbm.html",
-      "/posts/2021-06-12-markov-chain-monte-carlo/mcmc.html",
-      "/posts/welcome/index.html"
+      "/posts/2021-06-12-markov-chain-monte-carlo/mcmc.html"
     ]
   }
 ]
