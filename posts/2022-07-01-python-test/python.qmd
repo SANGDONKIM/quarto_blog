@@ -1,43 +1,78 @@
 ---
-title: "python test"
+title: "reticulate"
 description: |
-  quarto python setting
+  reticulate vscode 세팅
 author: "Don Don"
 date: "2022-07-01"
 categories: [R, python]
 ---
 
+## reticulate 소개 
 
-```{r}
+**reticulate** 패키지는 R에서 python을 사용하고 싶을 때 이용할 수 있는 패키지이다. vscode에서 quarto를 이용할 때, 가상환경을 적절하게 세팅하면 각 qmd 파일 별로 R, python을 적절하게 사용할 수 있지만 R, python을 한 qmd에서 동시에 사용할 수는 없다. 동시에 사용하고 싶을 경우 **reticulate** 패키지를 이용하면 된다. 
+
+# R example 
+```{r, message = F, warning = F}
 library(tidyverse)
 library(gt)
-library(sknifedatar)
-library(patchwork)
+library(reticulate)
 ```
 
 
--   pytorch-test 폴더에 만든 가상환경 env로 reticulate path를 맞춰줘야 잘 동작함 
+```{r}
+iris %>% head() %>% gt()
+```
+
+
+## reticulate 
+
+reticulate를 이용할 때는 가상환경을 만들고, 해당 가상환경을 연결해서 사용하는 것이 바람직하다. 나는 pytorch-test 폴더에 가상환경 env를 만들고, reticulate 패키지와 연결할 가상환경의 path를 맞춰주었다. 이 작업을 안할 경우 error가 난다;;  
 ```{r}
 Sys.setenv(RETICULATE_PYTHON="/Users/sangdon/pytorch-test/env/bin/python")
 reticulate::use_condaenv(condaenv = 'env')
 ```
 
 
+## python example 
 ```{python}
 import pandas as pd 
 import numpy as np 
 import torch
+
+import networkx as nx
+import matplotlib.pyplot as plt
 from torch_geometric.data import Data
+import torch_geometric
+from sklearn.datasets import load_iris
 ```
 
 
 ```{python}
-edge_index = torch.tensor([[0, 1, 1, 2],
-                           [1, 0, 2, 1]], dtype=torch.long)
-x = torch.tensor([[-1], [0], [1]], dtype=torch.float)
+iris = load_iris()
+df = pd.DataFrame(iris.data, columns=iris.feature_names)
+df.head()
+```
 
-data = Data(x=x, edge_index=edge_index)
-data
+
+
+```{python}
+G = nx.star_graph(20)
+pos = nx.spring_layout(G, seed=63)  # Seed layout for reproducibility
+colors = range(20)
+options = {
+    "node_color": "#A0CBE2",
+    "edge_color": colors,
+    "width": 4,
+    "edge_cmap": plt.cm.Blues,
+    "with_labels": False,
+}
+nx.draw(G, pos, **options)
+plt.show()
 
 ```
 
+## 참고 
+
+<https://rstudio.github.io/reticulate/articles/versions.html#providing-hints-1>
+
+<https://stackoverflow.com/questions/59842256/specify-reticulate-python-path-in-reticulate-python-environment-variable>
