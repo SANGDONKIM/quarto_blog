@@ -4,15 +4,16 @@ project:
 website:
   title: "Don Don"
   navbar:
+    search: true 
     right:
       - about.qmd
       - icon: github
         href: https://github.com/SANGDONKIM
       - icon: linkedin
         href: https://www.linkedin.com/in/%EC%83%81%EB%8F%88-%EA%B9%80-b89985199/
+format:
   html:
-    theme: my-litera.scss
+    theme: ember.scss
     css: styles.css
-
 
 

@@ -121,9 +121,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
+<link rel="stylesheet" href="../../styles.css">
 </head>
 
-<body class="nav-fixed fullcontent">
+<body class="floating nav-fixed">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -157,7 +158,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     </nav>
 </header>
 <!-- content -->
-<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+<header id="title-block-header" class="quarto-title-block default toc-left page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
       <h1 class="title">machine learning explainability</h1>
@@ -197,8 +198,32 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   
   </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto">
+    <nav id="TOC" role="doc-toc">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#libraries" id="toc-libraries" class="nav-link active" data-scroll-target="#libraries">Libraries</a></li>
+  <li><a href="#model-specific-method" id="toc-model-specific-method" class="nav-link" data-scroll-target="#model-specific-method">Model-specific method</a>
+  <ul class="collapse">
+  <li><a href="#random-forest" id="toc-random-forest" class="nav-link" data-scroll-target="#random-forest">Random forest</a></li>
+  <li><a href="#gini-importance-in-random-forest" id="toc-gini-importance-in-random-forest" class="nav-link" data-scroll-target="#gini-importance-in-random-forest">Gini importance in random forest</a></li>
+  <li><a href="#purmutation-importance-in-random-forest" id="toc-purmutation-importance-in-random-forest" class="nav-link" data-scroll-target="#purmutation-importance-in-random-forest">Purmutation importance in random forest</a></li>
+  </ul></li>
+  <li><a href="#model-agnostic-method" id="toc-model-agnostic-method" class="nav-link" data-scroll-target="#model-agnostic-method">Model-agnostic method</a>
+  <ul class="collapse">
+  <li><a href="#permutation-importance" id="toc-permutation-importance" class="nav-link" data-scroll-target="#permutation-importance">Permutation importance</a></li>
+  <li><a href="#partial-dependence-plot" id="toc-partial-dependence-plot" class="nav-link" data-scroll-target="#partial-dependence-plot">Partial dependence plot</a></li>
+  <li><a href="#shapley-value" id="toc-shapley-value" class="nav-link" data-scroll-target="#shapley-value">Shapley value</a></li>
+  <li><a href="#dalex-패키지를-이용해서-shap을-그리는-방법" id="toc-dalex-패키지를-이용해서-shap을-그리는-방법" class="nav-link" data-scroll-target="#dalex-패키지를-이용해서-shap을-그리는-방법">DALEX 패키지를 이용해서 SHAP을 그리는 방법</a></li>
+  <li><a href="#fastshap-패키지를-이용한-방법" id="toc-fastshap-패키지를-이용한-방법" class="nav-link" data-scroll-target="#fastshap-패키지를-이용한-방법">fastshap 패키지를 이용한 방법</a></li>
+  </ul></li>
+  </ul>
+</nav>
+</nav>
 <!-- margin-sidebar -->
-    
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+    </div>
 <!-- main -->
 <main class="content quarto-banner-title-block" id="quarto-document-content">
 
@@ -326,8 +351,8 @@ Mtry:                             1
 Target node size:                 5 
 Variable importance mode:         impurity 
 Splitrule:                        variance 
-OOB prediction error (MSE):       0.008674044 
-R squared (OOB):                  0.7231704 </code></pre>
+OOB prediction error (MSE):       0.008654984 
+R squared (OOB):                  0.7237787 </code></pre>
 </div>
 </div>
 <p><strong>Gini importance plot</strong></p>
@@ -515,10 +540,10 @@ Training error : 0.278962 </code></pre>
   -&gt; target variable   :  2930  values 
   -&gt; predict function  :  yhat.workflow  will be used (  default  )
   -&gt; predicted values  :  No value for predict function target column. (  default  )
-  -&gt; model_info        :  package tidymodels , ver. 0.2.0.9000 , task regression (  default  ) 
-  -&gt; predicted values  :  numerical, min =  4.906283 , mean =  5.220625 , max =  5.509735  
+  -&gt; model_info        :  package tidymodels , ver. 0.2.0 , task regression (  default  ) 
+  -&gt; predicted values  :  numerical, min =  4.89497 , mean =  5.220575 , max =  5.505708  
   -&gt; residual function :  difference between y and yhat (  default  )
-  -&gt; residuals         :  numerical, min =  -0.8029249 , mean =  1.511754e-05 , max =  0.3728236  
+  -&gt; residuals         :  numerical, min =  -0.8235946 , mean =  6.553947e-05 , max =  0.3733509  
   A new explainer has been created!  </code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>pdp_rf <span class="ot">&lt;-</span> <span class="fu">model_profile</span>(explainer_rf, <span class="at">N =</span> <span class="cn">NULL</span>, </span>
@@ -722,26 +747,21 @@ survived
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>titanic_rec <span class="ot">&lt;-</span> titanic <span class="sc">%&gt;%</span> </span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">recipe</span>(survived <span class="sc">~</span> class <span class="sc">+</span> gender <span class="sc">+</span> age <span class="sc">+</span> </span>
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>                sibsp <span class="sc">+</span> parch <span class="sc">+</span> fare <span class="sc">+</span> embarked) <span class="sc">%&gt;%</span> </span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_bagimpute</span>(age, fare, sibsp, parch)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: `step_bagimpute()` was deprecated in recipes 0.1.16.
-Please use `step_impute_bag()` instead.
-This warning is displayed once every 8 hours.
-Call `lifecycle::last_lifecycle_warnings()` to see where this warning was generated.</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>rf_model <span class="ot">&lt;-</span> </span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">rand_forest</span>(<span class="at">trees =</span> <span class="dv">1000</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">set_engine</span>(<span class="st">"ranger"</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">set_mode</span>(<span class="st">"classification"</span>)</span>
-<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>rf_wflow <span class="ot">&lt;-</span> </span>
-<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">workflow</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_model</span>(rf_model) <span class="sc">%&gt;%</span> </span>
-<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_recipe</span>(titanic_rec)</span>
-<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a>rf_fit <span class="ot">&lt;-</span> rf_wflow <span class="sc">%&gt;%</span> <span class="fu">fit</span>(<span class="at">data =</span> titanic <span class="sc">%&gt;%</span> <span class="fu">select</span>(<span class="sc">-</span>country))</span>
-<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a>rf_ex_fit <span class="ot">&lt;-</span> rf_fit <span class="sc">%&gt;%</span> <span class="fu">extract_fit_parsnip</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_impute_bag</span>(age, fare, sibsp, parch)</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>rf_model <span class="ot">&lt;-</span> </span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">rand_forest</span>(<span class="at">trees =</span> <span class="dv">1000</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">set_engine</span>(<span class="st">"ranger"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">set_mode</span>(<span class="st">"classification"</span>)</span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>rf_wflow <span class="ot">&lt;-</span> </span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">workflow</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_model</span>(rf_model) <span class="sc">%&gt;%</span> </span>
+<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_recipe</span>(titanic_rec)</span>
+<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-17"><a href="#cb15-17" aria-hidden="true" tabindex="-1"></a>rf_fit <span class="ot">&lt;-</span> rf_wflow <span class="sc">%&gt;%</span> <span class="fu">fit</span>(<span class="at">data =</span> titanic <span class="sc">%&gt;%</span> <span class="fu">select</span>(<span class="sc">-</span>country))</span>
+<span id="cb15-18"><a href="#cb15-18" aria-hidden="true" tabindex="-1"></a>rf_ex_fit <span class="ot">&lt;-</span> rf_fit <span class="sc">%&gt;%</span> <span class="fu">extract_fit_parsnip</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <ul>
 <li><p>explain()</p>
@@ -754,11 +774,11 @@ Call `lifecycle::last_lifecycle_warnings()` to see where this warning was genera
 <li><p>shapley value가 계산되는 것은 아님</p></li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(DALEX)</span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>titanic_rf_exp <span class="ot">&lt;-</span>DALEX<span class="sc">::</span><span class="fu">explain</span>(<span class="at">model =</span> rf_fit, </span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>                       <span class="at">data =</span> titanic <span class="sc">%&gt;%</span> <span class="fu">select</span>(<span class="sc">-</span>country),</span>
-<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>                       <span class="at">y =</span> titanic_imputed<span class="sc">$</span>survived <span class="sc">==</span> <span class="st">"yes"</span>, </span>
-<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>                       <span class="at">label =</span> <span class="st">"Random Forest"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(DALEX)</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>titanic_rf_exp <span class="ot">&lt;-</span>DALEX<span class="sc">::</span><span class="fu">explain</span>(<span class="at">model =</span> rf_fit, </span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>                       <span class="at">data =</span> titanic <span class="sc">%&gt;%</span> <span class="fu">select</span>(<span class="sc">-</span>country),</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>                       <span class="at">y =</span> titanic_imputed<span class="sc">$</span>survived <span class="sc">==</span> <span class="st">"yes"</span>, </span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>                       <span class="at">label =</span> <span class="st">"Random Forest"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Preparation of a new explainer is initiated
   -&gt; model label       :  Random Forest 
@@ -766,23 +786,23 @@ Call `lifecycle::last_lifecycle_warnings()` to see where this warning was genera
   -&gt; target variable   :  2207  values 
   -&gt; predict function  :  yhat.workflow  will be used (  default  )
   -&gt; predicted values  :  No value for predict function target column. (  default  )
-  -&gt; model_info        :  package tidymodels , ver. 0.2.0.9000 , task classification (  default  ) 
+  -&gt; model_info        :  package tidymodels , ver. 0.2.0 , task classification (  default  ) 
   -&gt; model_info        :  Model info detected classification task but 'y' is a logical . Converted to numeric.  (  NOTE  )
-  -&gt; predicted values  :  numerical, min =  0.01073995 , mean =  0.3223294 , max =  0.9896557  
+  -&gt; predicted values  :  numerical, min =  0.01023123 , mean =  0.3220097 , max =  0.9919301  
   -&gt; residual function :  difference between y and yhat (  default  )
-  -&gt; residuals         :  numerical, min =  -0.9896557 , mean =  -0.3223294 , max =  -0.01073995  
+  -&gt; residuals         :  numerical, min =  -0.9919301 , mean =  -0.3220097 , max =  -0.01023123  
   A new explainer has been created!  </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>henry <span class="ot">&lt;-</span> archivist<span class="sc">::</span><span class="fu">aread</span>(<span class="st">"pbiecek/models/a6538"</span>) </span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>henry</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>henry <span class="ot">&lt;-</span> archivist<span class="sc">::</span><span class="fu">aread</span>(<span class="st">"pbiecek/models/a6538"</span>) </span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>henry</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  class gender age sibsp parch fare  embarked
 1   1st   male  47     0     0   25 Cherbourg</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">predict</span>(titanic_rf_exp, henry)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">predict</span>(titanic_rf_exp, henry)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>      yes 
-0.3040662 </code></pre>
+0.3022091 </code></pre>
 </div>
 </div>
 <p><strong>shapley value 계산</strong></p>
@@ -796,32 +816,32 @@ Call `lifecycle::last_lifecycle_warnings()` to see where this warning was genera
 </ul></li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>shap_henry <span class="ot">&lt;-</span> <span class="fu">predict_parts</span>(<span class="at">explainer =</span> titanic_rf_exp,</span>
-<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>                      <span class="at">new_observation =</span> henry, </span>
-<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>                                 <span class="at">type =</span> <span class="st">"shap"</span>,</span>
-<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>                                    <span class="at">B =</span> <span class="dv">25</span>)</span>
-<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>shap_henry</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>shap_henry <span class="ot">&lt;-</span> <span class="fu">predict_parts</span>(<span class="at">explainer =</span> titanic_rf_exp,</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>                      <span class="at">new_observation =</span> henry, </span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>                                 <span class="at">type =</span> <span class="st">"shap"</span>,</span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>                                    <span class="at">B =</span> <span class="dv">25</span>)</span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>shap_henry</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>                                            min           q1       median
-Random Forest: age = 47             -0.10958216 -0.077048136 -0.039585336
-Random Forest: class = 1st           0.11977074  0.129703786  0.137299673
-Random Forest: embarked = Cherbourg  0.01057468  0.020564934  0.025149406
-Random Forest: fare = 25            -0.03420884 -0.030963125 -0.019752132
-Random Forest: gender = male        -0.13117611 -0.120853322 -0.106168829
-Random Forest: parch = 0            -0.01785730 -0.005364222 -0.002426969
-Random Forest: sibsp = 0            -0.02368693 -0.012924590 -0.003400316
-                                            mean            q3          max
-Random Forest: age = 47             -0.054847808 -0.0348250723 -0.027415817
-Random Forest: class = 1st           0.137306090  0.1441837270  0.156656946
-Random Forest: embarked = Cherbourg  0.033246438  0.0326961559  0.077812025
-Random Forest: fare = 25            -0.015709707 -0.0035259814  0.023666520
-Random Forest: gender = male        -0.109109816 -0.1026874512 -0.090353479
-Random Forest: parch = 0            -0.003782869 -0.0007665738  0.001970215
-Random Forest: sibsp = 0            -0.005365563  0.0008844455  0.009131888</code></pre>
+<pre><code>                                            min           q1        median
+Random Forest: age = 47             -0.11047449 -0.096429463 -0.0669658017
+Random Forest: class = 1st           0.10164206  0.126549630  0.1458351512
+Random Forest: embarked = Cherbourg  0.01472453  0.026721412  0.0267214117
+Random Forest: fare = 25            -0.04000014 -0.035758692 -0.0202262893
+Random Forest: gender = male        -0.12159195 -0.112111996 -0.1065680648
+Random Forest: parch = 0            -0.01464793 -0.005717229 -0.0045424915
+Random Forest: sibsp = 0            -0.02779374 -0.022223417 -0.0008603067
+                                            mean           q3          max
+Random Forest: age = 47             -0.072021474 -0.047819865 -0.030381216
+Random Forest: class = 1st           0.146701672  0.164791426  0.186964757
+Random Forest: embarked = Cherbourg  0.040352036  0.062262747  0.074431515
+Random Forest: fare = 25            -0.016483798  0.004129742  0.022581093
+Random Forest: gender = male        -0.106968299 -0.102861900 -0.090357896
+Random Forest: parch = 0            -0.004631298 -0.002553750  0.002539380
+Random Forest: sibsp = 0            -0.006749460  0.004304098  0.008911705</code></pre>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(shap_henry)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(shap_henry)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="ML_explain_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid" width="672"></p>
 </div>
@@ -848,32 +868,32 @@ Random Forest: sibsp = 0            -0.005365563  0.0008844455  0.009131888</cod
 </ul>
 <p><strong>Shapley feature importance</strong></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">"titanic_imputed"</span>)  </span>
-<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>titanic_rec <span class="ot">&lt;-</span> titanic_imputed <span class="sc">%&gt;%</span> </span>
-<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">recipe</span>(survived <span class="sc">~</span> .) <span class="sc">%&gt;%</span> </span>
-<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_mutate</span>(<span class="at">survived =</span> <span class="fu">as.factor</span>(survived))</span>
-<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a>rf_model <span class="ot">&lt;-</span> </span>
-<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">rand_forest</span>(<span class="at">trees =</span> <span class="dv">1000</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">set_engine</span>(<span class="st">"ranger"</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">set_mode</span>(<span class="st">"classification"</span>)</span>
-<span id="cb27-11"><a href="#cb27-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-12"><a href="#cb27-12" aria-hidden="true" tabindex="-1"></a>rf_wflow <span class="ot">&lt;-</span> </span>
-<span id="cb27-13"><a href="#cb27-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">workflow</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb27-14"><a href="#cb27-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_model</span>(rf_model) <span class="sc">%&gt;%</span> </span>
-<span id="cb27-15"><a href="#cb27-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_recipe</span>(titanic_rec)</span>
-<span id="cb27-16"><a href="#cb27-16" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb27-17"><a href="#cb27-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-18"><a href="#cb27-18" aria-hidden="true" tabindex="-1"></a>rf_fit <span class="ot">&lt;-</span> rf_wflow <span class="sc">%&gt;%</span> <span class="fu">fit</span>(<span class="at">data =</span> titanic_imputed)</span>
-<span id="cb27-19"><a href="#cb27-19" aria-hidden="true" tabindex="-1"></a>rf_ex_fit <span class="ot">&lt;-</span> rf_fit <span class="sc">%&gt;%</span> <span class="fu">extract_fit_parsnip</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">"titanic_imputed"</span>)  </span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>titanic_rec <span class="ot">&lt;-</span> titanic_imputed <span class="sc">%&gt;%</span> </span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">recipe</span>(survived <span class="sc">~</span> .) <span class="sc">%&gt;%</span> </span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_mutate</span>(<span class="at">survived =</span> <span class="fu">as.factor</span>(survived))</span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>rf_model <span class="ot">&lt;-</span> </span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">rand_forest</span>(<span class="at">trees =</span> <span class="dv">1000</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">set_engine</span>(<span class="st">"ranger"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">set_mode</span>(<span class="st">"classification"</span>)</span>
+<span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-12"><a href="#cb25-12" aria-hidden="true" tabindex="-1"></a>rf_wflow <span class="ot">&lt;-</span> </span>
+<span id="cb25-13"><a href="#cb25-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">workflow</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb25-14"><a href="#cb25-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_model</span>(rf_model) <span class="sc">%&gt;%</span> </span>
+<span id="cb25-15"><a href="#cb25-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_recipe</span>(titanic_rec)</span>
+<span id="cb25-16"><a href="#cb25-16" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb25-17"><a href="#cb25-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-18"><a href="#cb25-18" aria-hidden="true" tabindex="-1"></a>rf_fit <span class="ot">&lt;-</span> rf_wflow <span class="sc">%&gt;%</span> <span class="fu">fit</span>(<span class="at">data =</span> titanic_imputed)</span>
+<span id="cb25-19"><a href="#cb25-19" aria-hidden="true" tabindex="-1"></a>rf_ex_fit <span class="ot">&lt;-</span> rf_fit <span class="sc">%&gt;%</span> <span class="fu">extract_fit_parsnip</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <ul>
 <li>shap &lt;- explain(xgb_ex_fit$fit, X = X, exact = T)</li>
 <li>xgboost, lm만 exact = T 가능, 나머지 불가능(공식 문서 참고)</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(fastshap)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(fastshap)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>
 다음의 패키지를 부착합니다: 'fastshap'</code></pre>
@@ -893,7 +913,7 @@ Random Forest: sibsp = 0            -0.005365563  0.0008844455  0.009131888</cod
 
     explain</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">predict</span>(rf_ex_fit<span class="sc">$</span>fit, titanic_imputed)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">predict</span>(rf_ex_fit<span class="sc">$</span>fit, titanic_imputed)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Ranger prediction
 
@@ -901,34 +921,34 @@ Type:                             Probability estimation
 Sample size:                      2207 
 Number of independent variables:  7 </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">predict</span>(rf_ex_fit<span class="sc">$</span>fit, titanic_imputed)<span class="sc">$</span>predictions <span class="sc">%&gt;%</span> <span class="fu">head</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">predict</span>(rf_ex_fit<span class="sc">$</span>fit, titanic_imputed)<span class="sc">$</span>predictions <span class="sc">%&gt;%</span> <span class="fu">head</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>             0          1
-[1,] 0.9000799 0.09992012
-[2,] 0.7345494 0.26545058
-[3,] 0.8750383 0.12496173
-[4,] 0.4106171 0.58938287
-[5,] 0.2833394 0.71666057
-[6,] 0.7828397 0.21716025</code></pre>
+[1,] 0.9032664 0.09673362
+[2,] 0.7556320 0.24436805
+[3,] 0.8794615 0.12053852
+[4,] 0.4046595 0.59534049
+[5,] 0.2934269 0.70657306
+[6,] 0.7645011 0.23549891</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>pred_fun <span class="ot">&lt;-</span> <span class="cf">function</span>(X.model, newdata) {</span>
-<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">predict</span>(X.model, newdata)<span class="sc">$</span>predictions[,<span class="dv">2</span>]</span>
-<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a>shap <span class="ot">&lt;-</span> <span class="fu">explain</span>(rf_ex_fit<span class="sc">$</span>fit, <span class="at">X =</span> titanic_imputed, <span class="at">pred_wrapper =</span> pred_fun, <span class="at">nsim =</span> <span class="dv">20</span>)</span>
-<span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb37-7"><a href="#cb37-7" aria-hidden="true" tabindex="-1"></a><span class="fu">autoplot</span>(shap)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>pred_fun <span class="ot">&lt;-</span> <span class="cf">function</span>(X.model, newdata) {</span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">predict</span>(X.model, newdata)<span class="sc">$</span>predictions[,<span class="dv">2</span>]</span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a>shap <span class="ot">&lt;-</span> <span class="fu">explain</span>(rf_ex_fit<span class="sc">$</span>fit, <span class="at">X =</span> titanic_imputed, <span class="at">pred_wrapper =</span> pred_fun, <span class="at">nsim =</span> <span class="dv">20</span>)</span>
+<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-7"><a href="#cb35-7" aria-hidden="true" tabindex="-1"></a><span class="fu">autoplot</span>(shap)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="ML_explain_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p><strong>Shapley dependence plot</strong></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>pred_fun <span class="ot">&lt;-</span> <span class="cf">function</span>(X.model, newdata) {</span>
-<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">predict</span>(X.model, newdata)<span class="sc">$</span>predictions[,<span class="dv">2</span>]</span>
-<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a><span class="fu">autoplot</span>(shap, <span class="at">type =</span> <span class="st">"dependence"</span>, <span class="at">feature =</span> <span class="st">"fare"</span>, <span class="at">X =</span> titanic_imputed, <span class="at">smooth =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>pred_fun <span class="ot">&lt;-</span> <span class="cf">function</span>(X.model, newdata) {</span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">predict</span>(X.model, newdata)<span class="sc">$</span>predictions[,<span class="dv">2</span>]</span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a><span class="fu">autoplot</span>(shap, <span class="at">type =</span> <span class="st">"dependence"</span>, <span class="at">feature =</span> <span class="st">"fare"</span>, <span class="at">X =</span> titanic_imputed, <span class="at">smooth =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>`geom_smooth()` using method = 'gam' and formula 'y ~ s(x, bs = "cs")'</code></pre>
 </div>
@@ -938,13 +958,13 @@ Number of independent variables:  7 </code></pre>
 </div>
 <p><strong>contribution plot</strong></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="fu">autoplot</span>(shap, <span class="at">type =</span> <span class="st">"contribution"</span>, <span class="at">row_num =</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="fu">autoplot</span>(shap, <span class="at">type =</span> <span class="st">"contribution"</span>, <span class="at">row_num =</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="ML_explain_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="fu">force_plot</span>(shap[<span class="dv">1</span>,], <span class="at">baseline =</span> <span class="fu">mean</span>(<span class="fu">pred_fun</span>(rf_ex_fit, titanic_imputed)), <span class="at">feature_values =</span> titanic_imputed[<span class="dv">1</span>,], <span class="at">display =</span> <span class="st">"html"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="fu">force_plot</span>(shap[<span class="dv">1</span>,], <span class="at">baseline =</span> <span class="fu">mean</span>(<span class="fu">pred_fun</span>(rf_ex_fit, titanic_imputed)), <span class="at">feature_values =</span> titanic_imputed[<span class="dv">1</span>,], <span class="at">display =</span> <span class="st">"html"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-error">
 <pre><code>Error: The Python package "shap" is needed for this function to work. Please install it; visit https://github.com/slundberg/shap for details.</code></pre>
 </div>
@@ -968,7 +988,16 @@ Number of independent variables:  7 </code></pre>
 </section>
 </section>
 
-</main> <!-- /main -->
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@online{don2021,
+  author = {Don Don},
+  title = {Machine Learning Explainability},
+  date = {07/29/2021},
+  langid = {en}
+}
+</code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-don2021" class="csl-entry quarto-appendix-citeas" role="doc-biblioentry">
+Don Don. 7AD–29AD. <span>“Machine Learning Explainability.”</span>
+7AD–29AD.
+</div></div></section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const icon = "";

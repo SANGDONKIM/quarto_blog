@@ -434,7 +434,7 @@ titanic %>% is.na() %>% colSums()
 titanic_rec <- titanic %>% 
   recipe(survived ~ class + gender + age + 
                 sibsp + parch + fare + embarked) %>% 
-  step_bagimpute(age, fare, sibsp, parch)
+  step_impute_bag(age, fare, sibsp, parch)
   
 rf_model <- 
     rand_forest(trees = 1000) %>% 
