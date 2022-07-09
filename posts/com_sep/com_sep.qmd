@@ -135,7 +135,7 @@ test<-testing(splits)
 ```{r}
 rec <- train %>%
   recipe(occupancy~.) %>%
-  step_bagimpute(co2, impute_with=imp_vars(all_predictors()))
+  step_impute_bag(co2, impute_with=imp_vars(all_predictors()))
 
 train<- rec %>% prep() %>% juice()
 test <- rec %>% prep() %>% bake(new_data=test)

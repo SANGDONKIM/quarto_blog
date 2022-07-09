@@ -270,21 +270,21 @@ Disabled features: fftw, ghostscript, x11</code></pre>
 # Outcome: y
 #
 # A tibble: 13 × 8
-   name      x     y direction to     xend   yend circular
-   &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;fct&gt;     &lt;chr&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;lgl&gt;   
- 1 v     -2.45 1.20  -&gt;        z1    -3.16  2.42  FALSE   
- 2 v     -2.45 1.20  -&gt;        z2    -3.68  0.487 FALSE   
- 3 w1    -4.10 2.07  -&gt;        x     -4.64  2.40  FALSE   
- 4 w1    -4.10 2.07  -&gt;        y     -4.39  1.16  FALSE   
- 5 w1    -4.10 2.07  -&gt;        z1    -3.16  2.42  FALSE   
- 6 w1    -4.10 2.07  &lt;-&gt;       w2    -4.99  1.29  FALSE   
- 7 w2    -4.99 1.29  -&gt;        x     -4.64  2.40  FALSE   
- 8 w2    -4.99 1.29  -&gt;        y     -4.39  1.16  FALSE   
- 9 w2    -4.99 1.29  -&gt;        z2    -3.68  0.487 FALSE   
-10 x     -4.64 2.40  -&gt;        y     -4.39  1.16  FALSE   
-11 z1    -3.16 2.42  -&gt;        x     -4.64  2.40  FALSE   
-12 z2    -3.68 0.487 -&gt;        y     -4.39  1.16  FALSE   
-13 y     -4.39 1.16  &lt;NA&gt;      &lt;NA&gt;  NA    NA     FALSE   </code></pre>
+   name       x     y direction to      xend   yend circular
+   &lt;chr&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;fct&gt;     &lt;chr&gt;  &lt;dbl&gt;  &lt;dbl&gt; &lt;lgl&gt;   
+ 1 v     -1.02  2.54  -&gt;        z1     0.368  2.23  FALSE   
+ 2 v     -1.02  2.54  -&gt;        z2    -1.32   1.17  FALSE   
+ 3 w1     0.518 1.29  -&gt;        x      0.784  0.742 FALSE   
+ 4 w1     0.518 1.29  -&gt;        y     -0.212  0.209 FALSE   
+ 5 w1     0.518 1.29  -&gt;        z1     0.368  2.23  FALSE   
+ 6 w1     0.518 1.29  &lt;-&gt;       w2    -0.353  0.837 FALSE   
+ 7 w2    -0.353 0.837 -&gt;        x      0.784  0.742 FALSE   
+ 8 w2    -0.353 0.837 -&gt;        y     -0.212  0.209 FALSE   
+ 9 w2    -0.353 0.837 -&gt;        z2    -1.32   1.17  FALSE   
+10 x      0.784 0.742 -&gt;        y     -0.212  0.209 FALSE   
+11 z1     0.368 2.23  -&gt;        x      0.784  0.742 FALSE   
+12 z2    -1.32  1.17  -&gt;        y     -0.212  0.209 FALSE   
+13 y     -0.212 0.209 &lt;NA&gt;      &lt;NA&gt;  NA     NA     FALSE   </code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggdag</span>(tidy_ggdag) <span class="sc">+</span></span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_dag</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -339,13 +339,13 @@ Disabled features: fftw, ghostscript, x11</code></pre>
 </section>
 
 <div id="quarto-appendix" class="default"><section class="quarto-appendix-contents"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@online{don2022,
-  author = {Don Don},
+  author = {Don Don and Don Don},
   title = {hexSticker},
   date = {2022-06-24},
   langid = {en}
 }
 </code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-don2022" class="csl-entry quarto-appendix-citeas" role="doc-biblioentry">
-Don Don. 2022. <span>“hexSticker.”</span> June 24, 2022.
+Don Don, and Don Don. 2022. <span>“hexSticker.”</span> June 24, 2022.
 </div></div></section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {

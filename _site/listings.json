@@ -3,6 +3,7 @@
     "listing": "/index.html",
     "items": [
       "/posts/welcome/index.html",
+      "/posts/2022-07-10-RMySQL/RMySQL.html",
       "/posts/2022-07-01-python-test/python.html",
       "/posts/2021-06-28-install-sql-for-mac/sql.html",
       "/posts/2021-06-26-create-logo/hexsticker.html",

@@ -1,0 +1,108 @@
+---
+title: "R과 MySQL 연동하기"
+description: |
+  RMySQL, DBI 패키지를 활용하여 R과 MySQL 연동하기 
+author: "Don Don"
+date: "2022-07-10"
+categories: [R, RMySQL]
+image : "https://cdn.ucberkeleybootcamp.com/wp-content/uploads/sites/106/2020/03/SQL-Boot-Camp-San-Francisco.jpeg"
+---
+
+
+
+R과 MySQL을 연동하는 패키지는 여러가지가 있다(RODBC, odbc...). 그 중에서 가장 쉽게 사용할 수 있는 패키지가 RMySQL 패키지이다. 다른 패키지의 경우 odbc driver를 설치해야 정상적으로 작동하는 것 같은데, mac의 경우 설치가 조금 복잡하다. 몇 가지 시도해본 후 내린 결론은 RMySQL 패키지가 가장 쉽게 사용할 수 있는 것 같다. 
+
+
+## packages
+
+```{r}
+library(DBI)
+library(RMySQL)
+library(dplyr)
+```
+
+DBI 패키지는 R과 데이터베이스간 연결을 위한 패키지이고, RMySQL은 데이터베이스를 연결할 때, MySQL을 사용하도록 선언?하는 패키지이다. 
+
+
+
+## R과 DB 연결 
+
+```{r, eval = F}
+DBI::dbConnect(drv, 
+              dname, 
+              user, 
+              password, 
+              host, ...)
+
+```
+
+-   drv : DBIDriver 종류 
+
+-   dbname : MySQL에 저장되어있는 DB 이름 
+
+-   user : "root" (default)
+
+-   password : 비밀번호 
+
+-   host: localhost(로컬에서 작업할 경우)
+
+혼공 SQL책에 나와있는 market_db DB를 불러왔다. 
+
+
+```{r, echo = F}
+pat = "rlatkdehs1!"
+```
+```{r}
+drv <- dbDriver("MySQL")
+
+con = dbConnect(drv, 
+                dbname = "market_db", 
+                user = "root", 
+                password = pat, 
+                host = "localhost")
+```
+
+
+## DB에 있는 테이블 불러오기 
+
+market_db 안에 있는 buy table을 불러온 결과는 다음과 같다. 
+```{r}
+mydata = dbGetQuery(con, "select * from buy")
+mydata
+
+
+```
+
+
+한글이 깨질 경우 아래 3줄을 입력하면 해결된다(<https://leti-lee.tistory.com/17> 내용 참고). 
+
+```{r}
+dbSendQuery(con, "SET NAMES utf8;") 
+dbSendQuery(con, "SET CHARACTER SET utf8;") 
+dbSendQuery(con, "SET character_set_connection=utf8;")
+```
+
+```{r}
+mydata = dbGetQuery(con, "select * from buy")
+mydata
+```
+
+
+market_db에 어떤 table이 저장되어 있는지 확인해볼 수 있다. 
+```{r}
+dbListTables(con)
+
+```
+
+
+## R에 테이블 저장 
+
+market_db에 있는 buy table을 R data.frame으로 불러올 수 있다. 
+```{r}
+buy_dat <- dbReadTable(con, "buy")
+buy_dat %>% head()
+buy_dat %>% str()
+```
+
+
+

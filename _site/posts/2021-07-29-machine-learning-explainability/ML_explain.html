@@ -351,8 +351,8 @@ Mtry:                             1
 Target node size:                 5 
 Variable importance mode:         impurity 
 Splitrule:                        variance 
-OOB prediction error (MSE):       0.008654984 
-R squared (OOB):                  0.7237787 </code></pre>
+OOB prediction error (MSE):       0.008627292 
+R squared (OOB):                  0.7246625 </code></pre>
 </div>
 </div>
 <p><strong>Gini importance plot</strong></p>
@@ -541,9 +541,9 @@ Training error : 0.278962 </code></pre>
   -&gt; predict function  :  yhat.workflow  will be used (  default  )
   -&gt; predicted values  :  No value for predict function target column. (  default  )
   -&gt; model_info        :  package tidymodels , ver. 0.2.0 , task regression (  default  ) 
-  -&gt; predicted values  :  numerical, min =  4.89497 , mean =  5.220575 , max =  5.505708  
+  -&gt; predicted values  :  numerical, min =  4.902419 , mean =  5.220532 , max =  5.508208  
   -&gt; residual function :  difference between y and yhat (  default  )
-  -&gt; residuals         :  numerical, min =  -0.8235946 , mean =  6.553947e-05 , max =  0.3733509  
+  -&gt; residuals         :  numerical, min =  -0.7984955 , mean =  0.0001081782 , max =  0.373146  
   A new explainer has been created!  </code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>pdp_rf <span class="ot">&lt;-</span> <span class="fu">model_profile</span>(explainer_rf, <span class="at">N =</span> <span class="cn">NULL</span>, </span>
@@ -788,9 +788,9 @@ survived
   -&gt; predicted values  :  No value for predict function target column. (  default  )
   -&gt; model_info        :  package tidymodels , ver. 0.2.0 , task classification (  default  ) 
   -&gt; model_info        :  Model info detected classification task but 'y' is a logical . Converted to numeric.  (  NOTE  )
-  -&gt; predicted values  :  numerical, min =  0.01023123 , mean =  0.3220097 , max =  0.9919301  
+  -&gt; predicted values  :  numerical, min =  0.01157508 , mean =  0.3223648 , max =  0.9899299  
   -&gt; residual function :  difference between y and yhat (  default  )
-  -&gt; residuals         :  numerical, min =  -0.9919301 , mean =  -0.3220097 , max =  -0.01023123  
+  -&gt; residuals         :  numerical, min =  -0.9899299 , mean =  -0.3223648 , max =  -0.01157508  
   A new explainer has been created!  </code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>henry <span class="ot">&lt;-</span> archivist<span class="sc">::</span><span class="fu">aread</span>(<span class="st">"pbiecek/models/a6538"</span>) </span>
@@ -802,7 +802,7 @@ survived
 <div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">predict</span>(titanic_rf_exp, henry)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>      yes 
-0.3022091 </code></pre>
+0.3115554 </code></pre>
 </div>
 </div>
 <p><strong>shapley value 계산</strong></p>
@@ -822,22 +822,22 @@ survived
 <span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>                                    <span class="at">B =</span> <span class="dv">25</span>)</span>
 <span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>shap_henry</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>                                            min           q1        median
-Random Forest: age = 47             -0.11047449 -0.096429463 -0.0669658017
-Random Forest: class = 1st           0.10164206  0.126549630  0.1458351512
-Random Forest: embarked = Cherbourg  0.01472453  0.026721412  0.0267214117
-Random Forest: fare = 25            -0.04000014 -0.035758692 -0.0202262893
-Random Forest: gender = male        -0.12159195 -0.112111996 -0.1065680648
-Random Forest: parch = 0            -0.01464793 -0.005717229 -0.0045424915
-Random Forest: sibsp = 0            -0.02779374 -0.022223417 -0.0008603067
+<pre><code>                                             min          q1       median
+Random Forest: age = 47             -0.107769986 -0.08225301 -0.052534709
+Random Forest: class = 1st           0.120858355  0.13847492  0.146725273
+Random Forest: embarked = Cherbourg  0.006208021  0.02192237  0.026240676
+Random Forest: fare = 25            -0.033254691 -0.02148800 -0.020869511
+Random Forest: gender = male        -0.122478130 -0.11026003 -0.103272577
+Random Forest: parch = 0            -0.018288814 -0.01108137 -0.002063531
+Random Forest: sibsp = 0            -0.022942049 -0.00837284 -0.003404242
                                             mean           q3          max
-Random Forest: age = 47             -0.072021474 -0.047819865 -0.030381216
-Random Forest: class = 1st           0.146701672  0.164791426  0.186964757
-Random Forest: embarked = Cherbourg  0.040352036  0.062262747  0.074431515
-Random Forest: fare = 25            -0.016483798  0.004129742  0.022581093
-Random Forest: gender = male        -0.106968299 -0.102861900 -0.090357896
-Random Forest: parch = 0            -0.004631298 -0.002553750  0.002539380
-Random Forest: sibsp = 0            -0.006749460  0.004304098  0.008911705</code></pre>
+Random Forest: age = 47             -0.060144588 -0.036412284 -0.027904349
+Random Forest: class = 1st           0.147761772  0.152505981  0.188276846
+Random Forest: embarked = Cherbourg  0.030566624  0.034904153  0.070796838
+Random Forest: fare = 25            -0.012288680 -0.009024606  0.022963328
+Random Forest: gender = male        -0.106946452 -0.102185942 -0.093570494
+Random Forest: parch = 0            -0.005774083 -0.001606197  0.001302964
+Random Forest: sibsp = 0            -0.003983968  0.005573644  0.008947406</code></pre>
 </div>
 </div>
 <div class="cell">
@@ -923,13 +923,13 @@ Number of independent variables:  7 </code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">predict</span>(rf_ex_fit<span class="sc">$</span>fit, titanic_imputed)<span class="sc">$</span>predictions <span class="sc">%&gt;%</span> <span class="fu">head</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>             0          1
-[1,] 0.9032664 0.09673362
-[2,] 0.7556320 0.24436805
-[3,] 0.8794615 0.12053852
-[4,] 0.4046595 0.59534049
-[5,] 0.2934269 0.70657306
-[6,] 0.7645011 0.23549891</code></pre>
+<pre><code>             0         1
+[1,] 0.8978185 0.1021815
+[2,] 0.7418424 0.2581576
+[3,] 0.8669889 0.1330111
+[4,] 0.4268959 0.5731041
+[5,] 0.3037664 0.6962336
+[6,] 0.7617627 0.2382373</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>pred_fun <span class="ot">&lt;-</span> <span class="cf">function</span>(X.model, newdata) {</span>
 <span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">predict</span>(X.model, newdata)<span class="sc">$</span>predictions[,<span class="dv">2</span>]</span>
@@ -989,14 +989,14 @@ Number of independent variables:  7 </code></pre>
 </section>
 
 <div id="quarto-appendix" class="default"><section class="quarto-appendix-contents"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@online{don2021,
-  author = {Don Don},
+  author = {Don Don and Don Don},
   title = {Machine Learning Explainability},
   date = {07/29/2021},
   langid = {en}
 }
 </code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-don2021" class="csl-entry quarto-appendix-citeas" role="doc-biblioentry">
-Don Don. 7AD–29AD. <span>“Machine Learning Explainability.”</span>
-7AD–29AD.
+Don Don, and Don Don. 7AD–29AD. <span>“Machine Learning
+Explainability.”</span> 7AD–29AD.
 </div></div></section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {

@@ -121,9 +121,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
+<link rel="stylesheet" href="../../styles.css">
 </head>
 
-<body class="nav-fixed fullcontent">
+<body class="floating nav-fixed">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -157,7 +158,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     </nav>
 </header>
 <!-- content -->
-<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+<header id="title-block-header" class="quarto-title-block default toc-left page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
       <h1 class="title">Markov Chain Monte Carlo</h1>
@@ -198,8 +199,37 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   
   </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto">
+    <nav id="TOC" role="doc-toc">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#markov-chain-monte-carlomcmc" id="toc-markov-chain-monte-carlomcmc" class="nav-link active" data-scroll-target="#markov-chain-monte-carlomcmc">Markov Chain Monte Carlo(MCMC)</a>
+  <ul class="collapse">
+  <li><a href="#regularity-conditions" id="toc-regularity-conditions" class="nav-link" data-scroll-target="#regularity-conditions">regularity conditions</a></li>
+  </ul></li>
+  <li><a href="#metopolis-hasting-algorithm" id="toc-metopolis-hasting-algorithm" class="nav-link" data-scroll-target="#metopolis-hasting-algorithm">Metopolis-Hasting algorithm</a>
+  <ul class="collapse">
+  <li><a href="#example" id="toc-example" class="nav-link" data-scroll-target="#example">Example</a></li>
+  </ul></li>
+  <li><a href="#metropolis-sampler" id="toc-metropolis-sampler" class="nav-link" data-scroll-target="#metropolis-sampler">Metropolis Sampler</a></li>
+  <li><a href="#random-walk-metropolis" id="toc-random-walk-metropolis" class="nav-link" data-scroll-target="#random-walk-metropolis">Random Walk Metropolis</a></li>
+  <li><a href="#independence-sampler" id="toc-independence-sampler" class="nav-link" data-scroll-target="#independence-sampler">independence sampler</a></li>
+  <li><a href="#gibbs-sampler" id="toc-gibbs-sampler" class="nav-link" data-scroll-target="#gibbs-sampler">Gibbs sampler</a>
+  <ul class="collapse">
+  <li><a href="#gibbs-sampler-algorithm" id="toc-gibbs-sampler-algorithm" class="nav-link" data-scroll-target="#gibbs-sampler-algorithm">Gibbs sampler algorithm</a>
+  <ul class="collapse">
+  <li><a href="#example-beta-binomial-distribution" id="toc-example-beta-binomial-distribution" class="nav-link" data-scroll-target="#example-beta-binomial-distribution">Example (beta-binomial distribution)</a></li>
+  <li><a href="#algorithm" id="toc-algorithm" class="nav-link" data-scroll-target="#algorithm">Algorithm</a></li>
+  <li><a href="#example-bivariate-distribution" id="toc-example-bivariate-distribution" class="nav-link" data-scroll-target="#example-bivariate-distribution">Example (Bivariate distribution)</a></li>
+  </ul></li>
+  </ul></li>
+  </ul>
+</nav>
+</nav>
 <!-- margin-sidebar -->
-    
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+    </div>
 <!-- main -->
 <main class="content quarto-banner-title-block" id="quarto-document-content">
 
@@ -279,7 +309,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>}</span>
 <span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>k <span class="co"># reject된 갯수 </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 4008</code></pre>
+<pre><code>[1] 4000</code></pre>
 </div>
 </div>
 <p>실제 Rayleigh 분포와 같은지를 비교하기 위해 QQplot을 그리면 다음과 같다.</p>
@@ -434,19 +464,19 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a><span class="fu">colMeans</span>(x) <span class="co"># 0, 2에 거의 근사 </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] -0.003416818  1.997563728</code></pre>
+<pre><code>[1] -0.02094119  2.00648931</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cov</span>(x)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>           [,1]       [,2]
-[1,]  1.0212784 -0.3875986
-[2,] -0.3875986  0.2546840</code></pre>
+[1,]  0.9582500 -0.3503596
+[2,] -0.3503596  0.2371582</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cor</span>(x) <span class="co"># rho = -0.75에 거의 근사 </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>           [,1]       [,2]
-[1,]  1.0000000 -0.7599925
-[2,] -0.7599925  1.0000000</code></pre>
+[1,]  1.0000000 -0.7349462
+[2,] -0.7349462  1.0000000</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(x, <span class="at">main =</span> <span class="st">''</span>, <span class="at">cex =</span> <span class="fl">0.5</span>, <span class="at">xlab =</span> <span class="fu">bquote</span>(X[<span class="dv">1</span>]), <span class="at">ylab =</span> <span class="fu">bquote</span>(X[<span class="dv">2</span>]), <span class="at">ylim =</span> <span class="fu">range</span>(x[, <span class="dv">2</span>]))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
@@ -459,7 +489,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </section>
 </section>
 
-</main> <!-- /main -->
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@online{don2021,
+  author = {Don Don and Don Don},
+  title = {Markov {Chain} {Monte} {Carlo}},
+  date = {2021-01-06},
+  langid = {en}
+}
+</code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-don2021" class="csl-entry quarto-appendix-citeas" role="doc-biblioentry">
+Don Don, and Don Don. 2021. <span>“Markov Chain Monte Carlo.”</span>
+January 6, 2021.
+</div></div></section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const icon = "";

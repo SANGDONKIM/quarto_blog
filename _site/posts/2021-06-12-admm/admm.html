@@ -7,8 +7,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Don Don">
-<meta name="dcterms.date" content="2022-06-22">
-<meta name="description" content="vscode에서 quarto와 파이썬 사용하기">
+<meta name="dcterms.date" content="2021-05-30">
+<meta name="description" content="ADMM example code">
 
 <title>Don Don - ADMM example</title>
 <style>
@@ -121,9 +121,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
+<link rel="stylesheet" href="../../styles.css">
 </head>
 
-<body class="nav-fixed fullcontent">
+<body class="floating nav-fixed">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -157,19 +158,20 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     </nav>
 </header>
 <!-- content -->
-<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+<header id="title-block-header" class="quarto-title-block default toc-left page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
       <h1 class="title">ADMM example</h1>
                           <div class="quarto-categories">
-                <div class="quarto-category">python</div>
+                <div class="quarto-category">R</div>
+                <div class="quarto-category">optimization</div>
               </div>
                   </div>
   </div>
     
   <div>
     <div class="description">
-      <p>vscode에서 quarto와 파이썬 사용하기</p>
+      <p>ADMM example code</p>
     </div>
   </div>
 
@@ -188,7 +190,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">June 22, 2022</p>
+        <p class="date">May 30, 2021</p>
       </div>
     </div>
       
@@ -197,8 +199,23 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   
   </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto">
+    <nav id="TOC" role="doc-toc">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#scaled-dual-admm-algorithm" id="toc-scaled-dual-admm-algorithm" class="nav-link active" data-scroll-target="#scaled-dual-admm-algorithm">scaled dual ADMM algorithm</a>
+  <ul class="collapse">
+  <li><a href="#stopping-criterion" id="toc-stopping-criterion" class="nav-link" data-scroll-target="#stopping-criterion">Stopping criterion</a></li>
+  <li><a href="#lasso-example" id="toc-lasso-example" class="nav-link" data-scroll-target="#lasso-example">Lasso example</a></li>
+  </ul></li>
+  <li><a href="#r-code" id="toc-r-code" class="nav-link" data-scroll-target="#r-code">R code</a></li>
+  </ul>
+</nav>
+</nav>
 <!-- margin-sidebar -->
-    
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+    </div>
 <!-- main -->
 <main class="content quarto-banner-title-block" id="quarto-document-content">
 
@@ -390,18 +407,18 @@ Z^{k+1} &amp;:= \operatorname*{argmin}_Z (g(Z) + \frac{\rho}{2}||I\beta^{k+1} - 
 <span id="cb1-66"><a href="#cb1-66" aria-hidden="true" tabindex="-1"></a><span class="fu">ADMM</span>(<span class="at">X =</span> x, <span class="at">Y =</span> y)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>$beta.hat
-[1]  1.394049 -1.978164 -2.981449  3.974279  4.951313
+[1]  1.379323 -1.990279 -2.998234  4.018089  5.044086
 
 $beta
          [,1]      [,2]      [,3]     [,4]     [,5]
 [1,] 0.000000  0.000000  0.000000 0.000000 0.000000
-[2,] 1.390489 -1.973194 -2.974225 3.964208 4.938941
-[3,] 1.393988 -1.978098 -2.981382 3.974205 4.951232
-[4,] 1.394048 -1.978164 -2.981449 3.974279 4.951313
-[5,] 1.394049 -1.978164 -2.981449 3.974279 4.951313
+[2,] 1.376414 -1.985059 -2.991330 4.008202 5.031837
+[3,] 1.379269 -1.990212 -2.998172 4.018014 5.044009
+[4,] 1.379323 -1.990278 -2.998234 4.018089 5.044086
+[5,] 1.379323 -1.990279 -2.998234 4.018089 5.044086
 
 $objective
-[1] 55613.3328   980.2120   979.8707   979.8707   979.8707
+[1] 58940.123  1022.952  1022.613  1022.613  1022.613
 
 $iter
 [1] 5</code></pre>
@@ -411,7 +428,15 @@ $iter
 
 </section>
 
-</main> <!-- /main -->
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@online{don2021,
+  author = {Don Don and Don Don},
+  title = {ADMM Example},
+  date = {2021-05-30},
+  langid = {en}
+}
+</code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-don2021" class="csl-entry quarto-appendix-citeas" role="doc-biblioentry">
+Don Don, and Don Don. 2021. <span>“ADMM Example.”</span> May 30, 2021.
+</div></div></section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const icon = "";
