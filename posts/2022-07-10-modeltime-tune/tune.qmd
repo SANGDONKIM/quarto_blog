@@ -1,0 +1,193 @@
+---
+title: "modeltime tune"
+description: |
+  modeltime tuning 방법 소개
+author: "Don Don"
+date: "2021-07-10"
+categories: [R, modeltime]
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE,
+                      message = FALSE,
+                      warning = FALSE,
+                      fig.align = "center")
+```
+
+
+# Back to the basic.
+
+## Library load
+
+```{r load_lib, message=FALSE, warning=FALSE, results='hide'}
+# install.packages("fpp3")
+library(tidymodels)
+library(torch)
+library(tidyverse)
+library(magrittr)
+library(skimr)
+library(knitr)
+library(fpp3)
+library(modeltime)
+library(timetk)
+library(data.table)
+
+ggplot2::theme_set(ggplot2::theme_bw())
+```
+
+
+## Dataset load
+
+These are the file list in the competition. We will only use the `train` and `test` data for this notebook. Remember, make it simple.
+
+```{r, message=FALSE}
+dat <- read_csv("train.csv") %>% 
+  janitor::clean_names()  
+```
+
+# 모델 설정
+
+```{r}
+dat <- dat %>% 
+    filter(country == 'Norway' & store == 'KaggleRama' & product == "Kaggle Mug") %>% select(-c(row_id, country, store, product)) %>% 
+    rename(value = num_sold)
+```
+
+
+
+```{r}
+dat %>% 
+    plot_time_series(.date_var = date, 
+                     .value = value)
+
+```
+
+
+```{r}
+splits <- initial_time_split(dat, prop = 0.7)
+
+```
+
+
+```{r}
+store_recipe <-  
+    recipe(value ~ ., data = training(splits)) %>% 
+    step_timeseries_signature(date) %>% 
+    step_rm(matches("(iso)|(xts)|(hour)|(minute)|(second)|(am.pm)")) %>%
+    
+    step_normalize(matches("(index.num)|(year)|(yday)")) %>%
+    
+    step_dummy(all_nominal(), one_hot = TRUE) %>%
+    
+    step_interact(~ matches("week2") * matches("wday.lbl")) %>%
+    
+    step_fourier(date, period = c(7, 14, 30, 90, 365), K = 2)
+
+```
+
+
+::: {.column-screen}
+```{r}
+resamples_tscv_lag <- time_series_cv(
+    data = training(splits) %>% drop_na(),
+    cumulative  = TRUE,
+    initial     = "2 months",
+    assess      = "20 weeks",
+    skip        = "2 weeks",
+    slice_limit = 6
+)
+
+resamples_tscv_lag %>%
+    tk_time_series_cv_plan() %>%
+    plot_time_series_cv_plan(date, value)
+```
+:::
+
+
+```{r}
+model_spec_nnetar <- nnetar_reg(
+    seasonal_period = 7,
+    non_seasonal_ar = tune(id = "non_seasonal_ar"),
+    seasonal_ar     = tune(),
+    hidden_units    = tune(),
+    num_networks    = 10,
+    penalty         = tune(),
+    epochs          = 50
+) %>%
+    set_engine("nnetar")
+
+```
+
+
+```{r}
+set.seed(123)
+grid_spec_nnetar_1 <- grid_latin_hypercube(
+    parameters(model_spec_nnetar),
+    size = 15
+)
+
+wflw_fit_nnetar <- workflow() %>% 
+  add_recipe(store_recipe) %>%
+  add_model(model_spec_nnetar)
+
+```
+
+```{r}
+library(doFuture)
+
+registerDoFuture()
+
+n_cores <- parallel::detectCores()
+
+plan(
+    strategy = cluster,
+    workers  = parallel::makeCluster(n_cores)
+)
+
+
+library(tictoc)
+
+tic()
+set.seed(123)
+tune_results_nnetar_1 <- wflw_fit_nnetar %>%
+    tune_grid(
+        resamples = resamples_tscv_lag,
+        grid      = grid_spec_nnetar_1,
+        metrics   = default_forecast_accuracy_metric_set(),
+        control   = control_grid(save_pred = TRUE)
+    )
+toc()
+
+
+
+tune_results_nnetar_1$.notes[[1]]$note
+
+
+```
+
+
+```{r}
+set.seed(123)
+wflw_fit_nnetar_tscv <- wflw_fit_nnetar %>%
+    finalize_workflow(
+        tune_results_nnetar_1 %>% 
+            show_best(metric = "rmse", n = Inf) %>%
+            dplyr::slice(1)
+    ) %>%
+    fit(training(splits))
+wflw_fit_nnetar_tscv
+```
+
+```{r}
+library(plotly)
+pred <- predict(wflw_fit_nnetar_tscv, testing(splits))
+
+
+testing(splits) %>% 
+  bind_cols(pred) %>% 
+  ggplot() + 
+  geom_line(aes(x = date, y = value), color = "blue") + 
+  geom_line(aes(x = date, y = .pred), color = "red") 
+
+```
+
