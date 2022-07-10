@@ -4,6 +4,7 @@
     "items": [
       "/posts/welcome/index.html",
       "/posts/2022-07-10-RMySQL/RMySQL.html",
+      "/posts/2022-07-10-modeltime-tune/tune.html",
       "/posts/2022-07-01-python-test/python.html",
       "/posts/2021-06-28-install-sql-for-mac/sql.html",
       "/posts/2021-06-26-create-logo/hexsticker.html",
@@ -15,7 +16,6 @@
       "/posts/2021-10-02-docker/docker.html",
       "/posts/2021-08-24-packrat/packrat_renv.html",
       "/posts/2021-07-29-machine-learning-explainability/ML_explain.html",
-      "/posts/2022-07-10-modeltime-tune/tune.html",
       "/posts/2021-06-12-kernel-density-estimation/KDE.html",
       "/posts/2021-06-18-multiple-test/multiple_test.html",
       "/posts/2021-06-12-admm/admm.html",
