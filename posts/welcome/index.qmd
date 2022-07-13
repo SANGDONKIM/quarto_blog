@@ -18,4 +18,8 @@ image: "welcome.jpg"
 
 <https://youtu.be/-NfIcBSxU8w>
 
+# ADP 22회 합격자 리뷰 
+
+<https://cafe.naver.com/sqlpd/36991>
+
 수업은 ADP 시험 일정에 맞춰서 **7월 말**부터 다시 시작 예정입니다. 이전 수업 영상과 자료는 결제 후에 보실 수 있습니다. 
