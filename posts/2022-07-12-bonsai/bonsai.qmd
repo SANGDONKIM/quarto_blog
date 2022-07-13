@@ -3,7 +3,7 @@ title: "bonsai and treesnip"
 description: |
   R lightgbm, xgboost, catboost 관련 패키지
 author: "Don Don"
-date: "2022-07-01"
+date: "2022-07-13"
 categories: [R, ligthtgbm, xgboost, catboost]
 image: "https://bonsai.tidymodels.org/logo.png"
 ---
